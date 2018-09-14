@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 export function DisciplineGrid(props) {
-  let disciplines = props.disciplines.map(discipline => {
+  let disciplines = props.disciplines.map((discipline, i) => {
     let years = discipline.startYear - new Date().getFullYear();
     let reward = string => {
       if (string === "pay") {
@@ -18,7 +18,7 @@ export function DisciplineGrid(props) {
       return string.replace(/^\w/, c => c.toUpperCase());
     };
     return (
-      <div>
+      <div key={"discipline" + i}>
         <span>{capitalizeString(discipline.name)}</span>
         <span>{years + " yr"}</span>
         <span>{capitalizeString(discipline.active)}</span>

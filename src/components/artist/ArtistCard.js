@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Tear } from "./Tear";
+import { Tear } from "../Tear";
 import { Paragraph } from "./Paragraph";
 import { NameTag } from "./NameTag";
 import { BasicInfo } from "./BasicInfo";
@@ -8,8 +8,6 @@ import { DisciplineGrid } from "./DisciplineGrid";
 
 export class ArtistCard extends React.Component {
   render() {
-    console.log(this.props);
-
     return (
       <div style={{ border: "solid 1px black" }}>
         <div className="card-left">

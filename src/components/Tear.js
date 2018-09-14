@@ -9,11 +9,13 @@ export function Tear(props) {
   let colors = ["#F7EF6A", "#93C178", "#465C8B"];
   let color = colors[props.colorString.length % 3];
 
+  let image = <img src={url} />;
+
   return (
     <div className="tear">
-      <div style={{ "background-color": color }} className="prong" />
-      <img src={url} />
-      <div style={{ "background-color": color }} className="tear-background" />
+      <div style={{ backgroundColor: color }} className="prong" />
+      {image}
+      <div style={{ backgroundColor: color }} className="tear-background" />
     </div>
   );
 }

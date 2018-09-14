@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { ArtistCard } from "./ArtistCard";
+import { ArtistCard } from "./artist/ArtistCard";
 import sampleArtists from "../sampleArtists";
 
 export function SearchResults(props) {
