@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { ArtistCard } from "./artist/ArtistCard";
-import sampleArtists from "../sampleArtists";
+import sampleArtists from "../../sampleArtists";
 
 export function SearchResults(props) {
   let artists = sampleArtists.map(artist => {
@@ -9,7 +9,7 @@ export function SearchResults(props) {
   });
 
   return (
-    <div>
+    <div className="search-results">
       <h2>RESULTS</h2>
       {artists}
     </div>

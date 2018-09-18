@@ -3,16 +3,16 @@ import { connect } from "react-redux";
 import "./Tear.css";
 
 // This is place holder image
-let url = require("../assets/TestImage.png");
+let url = require("../../assets/images/TestImage.png");
 
 export function Tear(props) {
   let colors = ["#F7EF6A", "#93C178", "#465C8B"];
-  let color = colors[props.colorString.length % 3];
+  let color = colors[props.name.length % 3];
 
-  let image = <img src={url} />;
+  let image = <img src={url} alt={`${props.name}`} />;
 
   return (
-    <div className="tear">
+    <div className="tear" style={{ width: props.width, height: props.height }}>
       <div style={{ backgroundColor: color }} className="prong" />
       {image}
       <div style={{ backgroundColor: color }} className="tear-background" />

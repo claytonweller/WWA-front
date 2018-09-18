@@ -1,0 +1,105 @@
+.nav a {
+  position: relative;
+}
+
+.nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: #eff9f4;
+}
+
+.wide-screen {
+  display: none;
+}
+
+.mobile-screen {
+  display: flex;
+}
+
+.nav-bar button {
+  padding: 5px 20px 0px 20px;
+}
+
+.nav-bar .tear {
+  position: absolute;
+  top: -10px;
+  right: 10px;
+}
+.nav-logo,
+.menu-bars {
+  height: 100%;
+  width: auto;
+  align-self: center;
+}
+
+.drop-down {
+  /* display: flex; */
+  flex-flow: column-reverse;
+  align-items: center;
+  padding-top: 20px;
+  background-color: white;
+  margin: 0 30px;
+  border: 1px solid #151515;
+  border-top: none;
+  filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.15));
+}
+
+.drop-down * {
+  margin-bottom: 10px;
+}
+
+.nav li {
+  text-align: center;
+}
+
+.search-tab {
+  margin: auto;
+  width: 100px;
+  height: 100px;
+  z-index: -1;
+  position: relative;
+  top: -60px;
+  background-color: #f7ef6a;
+  border-radius: 50%;
+  filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.15));
+}
+
+.search-tab a {
+  position: relative;
+  bottom: -65px;
+  width: 100%;
+}
+
+.search-tab a img {
+  position: relative;
+  left: 35px;
+  width: 30%;
+}
+
+@media only screen and (min-width: 500px) {
+  .wide-screen {
+    display: flex;
+    /* max-width: 1000px; */
+    margin: auto;
+  }
+
+  .mobile-screen {
+    display: none;
+  }
+
+  .drop-down {
+    width: 300px;
+    position: absolute;
+    right: -10px;
+  }
+}

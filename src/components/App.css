@@ -1,0 +1,86 @@
+@font-face {
+  font-family: "schluber";
+  src: url("../assets/schluber-webfont.woff2") format("woff2"),
+    url("../assets/schluber-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Archivo Narrow", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "schluber", "Archivo Narrow", sans-serif;
+}
+
+body {
+  background-color: #eff9f4;
+}
+
+ul,
+li {
+  list-style-type: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 3px solid #93c178;
+  margin: 0 20px;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid #151515;
+  box-shadow: #151515 3px 3px 0;
+  padding: 10px;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  padding: 10px 20px 5px 20px;
+  margin: 0px 10px;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: #f7ef6a;
+  box-shadow: 3px 3px 0 #151515;
+  color: #151515;
+  border: #151515 solid 1px;
+  font-family: "Schluber", "Archivo Narrow", sans-serif;
+}
+
+a {
+  color: #465c8b;
+  font-weight: 1000;
+  font-size: 24px;
+}
+
+/* TODO MAKE THIS ACTUALLY WORK */
+.bar-gradient {
+  position: relative;
+  top: -3px;
+  left: 0px;
+  right: 0px;
+  background-image: linear-gradient(#eff9f4, rgba(0, 0, 0, 0));
+  /* background-image: linear-gradient(purple, rgba(0, 0, 0, 0)); */
+  height: 20px;
+  z-index: -1;
+}

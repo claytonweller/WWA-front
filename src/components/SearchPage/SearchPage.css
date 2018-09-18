@@ -1,0 +1,124 @@
+.search-page {
+  top: 75px;
+  position: absolute;
+  max-width: 1000px;
+  margin: auto;
+  left: 0;
+  right: 0;
+  padding: 0 10px;
+}
+
+.search-form-holder {
+  position: relative;
+  top: 20px;
+}
+
+.search-form {
+  background-color: #eff9f4;
+}
+
+.search-field-holder {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: column;
+  margin: 0px 10px;
+}
+
+.search-label {
+  display: block;
+  text-align: center;
+  font-family: "schluber", "Archivo Narrow", sans-serif;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  padding-top: 30px;
+}
+
+.search-field-holder * {
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.search-field-holder button {
+  margin: 0;
+  font-size: 1.7em;
+}
+
+.search-results {
+  padding: 0px 10px;
+}
+
+@media only screen and (min-width: 500px) {
+  .search-form-holder {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    top: 60px;
+    max-width: 982px;
+    margin: auto;
+  }
+
+  .search-label {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    padding-left: 10px;
+  }
+
+  .search-field-holder {
+    flex-flow: row wrap;
+  }
+
+  .reward-input,
+  .experience-input,
+  .search-field-holder button {
+    width: 31%;
+    height: 100%;
+    margin: 0;
+  }
+}
+
+@media only screen and (min-width: 500px) {
+  .search-results {
+    position: relative;
+    top: 180px;
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .search-label {
+    text-align: left;
+    font-family: "schluber", "Archivo Narrow", sans-serif;
+    font-size: 2em;
+    margin-bottom: 15px;
+    padding-left: 10px;
+  }
+
+  .search-field-holder {
+    flex-flow: nowrap;
+  }
+
+  .discipline-input {
+    width: 350px;
+  }
+
+  .search-field-holder button {
+    width: 150px;
+    height: 100%;
+    margin-left: 5px;
+  }
+
+  .reward-input,
+  .experience-input {
+    margin: 0 5px;
+  }
+
+  .discipline-input {
+    margin-right: 5px;
+  }
+
+  .search-results {
+    position: relative;
+    top: 120px;
+  }
+}

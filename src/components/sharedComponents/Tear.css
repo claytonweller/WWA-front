@@ -1,6 +1,7 @@
 .tear {
-  width: 20%;
+  /* width: 20%; */
   position: relative;
+  align-self: center;
   filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
 }
 
@@ -14,6 +15,8 @@
 .tear img {
   position: relative;
   width: 100%;
+  height: 100%;
+
   border-radius: 50%;
   z-index: 10;
 }

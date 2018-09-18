@@ -1,13 +1,15 @@
+import "./App.css";
 import React from "react";
 import { connect, Provider } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 
 import { refreshAuthToken } from "../actions/auth";
 import store from "../store";
 
-import SearchForm from "./SearchForm";
-import { SearchResults } from "./SearchResults";
-import { Nav } from "./Nav";
+import { NavBar } from "./NavBar";
+import { SearchPage } from "./SearchPage";
+import { LandingPage } from "./LandingPage";
+import { ProfileModal } from "./ProfileModal";
 
 export class App extends React.Component {
   componentDidUpdate(prevProps) {
@@ -40,15 +42,16 @@ export class App extends React.Component {
 
   render() {
     return (
-      <div className="app">
-        <Nav />
+      <Router>
         <Provider store={store}>
-          <SearchForm />
+          <div className="app">
+            <NavBar />
+            <ProfileModal />
+            <Route exact path="/" component={LandingPage} />
+            <Route exact path="/search" component={SearchPage} />
+          </div>
         </Provider>
-        <SearchResults />
-        {/* <Route exact path="/" component={Landing} />
-        <Route exact path="/search" component={Search} /> */}
-      </div>
+      </Router>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Tear } from "../Tear";
+import { Tear } from "../../sharedComponents/Tear";
 import { Paragraph } from "./Paragraph";
 import { NameTag } from "./NameTag";
 import { BasicInfo } from "./BasicInfo";
@@ -12,11 +12,13 @@ export class ArtistCard extends React.Component {
       <div style={{ border: "solid 1px black" }}>
         <div className="card-left">
           <Tear
-            colorString={
-              this.props.artist.firstName + this.props.artist.lastName
+            width="20%"
+            name={
+              this.props.artist.firstName + " " + this.props.artist.lastName
             }
             imageUrl={this.props.artist.imageUrl}
           />
+
           <NameTag
             name={
               this.props.artist.firstName + " " + this.props.artist.lastName
@@ -41,13 +43,6 @@ export class ArtistCard extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { currentUser } = state.auth;
-  return {
-    // username: state.auth.currentUser.username,
-    // name: `${currentUser.firstName} ${currentUser.lastName}`,
-    // protectedData: state.protectedData.data
-  };
-};
+const mapStateToProps = state => state;
 
 export default /*requiresLogin()*/ connect(mapStateToProps)(ArtistCard);

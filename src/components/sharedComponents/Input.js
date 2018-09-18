@@ -31,6 +31,16 @@ export default class Input extends React.Component {
     if (this.props.meta.touched && this.props.meta.warning) {
       warning = <div className="form-warning">{this.props.meta.warning}</div>;
     }
+
+    let elementStructure = (
+      <Element
+        {...this.props.input}
+        placeholder={this.props.placeholder}
+        id={this.props.input.name}
+        type={this.props.type}
+        ref={input => (this.input = input)}
+      />
+    );
     if (this.props.element === "select") {
       let options = this.props.options.map((singleOption, i) => {
         return (
@@ -39,42 +49,34 @@ export default class Input extends React.Component {
           </option>
         );
       });
-
-      return (
-        <div className="form-input">
-          <label htmlFor={this.props.input.name}>
-            {this.props.label}
-            {error}
-            {warning}
-          </label>
-          <Element
-            {...this.props.input}
-            id={this.props.input.name}
-            ref={input => (this.input = input)}
-            onChange={e => this.updateSearch(e.target)}
-            value={this.state[this.props.input.name]}
-          >
-            {options}
-          </Element>
-        </div>
-      );
-    } else {
-      return (
-        <div className="form-input">
-          <label htmlFor={this.props.input.name}>
-            {this.props.label}
-            {error}
-            {warning}
-          </label>
-          <Element
-            {...this.props.input}
-            placeholder={this.props.placeholder}
-            id={this.props.input.name}
-            type={this.props.type}
-            ref={input => (this.input = input)}
-          />
-        </div>
+      elementStructure = (
+        <Element
+          {...this.props.input}
+          id={this.props.input.name}
+          ref={input => (this.input = input)}
+          onChange={e => this.updateSearch(e.target)}
+          value={this.state[this.props.input.name]}
+        >
+          {options}
+        </Element>
       );
     }
+    let label;
+    if (this.props.label) {
+      label = (
+        <label htmlFor={this.props.input.name}>
+          {this.props.label}
+          {error}
+          {warning}
+        </label>
+      );
+    }
+
+    return (
+      <div className={`form-input ${this.props.input.name}-input`}>
+        {label}
+        {elementStructure}
+      </div>
+    );
   }
 }
