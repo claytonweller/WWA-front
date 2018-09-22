@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import "./SearchPage.css";
 
 import SearchForm from "./SearchForm";
-import { SearchResults } from "./SearchResults";
+import SearchResults from "./SearchResults";
 
 export class SearchPage extends React.Component {
   render() {

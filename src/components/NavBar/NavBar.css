@@ -6,7 +6,7 @@
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 1000;
+  z-index: 2000;
 }
 
 .nav-bar {
@@ -32,8 +32,8 @@
 
 .nav-bar .tear {
   position: absolute;
-  top: -10px;
-  right: 10px;
+  top: 5px;
+  right: 20px;
 }
 .nav-logo,
 .menu-bars {
@@ -75,9 +75,9 @@
 }
 
 .search-tab a {
-  position: relative;
   bottom: -65px;
   width: 100%;
+  height: fit-content;
 }
 
 .search-tab a img {

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 export function NameTag(props) {
   return (
-    <div>
+    <div className="name-tag">
       <h2>{props.name}</h2>
     </div>
   );

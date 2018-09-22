@@ -4,13 +4,19 @@ import thunk from "redux-thunk";
 import { loadAuthToken } from "./local-storage";
 import authReducer from "./reducers/auth";
 import protectedDataReducer from "./reducers/protected-data";
+import navReducer from "./reducers/nav";
+import searchReducer from "./reducers/search";
+import profileReducer from "./reducers/profile";
 import { setAuthToken, refreshAuthToken } from "./actions/auth";
 
 const store = createStore(
   combineReducers({
-    form: formReducer,
     auth: authReducer,
-    protectedData: protectedDataReducer
+    protectedData: protectedDataReducer,
+    nav: navReducer,
+    search: searchReducer,
+    profile: profileReducer,
+    form: formReducer
   }),
   applyMiddleware(thunk)
 );

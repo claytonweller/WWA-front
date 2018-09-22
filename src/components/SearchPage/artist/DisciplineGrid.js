@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 
 export function DisciplineGrid(props) {
   let disciplines = props.disciplines.map((discipline, i) => {
-    let years = discipline.startYear - new Date().getFullYear();
+    let years = new Date().getFullYear() - discipline.startYear;
     let reward = string => {
       if (string === "pay") {
         return "Financial";
       } else if (string === "fun") {
-        return "Fun/Experience";
+        return "Fun";
       } else {
         return "Depends";
       }
@@ -18,8 +18,10 @@ export function DisciplineGrid(props) {
       return string.replace(/^\w/, c => c.toUpperCase());
     };
     return (
-      <div key={"discipline" + i}>
-        <span>{capitalizeString(discipline.name)}</span>
+      <div className="card-discipline" key={"discipline" + i}>
+        <span className="discipline-title">
+          {capitalizeString(discipline.name)}
+        </span>
         <span>{years + " yr"}</span>
         <span>{capitalizeString(discipline.active)}</span>
         <span>{reward(discipline.reward)}</span>
@@ -28,11 +30,11 @@ export function DisciplineGrid(props) {
   });
 
   return (
-    <div>
-      <div className="disciplines-top">
+    <div className="disciplines-grid">
+      <div className="disciplines-top card-discipline">
         <h2>Disciplines</h2>
         <div>Experience</div>
-        <div>Seeking Work</div>
+        <div>Active</div>
         <div>Reward</div>
       </div>
       <div className="disciplines-bottom">{disciplines}</div>

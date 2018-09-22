@@ -2,9 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 
 export function Paragraph(props) {
+  let display;
+  if (!props.title) {
+    display = "none";
+  }
+
   return (
-    <div>
-      <h2>{props.title}</h2>
+    <div className="paragraph">
+      <h2 style={{ display: display }}>{props.title}</h2>
       <p>{props.content}</p>
     </div>
   );

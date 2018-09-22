@@ -44,7 +44,7 @@ export default class Input extends React.Component {
     if (this.props.element === "select") {
       let options = this.props.options.map((singleOption, i) => {
         return (
-          <option key={singleOption + i} value={singleOption}>
+          <option key={`${singleOption}` + i} value={singleOption}>
             {singleOption}
           </option>
         );

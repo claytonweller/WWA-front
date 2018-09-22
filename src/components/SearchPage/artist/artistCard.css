@@ -1,0 +1,206 @@
+.artist-card {
+  width: 100%;
+  border: solid #151515 1px;
+  filter: drop-shadow(4px -4px 0 #465c8b);
+  background-color: white;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 30px;
+  transition-duration: 500ms;
+}
+
+.vertical-bar {
+  position: relative;
+  width: 3px;
+  background-color: #93c178;
+  margin: 40px 10px;
+  display: none;
+}
+
+.card-right {
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.active-card {
+  position: relative;
+  top: -10px;
+  left: 15%;
+  width: 80%;
+  min-height: 200px;
+}
+
+.name-tag {
+  border: solid 1px #151515;
+  background-color: white;
+  text-align: right;
+}
+
+.name-tag h2 {
+  margin: 10px;
+  font-size: 1.8em;
+  padding-left: 28%;
+}
+
+.active-card .paragraph {
+  margin-left: 40%;
+  font-size: 1em;
+}
+
+.active-card .paragraph p {
+  margin: 10px 0;
+}
+
+.active-card button {
+  position: absolute;
+  bottom: -10px;
+  left: -19%;
+}
+
+.card-left .expanded-card {
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.expanded-card .paragraph h2 {
+  font-size: 2em;
+  padding-left: 20px;
+}
+
+.basic-info {
+  display: flex;
+  flex-flow: wrap row-reverse;
+  justify-content: space-around;
+  padding: 0 10px;
+}
+
+.basic-info div {
+  align-self: center;
+  margin-bottom: 10px;
+  font-size: 2em;
+}
+
+.basic-info button {
+  font-size: 2em;
+  height: 60px;
+  width: 100%;
+  margin: 0;
+}
+
+.disciplines-grid {
+  margin-top: 50px;
+  padding: 0 10px;
+}
+
+.disciplines-top {
+  margin-bottom: 10px;
+}
+
+.disciplines-top h2 {
+  position: relative;
+  top: -10px;
+  text-align: center;
+}
+
+.disciplines-top div {
+  left: 10px;
+  position: relative;
+  font-weight: bold;
+  font-size: 1.2em;
+  transform: rotate(-45deg);
+}
+
+.disciplines-bottom {
+  border-top: 2px solid #93c178;
+}
+
+.card-discipline {
+  display: grid;
+  grid-template-columns: 35% 20% 20% 25%;
+}
+
+.discipline-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  border-right: 2px solid #93c178;
+  margin-right: 10px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 500px) {
+  .basic-info {
+    flex-flow: row;
+  }
+
+  .basic-info div {
+    font-size: 1.7em;
+  }
+
+  .basic-info button {
+    font-size: 1.7em;
+    height: 45px;
+    width: fit-content;
+  }
+
+  .disciplines-top {
+    margin-bottom: 30px;
+  }
+  .disciplines-top h2 {
+    font-size: 2em;
+    position: relative;
+    margin: 10px;
+    top: 0px;
+    left: 10px;
+    text-align: left;
+  }
+
+  /* .disciplines-top h2 {
+    position: relative;
+    top: 30px;
+    text-align: center;
+  } */
+}
+
+@media only screen and (min-width: 750px) {
+  .artist-card {
+    flex-flow: row;
+  }
+
+  .card-right {
+    width: 45%;
+  }
+  .card-left {
+    width: 55%;
+  }
+
+  .vertical-bar {
+    display: block;
+  }
+
+  .basic-info {
+    position: relative;
+    justify-content: flex-end;
+  }
+
+  .active-card {
+    min-height: 210px;
+  }
+
+  .basic-info button {
+    position: absolute;
+    left: 10px;
+    top: -60px;
+  }
+
+  .basic-info div {
+    margin: 0 10px;
+  }
+
+  .disciplines-top h2 {
+    font-size: 2em;
+    margin: 10px 0;
+    top: -20px;
+    /* text-align: center; */
+  }
+}

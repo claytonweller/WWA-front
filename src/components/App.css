@@ -9,6 +9,16 @@
 * {
   box-sizing: border-box;
   font-family: "Archivo Narrow", sans-serif;
+  color: #151515;
+}
+
+*:focus {
+  outline-style: solid;
+  outline-color: #f7ef6a;
+}
+
+p {
+  font-size: 18px;
 }
 
 h1,
@@ -38,6 +48,10 @@ hr {
   margin: 0 20px;
 }
 
+label {
+  font-weight: bold;
+}
+
 input,
 select,
 textarea {
@@ -65,12 +79,24 @@ button {
   color: #151515;
   border: #151515 solid 1px;
   font-family: "Schluber", "Archivo Narrow", sans-serif;
+  transition-duration: 250ms;
+}
+
+button:hover,
+button:focus {
+  transform: scale(1.1);
 }
 
 a {
   color: #465c8b;
   font-weight: 1000;
   font-size: 24px;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
 }
 
 /* TODO MAKE THIS ACTUALLY WORK */

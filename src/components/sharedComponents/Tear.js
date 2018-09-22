@@ -11,12 +11,22 @@ export function Tear(props) {
 
   let image = <img src={url} alt={`${props.name}`} />;
 
+  let clickAction = e => {
+    e.preventDefault();
+    props.clickAction(e);
+  };
+
   return (
-    <div className="tear" style={{ width: props.width, height: props.height }}>
+    <a
+      onClick={e => clickAction(e)}
+      href="NONE"
+      className="tear"
+      style={{ display: "block", width: props.width, height: props.height }}
+    >
       <div style={{ backgroundColor: color }} className="prong" />
       {image}
       <div style={{ backgroundColor: color }} className="tear-background" />
-    </div>
+    </a>
   );
 }
 

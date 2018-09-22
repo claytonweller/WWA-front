@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./NavBar.css";
+import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
+import { makeModalVisible, openModalPage } from "../../actions/profile";
 
 import Tear from "../sharedComponents/Tear";
 
@@ -9,27 +11,35 @@ let menuBars = require("../../assets/images/menu-bars.png");
 let searchGlass = require("../../assets/images/Black-Search.png");
 
 export function NavBar(props) {
-  let loggedIn = true;
+  let loggedIn = false;
   let linkList = (
     <ul>
       <li>
-        <a>Link</a>
+        <a>Basic Info</a>
       </li>
       <li>
-        <a>Link</a>
+        <a>Disciplines</a>
       </li>
       <li>
-        <a>This is a longer link</a>
+        <a>Display</a>
       </li>
       <li>
-        <a>Link</a>
+        <a>Bio & Equipment</a>
+      </li>
+      <li>
+        <a>Log Out</a>
       </li>
     </ul>
   );
 
+  const toggleMenuAction = e => {
+    e.preventDefault();
+    props.dispatch(toggleNavMenu());
+  };
+
   let mobileNav = (
     <div>
-      <a href="NONE">
+      <a href="NONE" onClick={e => toggleMenuAction(e)}>
         <img className="menu-bars" src={menuBars} alt="Menu" />
       </a>
     </div>
@@ -38,34 +48,59 @@ export function NavBar(props) {
   let wideNav = (
     <div>
       <a href="NONE">Log In</a>
-      <button>Sign Up</button>
+      <button
+        onClick={() => {
+          props.dispatch(openModalPage("basic"));
+          props.dispatch(closeNavMenu());
+        }}
+      >
+        Sign Up
+      </button>
     </div>
   );
 
   let dropDown = (
-    <div className="drop-down" hidden>
+    <div
+      style={{ textAlign: "center" }}
+      className="drop-down"
+      hidden={!props.menuIsOpen}
+    >
       <a href="NONE">Log In</a>
-      <button>Sign Up</button>
+      <button
+        onClick={() => {
+          props.dispatch(openModalPage("basic"));
+          props.dispatch(closeNavMenu());
+        }}
+      >
+        Sign Up
+      </button>
     </div>
   );
 
   let searchTab;
   if (loggedIn) {
     mobileNav = wideNav = (
-      <div>
-        <a href="NONE">
-          <Tear height="50px" width="50px" name="Clayton" />
-        </a>
-      </div>
+      <Tear
+        clickAction={toggleMenuAction}
+        height="50px"
+        width="50px"
+        name="Clayton"
+      />
     );
     dropDown = (
-      <div className="drop-down" hidden>
+      <div className="drop-down" hidden={!props.menuIsOpen}>
         {linkList}
       </div>
     );
     searchTab = (
       <div className="mobile-screen search-tab">
-        <a href="NONE">
+        <a
+          href="NONE"
+          onClick={e => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        >
           <img src={searchGlass} alt="Search icon" />
         </a>
       </div>
@@ -83,13 +118,18 @@ export function NavBar(props) {
         {wideNav}
       </div>
       <hr />
-      {/* <div className="bar-gradient" /> */}
       {dropDown}
       {searchTab}
     </div>
   );
 }
 
-const mapStateToProps = state => state;
+NavBar.defaultProps = {
+  menuIsOpen: false
+};
+
+const mapStateToProps = state => ({
+  menuIsOpen: state.nav.menuIsOpen
+});
 
 export default connect(mapStateToProps)(NavBar);
