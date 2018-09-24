@@ -10,28 +10,28 @@ export function ProgressBar(props) {
       <div className="progress-numbers">
         <ProgressTear
           number="1"
-          complete={true}
+          complete={props.basicInfo.complete}
           required={true}
-          currentStep={false}
+          currentStep={props.editPage === "basic"}
         />
         <ProgressTear
           number="2"
-          complete={false}
+          complete={props.disciplines[0] !== undefined}
           required={true}
-          currentStep={true}
+          currentStep={props.editPage === "disciplines"}
         />
         <div className="vertical-line" />
         <ProgressTear
           number="3"
-          complete={false}
+          complete={props.display.complete}
           required={false}
-          currentStep={false}
+          currentStep={props.editPage === "display"}
         />
         <ProgressTear
           number="4"
-          complete={false}
+          complete={props.bio.complete}
           required={false}
-          currentStep={false}
+          currentStep={props.editPage === "bio"}
         />
       </div>
       <div className="progress-required">
@@ -42,8 +42,18 @@ export function ProgressBar(props) {
   );
 }
 
+ProgressBar.defaultProps = {
+  // basicInfo: { complete: false, values: {} },
+  // disciplines: [],
+  // display: { complete: false, values: {} },
+  // bio: { complete: false, values: {} }
+};
+
 const mapStateToProps = state => ({
-  // editPage: state.editPage
+  // basicInfo: state.basicInfo,
+  // disciplines: state.disciplines,
+  // display: state.display,
+  // bio: state.bio
 });
 
 export default connect(mapStateToProps)(ProgressBar);

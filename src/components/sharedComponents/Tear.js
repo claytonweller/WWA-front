@@ -9,7 +9,36 @@ export function Tear(props) {
   let colors = ["#F7EF6A", "#93C178", "#465C8B"];
   let color = colors[props.name.length % 3];
 
-  let image = <img src={url} alt={`${props.name}`} />;
+  let image = (
+    <img style={{ height: "100%" }} src={url} alt={`${props.name}`} />
+  );
+  if (props.imageUrl) {
+    // This code checks the dimensions of the image to be put
+    // in the tear. Then it scales the image by it's shorter
+    // dimension and centers in the larger one.
+    let newImage = new Image();
+    newImage.src = props.imageUrl;
+    newImage.onload = function() {
+      if (newImage.naturalWidth > newImage.naturalHeight) {
+        return (
+          <img
+            style={{ height: "100%" }}
+            src={props.imageUrl}
+            alt={`${props.name}`}
+          />
+        );
+      } else {
+        return (
+          <img
+            style={{ width: "100%" }}
+            src={props.imageUrl}
+            alt={`${props.name}`}
+          />
+        );
+      }
+    };
+    image = newImage.onload();
+  }
 
   let clickAction = e => {
     e.preventDefault();
@@ -24,7 +53,8 @@ export function Tear(props) {
       style={{ display: "block", width: props.width, height: props.height }}
     >
       <div style={{ backgroundColor: color }} className="prong" />
-      {image}
+      <div className="circle-cropper">{image}</div>
+
       <div style={{ backgroundColor: color }} className="tear-background" />
     </a>
   );

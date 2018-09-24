@@ -3,12 +3,30 @@ import { reduxForm, Field, focus } from "redux-form";
 
 import Input from "../sharedComponents/Input";
 import Tear from "../sharedComponents/Tear";
-import { openModalPage, submitDisciplines } from "../../actions/profile";
+import {
+  openModalPage,
+  closeModal,
+  submitProfileForm
+} from "../../actions/profile";
 
 export class Display extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      imageURL: ""
+    };
+  }
+
   onSubmit(values) {
-    this.props.dispatch(openModalPage("display"));
-    this.props.dispatch(submitDisciplines(values));
+    this.props.dispatch(openModalPage("bio"));
+    this.props.dispatch(submitProfileForm("display", values));
+  }
+
+  testUrlClick(e) {
+    e.preventDefault();
+    let url = document.getElementById("imageURL").value;
+
+    this.setState({ imageURL: url });
   }
 
   render() {
@@ -45,7 +63,13 @@ export class Display extends React.Component {
             <div className="display modal-left">
               <h2>Your picture</h2>
               <div className="image-interface">
-                <Tear length="35%" width="35%" name="PLACHOLDER" />
+                <Tear
+                  clickAction={console.log}
+                  length="35%"
+                  width="35%"
+                  name="testImage"
+                  imageUrl={this.state.imageURL}
+                />
                 <div className="img-url-test">
                   <Field
                     name="imageURL"
@@ -54,7 +78,7 @@ export class Display extends React.Component {
                     component={Input}
                     label="Image URL"
                   />
-                  <button>Test URL</button>
+                  <button onClick={e => this.testUrlClick(e)}>Test URL</button>
                 </div>
               </div>
             </div>
@@ -70,7 +94,15 @@ export class Display extends React.Component {
                 placeholder="In less than ### characters talk about the kind of work that most excites you. This will be people’s first impression of you."
               />
               <div className="edit-buttons">
-                <a href="NONE">Later</a>
+                <a
+                  href="NONE"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.props.dispatch(closeModal());
+                  }}
+                >
+                  Later
+                </a>
                 <button
                   style={{ backgroundColor: "#F7EF6A", color: "#151515" }}
                   type="submit"

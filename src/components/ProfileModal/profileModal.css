@@ -200,11 +200,10 @@
     height: 100vh;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.25);
-    display: flex;
   }
 
   .modal-border {
-    top: 0;
+    top: 20px;
     height: fit-content;
     min-height: fit-content;
     box-shadow: 4px -4px 0px #465c8b;
@@ -223,6 +222,7 @@
     height: fit-content;
     margin-top: 22px;
     margin-right: 40px;
+    width: 100%;
   }
 
   .modal-right {
@@ -242,7 +242,7 @@
     padding-top: 20px;
     display: flex;
     flex-flow: row;
-    max-height: 45vh;
+    max-height: 55vh;
     overflow-y: scroll;
   }
 

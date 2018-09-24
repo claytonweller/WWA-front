@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import "./NavBar.css";
 import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
-import { makeModalVisible, openModalPage } from "../../actions/profile";
+import { openModalPage } from "../../actions/profile";
 
 import Tear from "../sharedComponents/Tear";
 

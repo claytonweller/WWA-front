@@ -5,7 +5,7 @@ import Tear from "../sharedComponents/Tear";
 
 export function SearchResults(props) {
   const tearClick = e => {
-    let artistWrapper = e.target.parentElement.parentElement;
+    let artistWrapper = e.target.parentElement.parentElement.parentElement;
     let artistCard = artistWrapper.children[1];
     if (artistWrapper.className === "artist inactive") {
       artistWrapper.className = "artist active";

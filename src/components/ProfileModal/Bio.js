@@ -2,10 +2,12 @@ import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 
 import Input from "../sharedComponents/Input";
+import { submitProfileForm, closeModal } from "../../actions/profile";
 
 export class Bio extends React.Component {
   onSubmit(values) {
-    console.log(values);
+    this.props.dispatch(submitProfileForm("bio", values));
+    this.props.dispatch(closeModal());
   }
 
   render() {
@@ -43,7 +45,7 @@ export class Bio extends React.Component {
             <h2>Tell us about yourself</h2>
 
             <Field
-              name="editDesiredProjects"
+              name="editBio"
               element="textarea"
               component={Input}
               label=""
@@ -52,20 +54,28 @@ export class Bio extends React.Component {
             <h2>Equipment / Supplies</h2>
 
             <Field
-              name="editDesiredProjects"
+              name="editEquipment"
               element="textarea"
               component={Input}
               label=""
               placeholder="Guitar, Video Camera, Wigs... etc"
             />
             <div className="edit-buttons">
-              <a href="NONE">Later</a>
+              <a
+                href="NONE"
+                onClick={e => {
+                  e.preventDefault();
+                  this.props.dispatch(closeModal());
+                }}
+              >
+                Later
+              </a>
               <button
                 style={{ backgroundColor: "#F7EF6A", color: "#151515" }}
                 type="submit"
                 disabled={this.props.submitting}
               >
-                Next
+                Finish
               </button>
             </div>
           </div>

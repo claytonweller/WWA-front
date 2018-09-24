@@ -2,25 +2,43 @@
   filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.3));
 }
 
+.tear:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
 .prong {
+  top: 0;
   width: 50%;
   height: 50%;
   content: "";
   position: absolute;
 }
 
-.tear img {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
+.circle-cropper {
   border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+}
+
+.tear img {
+  left: -99999px;
+  right: -99999px;
+  top: -99999px;
+  bottom: -99999px;
+  margin: auto;
+  position: absolute;
   z-index: 10;
 }
 
 .tear-background {
   border-radius: 50%;
-  height: 95%;
+  height: 100%;
   width: 100%;
   top: 0;
   position: absolute;

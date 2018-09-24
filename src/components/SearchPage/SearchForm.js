@@ -71,9 +71,6 @@ export class SearchForm extends React.Component {
               Search
             </button>
           </div>
-
-          {successMessage}
-          {errorMessage}
         </form>
 
         <div className="bar-gradient" />

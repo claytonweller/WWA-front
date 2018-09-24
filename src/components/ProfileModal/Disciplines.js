@@ -1,12 +1,33 @@
 import React from "react";
-import { reduxForm, Field, focus } from "redux-form";
-import Input from "../sharedComponents/Input";
+import { connect } from "react-redux";
 import SingleDiscipline from "./SingleDiscipline";
-import years from "./allTheYears";
+import AddDisciplineForm from "./AddDisciplineForm";
+
+import {
+  openModalPage,
+  submitProfileForm,
+  openAddDisciplineForm
+} from "../../actions/profile";
 
 export class Disciplines extends React.Component {
-  onSubmit(values) {
-    console.log(values);
+  addClick(e) {
+    e.preventDefault();
+    this.props.dispatch(openAddDisciplineForm());
+    console.log(this.props);
+  }
+
+  nextClick(values) {
+    this.props.dispatch(openModalPage("display"));
+  }
+
+  disciplineSubmit(values) {
+    this.props.dispatch(submitProfileForm("discipline", values));
+    this.setState({ formIshidden: true });
+  }
+
+  cancelClick(e) {
+    e.preventDefault();
+    this.setState({ formIshidden: true });
   }
 
   render() {
@@ -25,8 +46,19 @@ export class Disciplines extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    // This is the dispatch thing for the form.
-    // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
+
+    let disciplineElements = this.props.disciplines.map((discipline, i) => {
+      return (
+        <SingleDiscipline
+          key={"discipline" + i}
+          index={i}
+          discipline={discipline.editDiscipline}
+          experience={discipline.editExperience}
+          active={discipline.editActive}
+          reward={discipline.editReward}
+        />
+      );
+    });
 
     return (
       <div className="">
@@ -39,57 +71,11 @@ export class Disciplines extends React.Component {
         <div className="modal-container">
           <div className="disciplines-card modal-left">
             <h3 className="disciplines-title">Your Disciplines</h3>
-            <SingleDiscipline />
-            <SingleDiscipline />
-            <SingleDiscipline />
-            <button>Add</button>
+            {disciplineElements}
+            <button onClick={e => this.addClick(e)}>Add</button>
           </div>
 
-          <form
-            className="disciplines-form edit-form modal-right"
-            onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
-          >
-            <h2>Add / Edit a Discipline</h2>
-            <div className="search-field-holder">
-              <Field
-                name="editDiscipline"
-                type="text"
-                component={Input}
-                placeholder="Actor, Set Designer... etc"
-                label="Discipline"
-              />
-              <Field
-                name="editExperience"
-                element="select"
-                component={Input}
-                label="When Did you start doing this?"
-                options={years}
-              />
-              <Field
-                name="editReward"
-                element="select"
-                component={Input}
-                label="Preferred reward for your time and expertise in this discipline"
-                options={["For Fun", "For Pay", "Depends on project"]}
-              />
-              <Field
-                name="editActive"
-                element="select"
-                component={Input}
-                label="Are you actively seeking projects in this discipline?"
-                options={["No", "Yes"]}
-              />
-              <div className="edit-buttons">
-                <a href="NONE">Cancel</a>
-                <button type="submit" disabled={this.props.submitting}>
-                  Save
-                </button>
-              </div>
-            </div>
-
-            {successMessage}
-            {errorMessage}
-          </form>
+          <AddDisciplineForm formIshidden={this.props.formIshidden} />
         </div>
         <hr
           style={{
@@ -104,6 +90,7 @@ export class Disciplines extends React.Component {
             right: "20px",
             bottom: "20px"
           }}
+          onClick={() => this.nextClick()}
         >
           Next
         </button>
@@ -112,8 +99,17 @@ export class Disciplines extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: "Search",
-  onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("search", Object.keys(errors)[0]))
-})(Disciplines);
+Disciplines.defaultProps = {
+  formIshidden: true,
+  disciplines: []
+};
+
+const mapStateToProps = state => {
+  // console.log(state.profile.disciplines);
+  return {
+    formIshidden: state.profile.addDisciplineFormIsHidden,
+    disciplines: state.profile.disciplines
+  };
+};
+
+export default connect(mapStateToProps)(Disciplines);

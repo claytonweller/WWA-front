@@ -26,11 +26,26 @@ export function ProfileModal(props) {
     modalForm = <BasicInfo />;
   }
 
+  let display;
+  if (props.isVisible && window.innerWidth > 600) {
+    display = "flex";
+  }
+
   return (
-    <div className="modal-background" hidden={!props.isVisible}>
-      <div className="modal-border">
+    <div
+      style={{ display: display }}
+      className="modal-background"
+      hidden={!props.isVisible}
+    >
+      <div className="modal-border" hidden={!props.isVisible}>
         <div className="modal-header">
-          <ProgressBar />
+          <ProgressBar
+            basicInfo={props.basicInfo}
+            disciplines={props.disciplines}
+            display={props.display}
+            bio={props.bio}
+            editPage={props.editPage}
+          />
           <h2 className="modal-title">{title}</h2>
         </div>
         {modalForm}
@@ -41,12 +56,20 @@ export function ProfileModal(props) {
 
 ProfileModal.defaultProps = {
   editPage: "basic",
-  isVisible: true
+  isVisible: false,
+  basicInfo: { complete: false, values: {} },
+  disciplines: [],
+  display: { complete: false, values: {} },
+  bio: { complete: false, values: {} }
 };
 
 const mapStateToProps = state => ({
   editPage: state.profile.editPage,
-  isVisible: state.profile.modalIsVisible
+  isVisible: state.profile.modalIsVisible,
+  basicInfo: state.basicInfo,
+  disciplines: state.disciplines,
+  display: state.display,
+  bio: state.bio
 });
 
 export default connect(mapStateToProps)(ProfileModal);

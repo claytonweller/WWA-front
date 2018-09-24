@@ -1,6 +1,6 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import { submitBasicInfo, openModalPage } from "../../actions/profile";
+import { openModalPage, submitProfileForm } from "../../actions/profile";
 
 import Input from "../sharedComponents/Input";
 import states from "./allTheStates";
@@ -9,7 +9,7 @@ export class BasicInfo extends React.Component {
   onSubmit(values) {
     console.log(values);
     this.props.dispatch(openModalPage("disciplines"));
-    this.props.dispatch(submitBasicInfo(values));
+    this.props.dispatch(submitProfileForm("basicInfo", values));
   }
 
   render() {

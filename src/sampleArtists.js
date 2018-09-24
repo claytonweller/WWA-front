@@ -2,7 +2,8 @@ const sampleArtists = [
   {
     firstName: "Clayton",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -25,7 +26,8 @@ const sampleArtists = [
   {
     firstName: "Clazer",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -48,7 +50,8 @@ const sampleArtists = [
   {
     firstName: "CW12",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -71,7 +74,8 @@ const sampleArtists = [
   {
     firstName: "CW",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -94,7 +98,8 @@ const sampleArtists = [
   {
     firstName: "CW",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -117,7 +122,8 @@ const sampleArtists = [
   {
     firstName: "CW1",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -140,7 +146,8 @@ const sampleArtists = [
   {
     firstName: "CW",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -163,7 +170,8 @@ const sampleArtists = [
   {
     firstName: "CW234",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -186,7 +194,8 @@ const sampleArtists = [
   {
     firstName: "CW23",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
@@ -209,7 +218,8 @@ const sampleArtists = [
   {
     firstName: "CW2",
     lastName: "Weller",
-    imageUrl: "../assets/TestImage.png",
+    imageUrl:
+      "https://media.glamour.com/photos/5a425fd3b6bcee68da9f86f8/master/w_644,c_limit/best-face-oil.png",
     bio:
       "A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version. A statement about the kind of projects that he’s interested in. It’s pretty good. I should probably click again. I’ll put in another sentence for good measure. Here’s a bunch of text. Oh my god it goes on forever. I worked at Univsities, and theaters, and ran my own theater for a long time. I have a cat. She’s mostly black, and a little fat. This keeps going but then gets cut off... OR IT DOESN’ Because this is the desktop version.",
     desiredProjects:
