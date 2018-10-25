@@ -15,14 +15,22 @@ const initialState = {
   basicInfo: { complete: false, values: {} },
   disciplines: [],
   display: { complete: false, values: {} },
-  bio: { complete: false, values: {} }
+  bio: { complete: false, values: {} },
+  isLogin: false
 };
 
 export default function reducer(state = initialState, action) {
   if (action.type === OPEN_MODAL_PAGE) {
+    if (action.editPage === "login") {
+      return Object.assign({}, state, {
+        modalIsVisible: true,
+        isLogin: true
+      });
+    }
     return Object.assign({}, state, {
       modalIsVisible: true,
-      editPage: action.editPage
+      editPage: action.editPage,
+      isLogin: false
     });
   } else if (action.type === CLOSE_MODAL) {
     return Object.assign({}, state, {

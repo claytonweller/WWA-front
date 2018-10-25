@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import "./NavBar.css";
 import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
 import { openModalPage } from "../../actions/profile";
+import { logout } from "../../actions/auth";
 
 import Tear from "../sharedComponents/Tear";
 
@@ -11,7 +13,6 @@ let menuBars = require("../../assets/images/menu-bars.png");
 let searchGlass = require("../../assets/images/Black-Search.png");
 
 export function NavBar(props) {
-  let loggedIn = false;
   let linkList = (
     <ul>
       <li>
@@ -27,14 +28,28 @@ export function NavBar(props) {
         <a>Bio & Equipment</a>
       </li>
       <li>
-        <a>Log Out</a>
+        <a href="none" onClick={e => logOutClick(e)}>
+          Log Out
+        </a>
       </li>
     </ul>
   );
 
+  const logOutClick = e => {
+    e.preventDefault();
+    props.dispatch(logout());
+    props.history.push("/");
+    props.dispatch(closeNavMenu());
+  };
+
   const toggleMenuAction = e => {
     e.preventDefault();
     props.dispatch(toggleNavMenu());
+  };
+
+  const loginClick = e => {
+    e.preventDefault();
+    props.dispatch(openModalPage("login"));
   };
 
   let mobileNav = (
@@ -47,7 +62,9 @@ export function NavBar(props) {
 
   let wideNav = (
     <div>
-      <a href="NONE">Log In</a>
+      <a href="NONE" onClick={e => loginClick(e)}>
+        Log In
+      </a>
       <button
         onClick={() => {
           props.dispatch(openModalPage("basic"));
@@ -65,7 +82,9 @@ export function NavBar(props) {
       className="drop-down"
       hidden={!props.menuIsOpen}
     >
-      <a href="NONE">Log In</a>
+      <a href="NONE" onClick={e => loginClick(e)}>
+        Log In
+      </a>
       <button
         onClick={() => {
           props.dispatch(openModalPage("basic"));
@@ -78,7 +97,7 @@ export function NavBar(props) {
   );
 
   let searchTab;
-  if (loggedIn) {
+  if (props.loggedIn) {
     mobileNav = wideNav = (
       <Tear
         clickAction={toggleMenuAction}
@@ -125,11 +144,13 @@ export function NavBar(props) {
 }
 
 NavBar.defaultProps = {
-  menuIsOpen: false
+  menuIsOpen: false,
+  loggedIn: false
 };
 
 const mapStateToProps = state => ({
-  menuIsOpen: state.nav.menuIsOpen
+  menuIsOpen: state.nav.menuIsOpen,
+  loggedIn: !!state.auth.currentUser
 });
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps)(withRouter(NavBar));

@@ -7,6 +7,7 @@
   flex-flow: column;
   margin-bottom: 30px;
   transition-duration: 500ms;
+  min-width: 320px;
 }
 
 .vertical-bar {
@@ -129,6 +130,10 @@
 }
 
 @media only screen and (min-width: 500px) {
+  .card-left {
+    min-width: 400px;
+  }
+
   .basic-info {
     flex-flow: row;
   }

@@ -35,25 +35,52 @@ export function SearchResults(props) {
     }
   };
 
-  let artists = props.artists.map(artist => {
+  let minExperience = 0;
+  if (props.experienceFilter === "2+ years") {
+    minExperience = 2;
+  } else if (props.experienceFilter === "5+ years") {
+    minExperience = 5;
+  } else if (props.experienceFilter === "10+ years") {
+    minExperience = 10;
+  }
+
+  let filteredArtists = [];
+
+  if (props.experienceFilter || props.rewardFilter) {
+    filteredArtists = props.artists.filter(artist => {
+      let disciplines = artist.disciplines;
+      let disciplineInQuestion = disciplines.find(
+        discipline => discipline.type === "Magician"
+      );
+      if (disciplineInQuestion) {
+        return (
+          new Date().getFullYear() - disciplineInQuestion.experience >=
+          minExperience
+        );
+      }
+    });
+  }
+
+  let artists = filteredArtists.map(artist => {
+    // TODO parent click fix
     return (
       <div
-        id={"artist" + artist.id}
-        key={artist.id}
+        id={"artist" + artist.user_id}
+        key={artist.user_id}
         className="artist inactive"
       >
         <Tear
-          id={artist.id}
+          id={artist.user_id}
+          key={"tear" + artist.user_id}
+          name={artist.first_name + " " + artist.last_name}
+          imageUrl={artist.img_url}
           clickAction={e => tearClick(e)}
-          key={"tear" + artist.id}
-          name={artist.firstName + " " + artist.lastName}
-          imageUrl={artist.imageUrl}
         />
         <ArtistCard
-          id={artist.id}
+          id={artist.user_id}
           moreInfo={moreInfo}
           status="inactive"
-          key={"card" + artist.id}
+          key={"card" + artist.user_id}
           artist={artist}
         />
       </div>
@@ -65,7 +92,9 @@ export function SearchResults(props) {
 
 const mapStateToProps = state => {
   return {
-    artists: state.search.artists
+    artists: state.search.artists,
+    rewardFilter: state.search.rewardFilter,
+    experienceFilter: state.search.experienceFilter
   };
 };
 

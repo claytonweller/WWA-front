@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./profileModal.css";
+import "../Modal.css";
 
 import ProgressBar from "./ProgressBar";
 import BasicInfo from "./BasicInfo";
@@ -8,7 +8,7 @@ import Disciplines from "./Disciplines";
 import Display from "./Display";
 import Bio from "./Bio";
 
-export function ProfileModal(props) {
+export function Profile(props) {
   let title;
   let modalForm;
 
@@ -26,37 +26,25 @@ export function ProfileModal(props) {
     modalForm = <BasicInfo />;
   }
 
-  let display;
-  if (props.isVisible && window.innerWidth > 600) {
-    display = "flex";
-  }
-
   return (
-    <div
-      style={{ display: display }}
-      className="modal-background"
-      hidden={!props.isVisible}
-    >
-      <div className="modal-border" hidden={!props.isVisible}>
-        <div className="modal-header">
-          <ProgressBar
-            basicInfo={props.basicInfo}
-            disciplines={props.disciplines}
-            display={props.display}
-            bio={props.bio}
-            editPage={props.editPage}
-          />
-          <h2 className="modal-title">{title}</h2>
-        </div>
-        {modalForm}
+    <div>
+      <div className="modal-header">
+        <ProgressBar
+          basicInfo={props.basicInfo}
+          disciplines={props.disciplines}
+          display={props.display}
+          bio={props.bio}
+          editPage={props.editPage}
+        />
+        <h2 className="modal-title">{title}</h2>
       </div>
+      {modalForm}
     </div>
   );
 }
 
-ProfileModal.defaultProps = {
+Profile.defaultProps = {
   editPage: "basic",
-  isVisible: false,
   basicInfo: { complete: false, values: {} },
   disciplines: [],
   display: { complete: false, values: {} },
@@ -65,11 +53,10 @@ ProfileModal.defaultProps = {
 
 const mapStateToProps = state => ({
   editPage: state.profile.editPage,
-  isVisible: state.profile.modalIsVisible,
   basicInfo: state.basicInfo,
   disciplines: state.disciplines,
   display: state.display,
   bio: state.bio
 });
 
-export default connect(mapStateToProps)(ProfileModal);
+export default connect(mapStateToProps)(Profile);

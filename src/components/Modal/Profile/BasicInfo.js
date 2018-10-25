@@ -1,8 +1,8 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import { openModalPage, submitProfileForm } from "../../actions/profile";
+import { openModalPage, submitProfileForm } from "../../../actions/profile";
 
-import Input from "../sharedComponents/Input";
+import Input from "../../sharedComponents/Input";
 import states from "./allTheStates";
 
 export class BasicInfo extends React.Component {

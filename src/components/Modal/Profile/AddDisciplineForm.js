@@ -1,12 +1,12 @@
 import React from "react";
 import { reduxForm, Field, focus, reset } from "redux-form";
-import Input from "../sharedComponents/Input";
+import Input from "../../sharedComponents/Input";
 import years from "./allTheYears";
 
 import {
   submitProfileForm,
   closeAddDisciplineForm
-} from "../../actions/profile";
+} from "../../../actions/profile";
 
 export class AddDisciplineForm extends React.Component {
   disciplineSubmit(values) {

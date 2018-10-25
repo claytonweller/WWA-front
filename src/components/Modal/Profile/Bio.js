@@ -1,8 +1,8 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 
-import Input from "../sharedComponents/Input";
-import { submitProfileForm, closeModal } from "../../actions/profile";
+import Input from "../../sharedComponents/Input";
+import { submitProfileForm, closeModal } from "../../../actions/profile";
 
 export class Bio extends React.Component {
   onSubmit(values) {

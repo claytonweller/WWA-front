@@ -7,7 +7,7 @@ import {
   openModalPage,
   submitProfileForm,
   openAddDisciplineForm
-} from "../../actions/profile";
+} from "../../../actions/profile";
 
 export class Disciplines extends React.Component {
   addClick(e) {

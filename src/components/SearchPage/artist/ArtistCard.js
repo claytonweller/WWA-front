@@ -24,10 +24,10 @@ export class ArtistCard extends React.Component {
           <div className="active-card">
             <NameTag
               name={
-                this.props.artist.firstName + " " + this.props.artist.lastName
+                this.props.artist.first_name + " " + this.props.artist.last_name
               }
             />
-            <Paragraph content={this.props.artist.desiredProjects} />
+            <Paragraph content={this.props.artist.desired_projects} />
             <button
               id={"more" + this.props.id}
               onClick={e => this.moreInfoClick(e)}
@@ -38,7 +38,7 @@ export class ArtistCard extends React.Component {
           <div className="expanded-card">
             <BasicInfo
               location={this.props.artist.city + ", " + this.props.artist.state}
-              DOB={this.props.artist.DOB}
+              DOB={this.props.artist.dob}
             />
             <DisciplineGrid disciplines={this.props.artist.disciplines} />
           </div>
@@ -58,4 +58,4 @@ export class ArtistCard extends React.Component {
 
 const mapStateToProps = state => state;
 
-export default /*requiresLogin()*/ connect(mapStateToProps)(ArtistCard);
+export default connect(mapStateToProps)(ArtistCard);

@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import trashIcon from "../../assets/images/Trash.png";
-import editIcon from "../../assets/images/Edit.png";
-import { trashDiscipline, editDiscipline } from "../../actions/profile";
+import trashIcon from "../../../assets/images/Trash.png";
+import editIcon from "../../../assets/images/Edit.png";
+import { trashDiscipline, editDiscipline } from "../../../actions/profile";
 
 export function SingleDiscipline(props) {
   const experienceInYears = startYear => {

@@ -1,10 +1,16 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 import Input from "../sharedComponents/Input";
+import {
+  searchArtists,
+  updateExperienceFilter,
+  udpateRewardFilter
+} from "../../actions/search";
 
 export class SearchForm extends React.Component {
   onSubmit(values) {
     console.log(values);
+    this.props.dispatch(searchArtists(values));
   }
 
   render() {
@@ -23,8 +29,6 @@ export class SearchForm extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    // This is the dispatch thing for the form.
-    // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
 
     return (
       <div className="search-form-holder">
@@ -47,6 +51,7 @@ export class SearchForm extends React.Component {
               name="experience"
               element="select"
               component={Input}
+              action={updateExperienceFilter}
               label=""
               options={[
                 "Experience (all)",
@@ -59,6 +64,7 @@ export class SearchForm extends React.Component {
               name="reward"
               element="select"
               component={Input}
+              action={udpateRewardFilter}
               label=""
               options={[
                 "Reward (any)",

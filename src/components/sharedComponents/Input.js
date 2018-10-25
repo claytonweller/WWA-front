@@ -1,6 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
 
-export default class Input extends React.Component {
+class Input extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,9 +15,11 @@ export default class Input extends React.Component {
     }
   }
 
-  updateSearch(target) {
-    console.log({ [this.props.input.name]: target.value });
+  updateInput(target) {
     this.setState({ [this.props.input.name]: target.value });
+    if (this.props.action) {
+      this.props.dispatch(this.props.action(target.value));
+    }
   }
 
   render() {
@@ -54,7 +57,7 @@ export default class Input extends React.Component {
           {...this.props.input}
           id={this.props.input.name}
           ref={input => (this.input = input)}
-          onChange={e => this.updateSearch(e.target)}
+          onChange={e => this.updateInput(e.target)}
           value={this.state[this.props.input.name]}
         >
           {options}
@@ -80,3 +83,7 @@ export default class Input extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps)(Input);

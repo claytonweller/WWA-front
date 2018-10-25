@@ -1,13 +1,13 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 
-import Input from "../sharedComponents/Input";
-import Tear from "../sharedComponents/Tear";
+import Input from "../../sharedComponents/Input";
+import Tear from "../../sharedComponents/Tear";
 import {
   openModalPage,
   closeModal,
   submitProfileForm
-} from "../../actions/profile";
+} from "../../../actions/profile";
 
 export class Display extends React.Component {
   constructor(props) {

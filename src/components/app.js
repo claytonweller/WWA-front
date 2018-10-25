@@ -9,7 +9,7 @@ import store from "../store";
 import NavBar from "./NavBar";
 import SearchPage from "./SearchPage";
 import LandingPage from "./LandingPage";
-import ProfileModal from "./ProfileModal";
+import Modal from "./Modal";
 
 export class App extends React.Component {
   componentDidUpdate(prevProps) {
@@ -46,7 +46,7 @@ export class App extends React.Component {
         <Provider store={store}>
           <div className="app">
             <NavBar />
-            <ProfileModal isVisible={this.props.modalIsVisible} />
+            <Modal isVisible={this.props.modalIsVisible} />
             <Route exact path="/" component={LandingPage} />
             <Route exact path="/search" component={SearchPage} />
           </div>
