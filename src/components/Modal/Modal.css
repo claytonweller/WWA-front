@@ -124,6 +124,7 @@
 
 .disciplines-form {
   margin: 20px 0;
+  width: 100%;
 }
 
 .edit-form h2 {
@@ -216,6 +217,11 @@
 
   .modal-form .search-field-holder {
     flex-flow: row;
+  }
+
+  .disciplines-form .form-input {
+    width: 100%;
+    margin: 0px 0px;
   }
 
   .modal-left {

@@ -1,5 +1,3 @@
-// import { API_BASE_URL } from "../config";
-
 export const TOGGLE_NAV_MENU = "TOGGLE_NAV_MENU";
 export const toggleNavMenu = () => ({
   type: TOGGLE_NAV_MENU

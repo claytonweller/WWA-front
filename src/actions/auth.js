@@ -4,7 +4,7 @@ import { SubmissionError } from "redux-form";
 import { API_BASE_URL } from "../config";
 import { normalizeResponseErrors } from "./utils";
 import { saveAuthToken, clearAuthToken } from "../local-storage";
-import { closeModal } from "../actions/profile";
+import { closeModal, storeDisciplineTypes } from "../actions/profile";
 
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 export const setAuthToken = authToken => ({
@@ -48,7 +48,7 @@ export const logout = () => dispatch => {
   clearAuthToken();
 };
 
-export const login = (email, password) => dispatch => {
+export const login = (email, password, firstTime = false) => dispatch => {
   dispatch(authRequest());
   return (
     fetch(`${API_BASE_URL}/auth/login`, {
@@ -67,8 +67,10 @@ export const login = (email, password) => dispatch => {
       .then(res => res.json())
       .then(({ authToken }) => storeAuthInfo(authToken, dispatch))
       .then(() => {
-        dispatch(closeModal());
-        // navigate to search
+        storeDisciplineTypes();
+        if (!firstTime) {
+          dispatch(closeModal());
+        }
       })
       .catch(err => {
         const { code } = err;

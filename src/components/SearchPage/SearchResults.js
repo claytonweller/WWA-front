@@ -35,6 +35,8 @@ export function SearchResults(props) {
     }
   };
 
+  let experienceFilteredArtists = [];
+
   let minExperience = 0;
   if (props.experienceFilter === "2+ years") {
     minExperience = 2;
@@ -44,24 +46,44 @@ export function SearchResults(props) {
     minExperience = 10;
   }
 
-  let filteredArtists = [];
-
-  if (props.experienceFilter || props.rewardFilter) {
-    filteredArtists = props.artists.filter(artist => {
-      let disciplines = artist.disciplines;
-      let disciplineInQuestion = disciplines.find(
-        discipline => discipline.type === "Magician"
+  experienceFilteredArtists = props.artists.filter(artist => {
+    let disciplines = artist.disciplines;
+    let disciplineInQuestion = disciplines.find(
+      discipline => discipline.type === props.disciplineFilter
+    );
+    if (disciplineInQuestion) {
+      return (
+        new Date().getFullYear() - disciplineInQuestion.experience >=
+        minExperience
       );
-      if (disciplineInQuestion) {
-        return (
-          new Date().getFullYear() - disciplineInQuestion.experience >=
-          minExperience
-        );
-      }
-    });
+    }
+    return true;
+  });
+
+  let desiredReward = null;
+  if (props.rewardFilter === "For Fun") {
+    desiredReward = "fun";
+  } else if (props.rewardFilter === "For Pay") {
+    desiredReward = "pay";
+  } else if (props.rewardFilter === "Depends on project") {
+    desiredReward = "depends";
+  } else {
+    desiredReward = null;
   }
 
-  let artists = filteredArtists.map(artist => {
+  let rewardFilteredArtists = experienceFilteredArtists.filter(artist => {
+    let disciplines = artist.disciplines;
+    let disciplineInQuestion = disciplines.find(
+      discipline => discipline.type === props.disciplineFilter
+    );
+    if (disciplineInQuestion && desiredReward) {
+      console.log(disciplineInQuestion.reward, desiredReward);
+      return disciplineInQuestion.reward === desiredReward;
+    }
+    return true;
+  });
+
+  let artists = rewardFilteredArtists.map(artist => {
     // TODO parent click fix
     return (
       <div
@@ -94,7 +116,8 @@ const mapStateToProps = state => {
   return {
     artists: state.search.artists,
     rewardFilter: state.search.rewardFilter,
-    experienceFilter: state.search.experienceFilter
+    experienceFilter: state.search.experienceFilter,
+    disciplineFilter: state.search.disciplineFilter
   };
 };
 

@@ -6,7 +6,8 @@ import AddDisciplineForm from "./AddDisciplineForm";
 import {
   openModalPage,
   submitProfileForm,
-  openAddDisciplineForm
+  openAddDisciplineForm,
+  postUserDiscipline
 } from "../../../actions/profile";
 
 export class Disciplines extends React.Component {
@@ -60,6 +61,11 @@ export class Disciplines extends React.Component {
       );
     });
 
+    let listDisplay = "inline-block";
+    if (!this.props.formIshidden) {
+      listDisplay = "none";
+    }
+
     return (
       <div className="">
         <p className="form-description">
@@ -69,13 +75,19 @@ export class Disciplines extends React.Component {
         </p>
         <hr />
         <div className="modal-container">
-          <div className="disciplines-card modal-left">
+          {/* The list and the form toggle back and forth */}
+          <div className="disciplines-card" style={{ display: listDisplay }}>
             <h3 className="disciplines-title">Your Disciplines</h3>
             {disciplineElements}
             <button onClick={e => this.addClick(e)}>Add</button>
           </div>
 
-          <AddDisciplineForm formIshidden={this.props.formIshidden} />
+          <AddDisciplineForm
+            disciplineTypes={this.props.disciplineTypes.map(
+              entry => entry.type.charAt(0).toUpperCase() + entry.type.slice(1)
+            )}
+            formIshidden={this.props.formIshidden}
+          />
         </div>
         <hr
           style={{
@@ -88,7 +100,8 @@ export class Disciplines extends React.Component {
             width: "150px",
             position: "absolute",
             right: "20px",
-            bottom: "20px"
+            bottom: "20px",
+            display: listDisplay
           }}
           onClick={() => this.nextClick()}
         >
@@ -101,14 +114,15 @@ export class Disciplines extends React.Component {
 
 Disciplines.defaultProps = {
   formIshidden: true,
-  disciplines: []
+  disciplines: [],
+  disciplineTypes: []
 };
 
 const mapStateToProps = state => {
-  // console.log(state.profile.disciplines);
   return {
     formIshidden: state.profile.addDisciplineFormIsHidden,
-    disciplines: state.profile.disciplines
+    disciplines: state.profile.disciplines,
+    disciplineTypes: state.profile.disciplineTypes
   };
 };
 

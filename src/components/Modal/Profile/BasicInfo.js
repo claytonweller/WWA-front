@@ -1,25 +1,22 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import { openModalPage, submitProfileForm } from "../../../actions/profile";
+import { postUser, submitProfileForm } from "../../../actions/profile";
 
 import Input from "../../sharedComponents/Input";
 import states from "./allTheStates";
 
 export class BasicInfo extends React.Component {
   onSubmit(values) {
-    console.log(values);
-    this.props.dispatch(openModalPage("disciplines"));
-    this.props.dispatch(submitProfileForm("basicInfo", values));
+    console.log("submit", values);
+
+    // this.props.dispatch(submitProfileForm("basic", values));
+    this.props.dispatch(postUser(values));
   }
 
   render() {
     let successMessage;
     if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
+      successMessage = <div className="message message-success">Submitted</div>;
     }
 
     let errorMessage;
@@ -41,14 +38,14 @@ export class BasicInfo extends React.Component {
           <div className="search-field-holder">
             <div className="modal-left">
               <Field
-                name="firstName"
+                name="first_name"
                 type="text"
                 component={Input}
                 placeholder="Billy"
                 label="First Name"
               />
               <Field
-                name="lastName"
+                name="last_name"
                 type="text"
                 component={Input}
                 placeholder="Shakespeare"
@@ -71,7 +68,7 @@ export class BasicInfo extends React.Component {
                 />
               </div>
               <Field
-                name="DOB"
+                name="dob"
                 type="date"
                 component={Input}
                 label="Date of Birth"

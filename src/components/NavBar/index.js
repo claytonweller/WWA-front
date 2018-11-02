@@ -5,6 +5,7 @@ import "./NavBar.css";
 import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
 import { openModalPage } from "../../actions/profile";
 import { logout } from "../../actions/auth";
+import { parseJwt } from "../../parseJwt";
 
 import Tear from "../sharedComponents/Tear";
 
@@ -16,16 +17,24 @@ export function NavBar(props) {
   let linkList = (
     <ul>
       <li>
-        <a>Basic Info</a>
+        <a href="none" onClick={e => menuLinkClick(e, "basic")}>
+          Basic Info
+        </a>
       </li>
       <li>
-        <a>Disciplines</a>
+        <a href="none" onClick={e => menuLinkClick(e, "disciplines")}>
+          Disciplines
+        </a>
       </li>
       <li>
-        <a>Display</a>
+        <a href="none" onClick={e => menuLinkClick(e, "display")}>
+          Display
+        </a>
       </li>
       <li>
-        <a>Bio & Equipment</a>
+        <a href="none" onClick={e => menuLinkClick(e, "bio")}>
+          Bio & Equipment
+        </a>
       </li>
       <li>
         <a href="none" onClick={e => logOutClick(e)}>
@@ -34,6 +43,12 @@ export function NavBar(props) {
       </li>
     </ul>
   );
+
+  const menuLinkClick = (e, desination) => {
+    e.preventDefault();
+    props.dispatch(openModalPage(desination));
+    props.dispatch(closeNavMenu());
+  };
 
   const logOutClick = e => {
     e.preventDefault();
@@ -98,12 +113,17 @@ export function NavBar(props) {
 
   let searchTab;
   if (props.loggedIn) {
+    let img;
+    if (localStorage.getItem("authToken")) {
+      img = parseJwt(localStorage.getItem("authToken")).user.img_url;
+    }
     mobileNav = wideNav = (
       <Tear
         clickAction={toggleMenuAction}
         height="50px"
         width="50px"
         name="Clayton"
+        imageUrl={img}
       />
     );
     dropDown = (

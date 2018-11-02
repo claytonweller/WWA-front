@@ -1,16 +1,20 @@
 import React from "react";
 import { reduxForm, Field, focus, reset } from "redux-form";
 import Input from "../../sharedComponents/Input";
+import { connect } from "react-redux";
 import years from "./allTheYears";
 
 import {
   submitProfileForm,
-  closeAddDisciplineForm
+  closeAddDisciplineForm,
+  postUserDiscipline
 } from "../../../actions/profile";
 
 export class AddDisciplineForm extends React.Component {
   disciplineSubmit(values) {
+    values.type_id = this;
     this.props.dispatch(submitProfileForm("discipline", values));
+    this.props.dispatch(postUserDiscipline(values));
     this.props.dispatch(closeAddDisciplineForm());
     this.props.dispatch(reset("Discipline"));
   }
@@ -41,7 +45,7 @@ export class AddDisciplineForm extends React.Component {
     return (
       <form
         hidden={this.props.formIshidden}
-        className="disciplines-form edit-form modal-right"
+        className="disciplines-form edit-form"
         onSubmit={this.props.handleSubmit(values =>
           this.disciplineSubmit(values)
         )}
@@ -49,33 +53,36 @@ export class AddDisciplineForm extends React.Component {
         <h2>Add / Edit a Discipline</h2>
         <div className="search-field-holder">
           <Field
-            name="editDiscipline"
+            name="type"
             type="text"
+            element="select"
             component={Input}
-            placeholder="Actor, Set Designer... etc"
             label="Discipline"
+            options={this.props.disciplineTypes}
           />
           <Field
-            name="editExperience"
+            name="experience"
             element="select"
             component={Input}
             label="When Did you start doing this?"
             options={years}
           />
+
           <Field
-            name="editReward"
+            name="reward"
             element="select"
             component={Input}
             label="Preferred reward for your time and expertise in this discipline"
             options={["Reward?", "For Fun", "For Pay", "Depends on project"]}
           />
           <Field
-            name="editActive"
+            name="active"
             element="select"
             component={Input}
             label="Are you actively seeking projects in this discipline?"
             options={["Active?", "No", "Yes"]}
           />
+
           <div className="edit-buttons">
             <a href="NONE" onClick={e => this.cancelClick(e)}>
               Cancel
@@ -92,6 +99,8 @@ export class AddDisciplineForm extends React.Component {
     );
   }
 }
+
+AddDisciplineForm = connect(mapStateToProps)(AddDisciplineForm);
 
 export default reduxForm({
   form: "Discipline",

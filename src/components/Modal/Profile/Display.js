@@ -3,11 +3,7 @@ import { reduxForm, Field, focus } from "redux-form";
 
 import Input from "../../sharedComponents/Input";
 import Tear from "../../sharedComponents/Tear";
-import {
-  openModalPage,
-  closeModal,
-  submitProfileForm
-} from "../../../actions/profile";
+import { closeModal, updateUser } from "../../../actions/profile";
 
 export class Display extends React.Component {
   constructor(props) {
@@ -18,13 +14,12 @@ export class Display extends React.Component {
   }
 
   onSubmit(values) {
-    this.props.dispatch(openModalPage("bio"));
-    this.props.dispatch(submitProfileForm("display", values));
+    this.props.dispatch(updateUser(values, "bio"));
   }
 
   testUrlClick(e) {
     e.preventDefault();
-    let url = document.getElementById("imageURL").value;
+    let url = document.getElementById("img_url").value;
 
     this.setState({ imageURL: url });
   }
@@ -72,7 +67,7 @@ export class Display extends React.Component {
                 />
                 <div className="img-url-test">
                   <Field
-                    name="imageURL"
+                    name="img_url"
                     type="text"
                     placeholder="www.imgur.com/mysickpic"
                     component={Input}
@@ -87,7 +82,7 @@ export class Display extends React.Component {
               <h2>Desired Projects</h2>
 
               <Field
-                name="editDesiredProjects"
+                name="desired_projects"
                 element="textarea"
                 component={Input}
                 label="What kind of projects are you most excited to work on?"

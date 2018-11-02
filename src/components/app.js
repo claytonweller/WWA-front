@@ -4,6 +4,7 @@ import { connect, Provider } from "react-redux";
 import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
 
 import { refreshAuthToken } from "../actions/auth";
+import { getDisciplineTypes } from "../actions/profile";
 import store from "../store";
 
 import NavBar from "./NavBar";
@@ -12,6 +13,10 @@ import LandingPage from "./LandingPage";
 import Modal from "./Modal";
 
 export class App extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(getDisciplineTypes());
+  }
+
   componentDidUpdate(prevProps) {
     if (!prevProps.loggedIn && this.props.loggedIn) {
       // When we are logged in, refresh the auth token periodically

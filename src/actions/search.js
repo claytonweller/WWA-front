@@ -13,7 +13,7 @@ export const expandCard = () => ({
 
 export const UPDATE_REWARD_FILTER = "UPDATE_REWARD_FILTER";
 export const udpateRewardFilter = value => ({
-  type: UPDATE_EXPERIENCE_FILTER,
+  type: UPDATE_REWARD_FILTER,
   value
 });
 
@@ -23,9 +23,16 @@ export const updateExperienceFilter = value => ({
   value
 });
 
+export const UPDATE_DISCIPLINE_FILTER = "UPDATE_DISCIPLINE_FILTER";
+export const updateDisciplineFilter = value => ({
+  type: UPDATE_DISCIPLINE_FILTER,
+  value
+});
+
 export const ARTIST_SEARCH_REQUEST = "ARTIST_SEARCH_REQUEST";
-export const artistSearchRequest = () => ({
-  type: ARTIST_SEARCH_REQUEST
+export const artistSearchRequest = disciplineFilter => ({
+  type: ARTIST_SEARCH_REQUEST,
+  disciplineFilter
 });
 
 export const ARTIST_SEARCH_SUCCESS = "ARTIST_SEARCH_SUCCESS";
@@ -44,7 +51,8 @@ export const searchArtists = searchObject => dispatch => {
   dispatch(artistSearchRequest());
   let fetchRoute = "";
   if (searchObject.discipline) {
-    fetchRoute = "?type=" + searchObject.discipline;
+    fetchRoute = "?type=" + searchObject.discipline.toLowerCase();
+    dispatch(updateDisciplineFilter(searchObject.discipline.toLowerCase()));
   }
 
   return fetch(`${API_BASE_URL}/users/${fetchRoute}`, {

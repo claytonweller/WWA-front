@@ -134,6 +134,10 @@
     min-width: 400px;
   }
 
+  .active .artist-card .card-left {
+    min-width: 0px;
+  }
+
   .basic-info {
     flex-flow: row;
   }

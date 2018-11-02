@@ -2,12 +2,15 @@ import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 
 import Input from "../../sharedComponents/Input";
-import { submitProfileForm, closeModal } from "../../../actions/profile";
+import {
+  submitProfileForm,
+  closeModal,
+  updateUser
+} from "../../../actions/profile";
 
 export class Bio extends React.Component {
   onSubmit(values) {
-    this.props.dispatch(submitProfileForm("bio", values));
-    this.props.dispatch(closeModal());
+    this.props.dispatch(updateUser(values));
   }
 
   render() {
@@ -45,7 +48,7 @@ export class Bio extends React.Component {
             <h2>Tell us about yourself</h2>
 
             <Field
-              name="editBio"
+              name="bio"
               element="textarea"
               component={Input}
               label=""
@@ -54,7 +57,7 @@ export class Bio extends React.Component {
             <h2>Equipment / Supplies</h2>
 
             <Field
-              name="editEquipment"
+              name="equipment"
               element="textarea"
               component={Input}
               label=""

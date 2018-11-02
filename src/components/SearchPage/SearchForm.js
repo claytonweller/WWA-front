@@ -43,8 +43,9 @@ export class SearchForm extends React.Component {
             <Field
               name="discipline"
               type="text"
+              element="select"
               component={Input}
-              placeholder="Actor, Set Designer... etc"
+              options={this.props.disciplineTypes}
               label=""
             />
             <Field

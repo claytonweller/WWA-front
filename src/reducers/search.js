@@ -5,18 +5,17 @@ import {
   ARTIST_SEARCH_SUCCESS,
   ARTIST_SEARCH_ERROR,
   UPDATE_EXPERIENCE_FILTER,
-  UPDATE_REWARD_FILTER
+  UPDATE_REWARD_FILTER,
+  UPDATE_DISCIPLINE_FILTER
 } from "../actions/search";
-
-// PLACEHOLDER DATA
-import sampleArtists from "../sampleArtists";
 
 const initialState = {
   artists: [],
   loading: false,
   error: null,
   experienceFilter: null,
-  rewardFilter: null
+  rewardFilter: null,
+  disciplineFilter: null
 };
 
 export default function reducer(state = initialState, action) {
@@ -31,7 +30,8 @@ export default function reducer(state = initialState, action) {
   } else if (action.type === ARTIST_SEARCH_REQUEST) {
     return Object.assign({}, state, {
       loading: true,
-      error: null
+      error: null,
+      disciplineFilter: null
     });
   } else if (action.type === ARTIST_SEARCH_SUCCESS) {
     return Object.assign({}, state, {
@@ -49,9 +49,12 @@ export default function reducer(state = initialState, action) {
     });
   } else if (action.type === UPDATE_REWARD_FILTER) {
     return Object.assign({}, state, {
-      experienceFilter: action.value
+      rewardFilter: action.value
+    });
+  } else if (action.type === UPDATE_DISCIPLINE_FILTER) {
+    return Object.assign({}, state, {
+      disciplineFilter: action.value
     });
   }
-
   return state;
 }
