@@ -24,7 +24,6 @@ class Input extends React.Component {
 
   render() {
     const Element = this.props.element || "input";
-
     let error;
     if (this.props.meta.touched && this.props.meta.error) {
       error = <div className="form-error">{this.props.meta.error}</div>;
@@ -42,8 +41,10 @@ class Input extends React.Component {
         id={this.props.input.name}
         type={this.props.type}
         ref={input => (this.input = input)}
+        initialvalues={this.props.farts}
       />
     );
+
     if (this.props.element === "select") {
       let options = this.props.options.map((singleOption, i) => {
         return (

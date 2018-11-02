@@ -73,7 +73,6 @@ export default function reducer(state = initialState, action) {
       disciplines: newDisciplines
     });
   } else if (action.type === STORE_DISCIPLINE_TYPES) {
-    console.log(action.disciplineTypes);
     return Object.assign({}, state, {
       disciplineTypes: action.disciplineTypes
     });

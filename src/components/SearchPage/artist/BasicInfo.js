@@ -8,17 +8,21 @@ export function BasicInfo(props) {
     return Math.floor(difference);
   };
 
+  const contactClick = e => {
+    console.log(props);
+  };
+
   return (
     <div className="basic-info">
       <div>Age {findAge(props.DOB)}</div>
       <div> {props.location}</div>
-      <button>Contact</button>
+      <button onClick={e => contactClick(e)}>Contact</button>
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-  // loggedIn: state.auth.currentUser !== null
+  currentUser: state.auth.currentUser
 });
 
 export default connect(mapStateToProps)(BasicInfo);

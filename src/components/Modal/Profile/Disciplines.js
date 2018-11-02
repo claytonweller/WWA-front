@@ -6,15 +6,13 @@ import AddDisciplineForm from "./AddDisciplineForm";
 import {
   openModalPage,
   submitProfileForm,
-  openAddDisciplineForm,
-  postUserDiscipline
+  openAddDisciplineForm
 } from "../../../actions/profile";
 
 export class Disciplines extends React.Component {
   addClick(e) {
     e.preventDefault();
     this.props.dispatch(openAddDisciplineForm());
-    console.log(this.props);
   }
 
   nextClick(values) {
@@ -32,31 +30,34 @@ export class Disciplines extends React.Component {
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
+    // TODO Success/Error
 
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
+    // let successMessage;
+    // if (this.props.submitSucceeded) {
+    //   successMessage = (
+    //     <div className="message message-success">
+    //       Message submitted successfully
+    //     </div>
+    //   );
+    // }
+
+    // let errorMessage;
+    // if (this.props.error) {
+    //   errorMessage = (
+    //     <div className="message message-error">{this.props.error}</div>
+    //   );
+    // }
 
     let disciplineElements = this.props.disciplines.map((discipline, i) => {
+      console.log(discipline);
       return (
         <SingleDiscipline
           key={"discipline" + i}
           index={i}
-          discipline={discipline.editDiscipline}
-          experience={discipline.editExperience}
-          active={discipline.editActive}
-          reward={discipline.editReward}
+          discipline={discipline.type}
+          experience={discipline.experience}
+          active={discipline.active}
+          reward={discipline.reward}
         />
       );
     });
@@ -82,12 +83,7 @@ export class Disciplines extends React.Component {
             <button onClick={e => this.addClick(e)}>Add</button>
           </div>
 
-          <AddDisciplineForm
-            disciplineTypes={this.props.disciplineTypes.map(
-              entry => entry.type.charAt(0).toUpperCase() + entry.type.slice(1)
-            )}
-            formIshidden={this.props.formIshidden}
-          />
+          <AddDisciplineForm formIshidden={this.props.formIshidden} />
         </div>
         <hr
           style={{

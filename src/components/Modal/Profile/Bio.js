@@ -1,12 +1,9 @@
 import React from "react";
+import { connect } from "react-redux";
 import { reduxForm, Field, focus } from "redux-form";
 
 import Input from "../../sharedComponents/Input";
-import {
-  submitProfileForm,
-  closeModal,
-  updateUser
-} from "../../../actions/profile";
+import { closeModal, updateUser } from "../../../actions/profile";
 
 export class Bio extends React.Component {
   onSubmit(values) {
@@ -32,6 +29,7 @@ export class Bio extends React.Component {
     // This is the dispatch thing for the form.
     // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
 
+    console.log(this.props.currentUser.bio);
     return (
       <div className="">
         <p className="form-description">
@@ -53,6 +51,7 @@ export class Bio extends React.Component {
               component={Input}
               label=""
               placeholder="After working with Twyla Tharp on Broadway, I was the ghost writer for Starwars episode 7 helping my buddy JJ. Abrams... etc."
+              farts={this.props.currentUser.bio}
             />
             <h2>Equipment / Supplies</h2>
 
@@ -91,8 +90,16 @@ export class Bio extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    currentUser: state.auth.currentUser
+  };
+};
+
+Bio = connect(mapStateToProps)(Bio);
+
 export default reduxForm({
-  form: "Search",
+  form: "Bio",
   onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("search", Object.keys(errors)[0]))
+    dispatch(focus("Bio", Object.keys(errors)[0]))
 })(Bio);

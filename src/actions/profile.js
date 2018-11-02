@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "../config";
 import { SubmissionError } from "redux-form";
-import { login } from "../actions/auth";
+import { login } from "./auth";
 import { parseJwt } from "../parseJwt";
 
 export const OPEN_MODAL_PAGE = "OPEN_MODAL_PAGE";

@@ -14,21 +14,22 @@ export class SearchForm extends React.Component {
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
+    // TODO success/Error
+    // let successMessage;
+    // if (this.props.submitSucceeded) {
+    //   successMessage = (
+    //     <div className="message message-success">
+    //       Message submitted successfully
+    //     </div>
+    //   );
+    // }
 
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
+    // let errorMessage;
+    // if (this.props.error) {
+    //   errorMessage = (
+    //     <div className="message message-error">{this.props.error}</div>
+    //   );
+    // }
 
     return (
       <div className="search-form-holder">

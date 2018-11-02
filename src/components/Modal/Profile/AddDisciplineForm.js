@@ -12,7 +12,10 @@ import {
 
 export class AddDisciplineForm extends React.Component {
   disciplineSubmit(values) {
-    values.type_id = this;
+    console.log(values);
+    values.type_id = this.props.disciplineTypes.find(
+      typeObject => typeObject.type === values.type
+    ).type_id;
     this.props.dispatch(submitProfileForm("discipline", values));
     this.props.dispatch(postUserDiscipline(values));
     this.props.dispatch(closeAddDisciplineForm());
@@ -58,7 +61,9 @@ export class AddDisciplineForm extends React.Component {
             element="select"
             component={Input}
             label="Discipline"
-            options={this.props.disciplineTypes}
+            options={this.props.disciplineTypes.map(
+              typeObject => typeObject.type
+            )}
           />
           <Field
             name="experience"
@@ -100,10 +105,17 @@ export class AddDisciplineForm extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    disciplineTypes: state.profile.disciplineTypes
+  };
+};
+
 AddDisciplineForm = connect(mapStateToProps)(AddDisciplineForm);
 
 export default reduxForm({
   form: "Discipline",
-  onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("search", Object.keys(errors)[0]))
+  onSubmitFail: (errors, dispatch) => {
+    dispatch(focus("Discipline", Object.keys(errors)[0]));
+  }
 })(AddDisciplineForm);

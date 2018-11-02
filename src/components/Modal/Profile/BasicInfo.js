@@ -1,14 +1,14 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import { postUser, submitProfileForm } from "../../../actions/profile";
+import { postUser } from "../../../actions/profile";
 
 import Input from "../../sharedComponents/Input";
 import states from "./allTheStates";
 
 export class BasicInfo extends React.Component {
+  // TODO Needs logic that will update instead of post
   onSubmit(values) {
     console.log("submit", values);
-
     // this.props.dispatch(submitProfileForm("basic", values));
     this.props.dispatch(postUser(values));
   }
