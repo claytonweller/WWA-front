@@ -1,5 +1,6 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
+import { connect } from "react-redux";
 
 import Input from "../../sharedComponents/Input";
 import Tear from "../../sharedComponents/Tear";
@@ -20,7 +21,6 @@ export class Display extends React.Component {
   testUrlClick(e) {
     e.preventDefault();
     let url = document.getElementById("img_url").value;
-
     this.setState({ imageURL: url });
   }
 
@@ -117,8 +117,23 @@ export class Display extends React.Component {
   }
 }
 
-export default reduxForm({
+Display = reduxForm({
   form: "Search",
   onSubmitFail: (errors, dispatch) =>
     dispatch(focus("search", Object.keys(errors)[0]))
 })(Display);
+
+const mapStateToProps = state => {
+  if (state.auth.currentUser) {
+    return {
+      initialValues: {
+        img_url: state.auth.currentUser.img_url,
+        desired_projects: state.auth.currentUser.desired_projects
+      }
+    };
+  }
+};
+
+Display = connect(mapStateToProps)(Display);
+
+export default Display;

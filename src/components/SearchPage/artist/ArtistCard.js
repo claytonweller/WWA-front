@@ -5,13 +5,27 @@ import { connect } from "react-redux";
 
 import { Paragraph } from "./Paragraph";
 import { NameTag } from "./NameTag";
-import { BasicInfo } from "./BasicInfo";
+//for whatever reason this is not recieving props
+// import { BasicInfo } from "./BasicInfo";
 import { DisciplineGrid } from "./DisciplineGrid";
+
+import { openContactModal } from "../../../actions/profile";
 
 export class ArtistCard extends React.Component {
   moreInfoClick(e) {
     this.props.moreInfo(e);
   }
+
+  // These two funciton wuold live in the basic Info Section
+  findAge = DOB => {
+    let now = new Date();
+    let difference = (now - DOB) / 1000 / 60 / 60 / 24 / 365.25;
+    return Math.floor(difference);
+  };
+
+  contactClick = e => {
+    this.props.dispatch(openContactModal(e.target.id.replace("contact", "")));
+  };
 
   render() {
     let display;
@@ -36,10 +50,23 @@ export class ArtistCard extends React.Component {
             </button>
           </div>
           <div className="expanded-card">
-            <BasicInfo
+            {/* <BasicInfo
               location={this.props.artist.city + ", " + this.props.artist.state}
               DOB={this.props.artist.dob}
-            />
+            /> */}
+            <div className="basic-info">
+              <div>Age {this.findAge(this.props.artist.dob)}</div>
+              <div>
+                {" "}
+                {this.props.artist.city + ", " + this.props.artist.state}
+              </div>
+              <button
+                id={`contact${this.props.id}`}
+                onClick={e => this.contactClick(e)}
+              >
+                Contact
+              </button>
+            </div>
             <DisciplineGrid disciplines={this.props.artist.disciplines} />
           </div>
         </div>

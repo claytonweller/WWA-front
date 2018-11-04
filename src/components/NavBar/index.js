@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import "./NavBar.css";
 import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
-import { openModalPage } from "../../actions/profile";
+import { openModalPage, closeModal } from "../../actions/profile";
 import { logout } from "../../actions/auth";
 import { parseJwt } from "../../parseJwt";
 
@@ -55,6 +55,7 @@ export function NavBar(props) {
     props.dispatch(logout());
     props.history.push("/");
     props.dispatch(closeNavMenu());
+    props.dispatch(closeModal());
   };
 
   const toggleMenuAction = e => {
@@ -138,6 +139,7 @@ export function NavBar(props) {
           onClick={e => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
+            props.dispatch(closeModal());
           }}
         >
           <img src={searchGlass} alt="Search icon" />

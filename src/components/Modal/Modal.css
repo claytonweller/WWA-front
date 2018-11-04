@@ -196,6 +196,10 @@
   min-height: 150px;
 }
 
+.bio-form {
+  margin: 0;
+}
+
 @media only screen and (min-width: 600px) {
   .modal-background {
     height: 100vh;
@@ -208,6 +212,7 @@
     height: fit-content;
     min-height: fit-content;
     box-shadow: 4px -4px 0px #465c8b;
+    position: relative;
   }
 
   .modal-header {

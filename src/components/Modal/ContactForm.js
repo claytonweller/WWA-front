@@ -1,15 +1,14 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import { login } from "../../actions/auth";
 
 import Input from "../sharedComponents/Input";
+import { sendMessage } from "../../actions/profile";
 
 export class ContactForm extends React.Component {
   onSubmit(values) {
+    values.artistId = this.props.focusedUser;
+    this.props.dispatch(sendMessage(values));
     console.log(values);
-    this.props
-      .dispatch(login(values.email, values.password))
-      .then(() => this.props.history.push("/search"));
   }
 
   render() {
@@ -28,11 +27,10 @@ export class ContactForm extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    // This is the dispatch thing for the form.
-    // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
 
     return (
       <div className="">
+        <h1>Contact</h1>
         <hr />
         <form
           className="modal-form"

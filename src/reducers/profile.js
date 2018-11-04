@@ -5,11 +5,13 @@ import {
   OPEN_ADD_DISCIPLINE_FORM,
   CLOSE_ADD_DISCIPLINE_FORM,
   TRASH_DISCIPLINE,
+  // TODO remove edit
   EDIT_DISCIPLINE,
   POST_USER_REQUEST,
   POST_USER_SUCCESS,
   POST_USER_ERROR,
-  STORE_DISCIPLINE_TYPES
+  STORE_DISCIPLINE_TYPES,
+  SET_FOCUSED_USER
 } from "../actions/profile";
 
 const initialState = {
@@ -22,8 +24,10 @@ const initialState = {
   display: { complete: false, values: {} },
   bio: { complete: false, values: {} },
   isLogin: false,
+  isContactForm: false,
   loading: false,
-  error: null
+  error: null,
+  focusedUser: null
 };
 
 export default function reducer(state = initialState, action) {
@@ -34,14 +38,26 @@ export default function reducer(state = initialState, action) {
         isLogin: true
       });
     }
+    if (action.editPage === "contact") {
+      return Object.assign({}, state, {
+        modalIsVisible: true,
+        isContactForm: true
+      });
+    }
     return Object.assign({}, state, {
       modalIsVisible: true,
       editPage: action.editPage,
-      isLogin: false
+      isLogin: false,
+      isContactForm: false
     });
   } else if (action.type === CLOSE_MODAL) {
     return Object.assign({}, state, {
       modalIsVisible: false
+    });
+  } else if (action.type === SET_FOCUSED_USER) {
+    return Object.assign({}, state, {
+      modalIsVisible: false,
+      focusedUser: parseInt(action.id, 10)
     });
   } else if (action.type === SUBMIT_PROFILE_FORM) {
     if (action.form === "discipline") {

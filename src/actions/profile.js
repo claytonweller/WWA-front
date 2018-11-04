@@ -27,6 +27,49 @@ export const closeModal = () => {
   };
 };
 
+export const SET_FOCUSED_USER = "SET_FOCUSED_USER";
+export const setFocusedUser = id => {
+  return {
+    type: SET_FOCUSED_USER,
+    id
+  };
+};
+
+export const openContactModal = id => dispatch => {
+  dispatch(setFocusedUser(id));
+  dispatch(openModalPage("contact"));
+};
+
+export const sendMessage = messageObject => dispatch => {
+  // TODO (Request)
+  return fetch(`${API_BASE_URL}/communication/`, {
+    method: "POST",
+    body: JSON.stringify(messageObject),
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      "Content-Type": "application/json"
+    }
+  })
+    .then(res => res.json())
+    .then(successObject => {
+      console.log("success", successObject);
+      if (successObject.code === 422) {
+        return Promise.reject(successObject);
+      }
+      // TODO dispatch(postUserSuccess(successObject));
+      dispatch(closeModal());
+      dispatch(setFocusedUser(null));
+    })
+    .catch(err => {
+      const message = err;
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
+};
+
 export const OPEN_ADD_DISCIPLINE_FORM = "OPEN_ADD_DISCIPLINE_FORM";
 export const openAddDisciplineForm = () => {
   return {
@@ -170,7 +213,6 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
 export const postUserDiscipline = disciplineObject => dispatch => {
   const currentUser = parseJwt(localStorage.getItem("authToken")).user;
   disciplineObject.user_id = currentUser.user_id;
-  console.log(disciplineObject);
   return fetch(`${API_BASE_URL}/user_disciplines/${currentUser.user_id}`, {
     method: "Post",
     body: JSON.stringify(disciplineObject),

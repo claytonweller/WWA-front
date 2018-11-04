@@ -29,7 +29,6 @@ export class Bio extends React.Component {
     // This is the dispatch thing for the form.
     // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
 
-    console.log(this.props.currentUser.bio);
     return (
       <div className="">
         <p className="form-description">
@@ -42,7 +41,10 @@ export class Bio extends React.Component {
           className="modal-container display-form edit-form "
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <div style={{ width: "100%" }} className="search-field-holder ">
+          <div
+            style={{ width: "100%" }}
+            className="bio-form search-field-holder "
+          >
             <h2>Tell us about yourself</h2>
 
             <Field
@@ -51,7 +53,6 @@ export class Bio extends React.Component {
               component={Input}
               label=""
               placeholder="After working with Twyla Tharp on Broadway, I was the ghost writer for Starwars episode 7 helping my buddy JJ. Abrams... etc."
-              farts={this.props.currentUser.bio}
             />
             <h2>Equipment / Supplies</h2>
 
@@ -90,16 +91,29 @@ export class Bio extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.auth.currentUser
-  };
-};
+// state => ({
+//   initialValues: state.account.data // pull initial values from account reducer
+// }),
+// { load: loadAccount } // bind account loading action creator
+// )
 
-Bio = connect(mapStateToProps)(Bio);
-
-export default reduxForm({
+Bio = reduxForm({
   form: "Bio",
   onSubmitFail: (errors, dispatch) =>
     dispatch(focus("Bio", Object.keys(errors)[0]))
 })(Bio);
+
+const mapStateToProps = state => {
+  if (state.auth.currentUser) {
+    return {
+      initialValues: {
+        bio: state.auth.currentUser.bio,
+        equipment: state.auth.currentUser.equipment
+      }
+    };
+  }
+};
+
+Bio = connect(mapStateToProps)(Bio);
+
+export default Bio;

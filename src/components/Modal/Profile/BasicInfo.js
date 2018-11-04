@@ -1,16 +1,18 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import { postUser } from "../../../actions/profile";
+import { connect } from "react-redux";
 
+import { postUser, updateUser } from "../../../actions/profile";
 import Input from "../../sharedComponents/Input";
 import states from "./allTheStates";
 
 export class BasicInfo extends React.Component {
-  // TODO Needs logic that will update instead of post
   onSubmit(values) {
-    console.log("submit", values);
     // this.props.dispatch(submitProfileForm("basic", values));
-    this.props.dispatch(postUser(values));
+    if (!this.props.currentUser) {
+      return this.props.dispatch(postUser(values));
+    }
+    this.props.dispatch(updateUser(values));
   }
 
   render() {
@@ -110,8 +112,29 @@ export class BasicInfo extends React.Component {
   }
 }
 
-export default reduxForm({
+BasicInfo = reduxForm({
   form: "basic",
   onSubmitFail: (errors, dispatch) =>
     dispatch(focus("search", Object.keys(errors)[0]))
 })(BasicInfo);
+
+const mapStateToProps = state => {
+  if (state.auth.currentUser) {
+    return {
+      currentUser: state.auth.currentUser,
+      initialValues: {
+        email: state.auth.currentUser.email,
+        first_name: state.auth.currentUser.first_name,
+        last_name: state.auth.currentUser.last_name,
+        city: state.auth.currentUser.city,
+        state: state.auth.currentUser.state,
+        email: state.auth.currentUser.email
+      }
+    };
+  }
+  return { currentUser: state.auth.currentUser };
+};
+
+BasicInfo = connect(mapStateToProps)(BasicInfo);
+
+export default BasicInfo;

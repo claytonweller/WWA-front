@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import Login from "./Login";
 import Profile from "./Profile";
+import ContactForm from "./ContactForm";
 
 export function Modal(props) {
   let display;
@@ -16,6 +17,10 @@ export function Modal(props) {
 
   if (props.isLogin) {
     contents = <Login history={props.history} />;
+  }
+
+  if (props.isContactForm) {
+    contents = <ContactForm focusedUser={props.focusedUser} />;
   }
 
   return (
@@ -38,7 +43,9 @@ Modal.defaultProps = {
 
 const mapStateToProps = state => ({
   isVisible: state.profile.modalIsVisible,
-  isLogin: state.profile.isLogin
+  isLogin: state.profile.isLogin,
+  isContactForm: state.profile.isContactForm,
+  focusedUser: state.profile.focusedUser
 });
 
 // export default connect(mapStateToProps)(Modal);
