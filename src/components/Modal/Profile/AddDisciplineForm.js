@@ -114,8 +114,9 @@ const mapStateToProps = state => {
 AddDisciplineForm = connect(mapStateToProps)(AddDisciplineForm);
 
 export default reduxForm({
-  form: "Discipline",
+  form: "discipline",
+  enableReinitialize: true,
   onSubmitFail: (errors, dispatch) => {
-    dispatch(focus("Discipline", Object.keys(errors)[0]));
+    dispatch(focus("discipline", Object.keys(errors)[0]));
   }
 })(AddDisciplineForm);

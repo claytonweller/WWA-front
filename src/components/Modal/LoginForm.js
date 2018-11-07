@@ -1,5 +1,5 @@
 import React from "react";
-import { reduxForm, Field, focus } from "redux-form";
+import { reduxForm, Field, focus, reset } from "redux-form";
 import { login } from "../../actions/auth";
 
 import Input from "../sharedComponents/Input";
@@ -10,6 +10,8 @@ export class LoginForm extends React.Component {
     this.props
       .dispatch(login(values.email, values.password))
       .then(() => this.props.history.push("/search"));
+
+    this.props.dispatch(reset("login"));
   }
 
   render() {
@@ -70,5 +72,5 @@ export class LoginForm extends React.Component {
 export default reduxForm({
   form: "login",
   onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("search", Object.keys(errors)[0]))
+    dispatch(focus("login", Object.keys(errors)[0]))
 })(LoginForm);

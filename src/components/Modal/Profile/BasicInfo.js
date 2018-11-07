@@ -1,5 +1,5 @@
 import React from "react";
-import { reduxForm, Field, focus } from "redux-form";
+import { reduxForm, Field, focus, reset } from "redux-form";
 import { connect } from "react-redux";
 
 import { postUser, updateUser } from "../../../actions/profile";
@@ -13,6 +13,7 @@ export class BasicInfo extends React.Component {
       return this.props.dispatch(postUser(values));
     }
     this.props.dispatch(updateUser(values));
+    this.props.dispatch(reset("basic"));
   }
 
   render() {
@@ -114,8 +115,9 @@ export class BasicInfo extends React.Component {
 
 BasicInfo = reduxForm({
   form: "basic",
+  enableReinitialize: true,
   onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("search", Object.keys(errors)[0]))
+    dispatch(focus("basic", Object.keys(errors)[0]))
 })(BasicInfo);
 
 const mapStateToProps = state => {
@@ -132,7 +134,7 @@ const mapStateToProps = state => {
       }
     };
   }
-  return { currentUser: state.auth.currentUser };
+  return { initialValues: {} };
 };
 
 BasicInfo = connect(mapStateToProps)(BasicInfo);

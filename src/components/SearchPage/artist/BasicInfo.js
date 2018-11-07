@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { openContactModal } from "../../../actions/profile";
 
 export function BasicInfo(props) {
   const findAge = DOB => {
@@ -10,6 +11,7 @@ export function BasicInfo(props) {
 
   const contactClick = e => {
     console.log(props);
+    props.dispatch(openContactModal(e.target.id.replace("contact", "")));
   };
 
   return (

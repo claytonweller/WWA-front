@@ -1,5 +1,5 @@
 import React from "react";
-import { reduxForm, Field, focus } from "redux-form";
+import { reduxForm, Field, focus, reset } from "redux-form";
 import { connect } from "react-redux";
 
 import Input from "../../sharedComponents/Input";
@@ -16,6 +16,7 @@ export class Display extends React.Component {
 
   onSubmit(values) {
     this.props.dispatch(updateUser(values, "bio"));
+    this.props.dispatch(reset("display"));
   }
 
   testUrlClick(e) {
@@ -118,9 +119,10 @@ export class Display extends React.Component {
 }
 
 Display = reduxForm({
-  form: "Search",
+  form: "display",
+  enableReinitialize: true,
   onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("search", Object.keys(errors)[0]))
+    dispatch(focus("display", Object.keys(errors)[0]))
 })(Display);
 
 const mapStateToProps = state => {
@@ -132,6 +134,7 @@ const mapStateToProps = state => {
       }
     };
   }
+  return { initialValues: {} };
 };
 
 Display = connect(mapStateToProps)(Display);

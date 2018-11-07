@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { reduxForm, Field, focus } from "redux-form";
+import { reduxForm, Field, focus, reset } from "redux-form";
 
 import Input from "../../sharedComponents/Input";
 import { closeModal, updateUser } from "../../../actions/profile";
@@ -8,6 +8,7 @@ import { closeModal, updateUser } from "../../../actions/profile";
 export class Bio extends React.Component {
   onSubmit(values) {
     this.props.dispatch(updateUser(values));
+    this.props.dispatch(reset("bio"));
   }
 
   render() {
@@ -98,9 +99,10 @@ export class Bio extends React.Component {
 // )
 
 Bio = reduxForm({
-  form: "Bio",
+  form: "bio",
+  enableReinitialize: true,
   onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("Bio", Object.keys(errors)[0]))
+    dispatch(focus("bio", Object.keys(errors)[0]))
 })(Bio);
 
 const mapStateToProps = state => {

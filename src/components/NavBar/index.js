@@ -6,6 +6,7 @@ import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
 import { openModalPage, closeModal } from "../../actions/profile";
 import { logout } from "../../actions/auth";
 import { parseJwt } from "../../parseJwt";
+import { reset } from "redux-form";
 
 import Tear from "../sharedComponents/Tear";
 
@@ -50,12 +51,21 @@ export function NavBar(props) {
     props.dispatch(closeNavMenu());
   };
 
+  const resetAllForms = () => {
+    props.dispatch(reset("login"));
+    props.dispatch(reset("basic"));
+    props.dispatch(reset("discipline"));
+    props.dispatch(reset("display"));
+    props.dispatch(reset("bio"));
+  };
+
   const logOutClick = e => {
     e.preventDefault();
     props.dispatch(logout());
     props.history.push("/");
     props.dispatch(closeNavMenu());
     props.dispatch(closeModal());
+    resetAllForms();
   };
 
   const toggleMenuAction = e => {

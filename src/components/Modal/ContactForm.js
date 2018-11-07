@@ -1,5 +1,5 @@
 import React from "react";
-import { reduxForm, Field, focus } from "redux-form";
+import { reduxForm, Field, focus, reset } from "redux-form";
 
 import Input from "../sharedComponents/Input";
 import { sendMessage } from "../../actions/profile";
@@ -8,7 +8,7 @@ export class ContactForm extends React.Component {
   onSubmit(values) {
     values.artistId = this.props.focusedUser;
     this.props.dispatch(sendMessage(values));
-    console.log(values);
+    this.props.dispatch(reset("contact"));
   }
 
   render() {

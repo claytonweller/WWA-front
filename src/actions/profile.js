@@ -158,7 +158,6 @@ export const postUser = userObject => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
-      console.log("success", successObject);
       if (successObject.code === 422) {
         return Promise.reject(successObject);
       }
@@ -190,8 +189,6 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
-      console.log("success", successObject);
-
       dispatch(postUserSuccess(successObject));
 
       if (nextPage) {

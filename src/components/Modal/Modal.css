@@ -10,13 +10,14 @@
 .modal-border {
   width: 100%;
   background-color: #eff9f4;
-  top: 60px;
-  position: relative;
-  min-height: 100vh;
+  position: fixed;
+  height: 100vh;
   padding: 20px;
+  padding-top: 80px;
   max-width: 600px;
   margin: auto;
   font-size: 1em;
+  overflow: scroll;
 }
 
 .modal-header {
