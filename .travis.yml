@@ -2,6 +2,13 @@ language: node_js
 node_js: node
 cache:
   directories:
-    - node_modules
+  - node_modules
 env:
-  - CI=true
+- CI=true
+deploy:
+  provider: heroku
+  api_key:
+    secure: QGk1DQzVwbQezhr6zC0JAOYVfGLkJ6hz8gZN3GRwvhTjhXwjy+KUVxJMsfpYp+syf3xn/3lBFQAxyDHSIptPvjo/IW+zoJ02re52QMXlz1wrjK9VbzNqBzU53l9QnlKZpnSDKAY21jsweSCiMzSmO/Bv5mPca6o+Vja8h8xHi5cZfWnpOweIIikdeEUs02CRn0dKFe4GftRqLWpGbQ9vQt1Nboc4iNcITSdLxZ+JeXJpht/AcDnMqLQRj0K3Pmm4Ir+TTAXzCLDI4iHt72BiiwOHQRFSnYOR5i1U/7l3LM6gOqpSpwlKsaXfxsE8miy4KgRSgJZE9kistu5M+HYr+HUkusBn7CzU9I5R1c9YAPSnwDSToooy4dvSZ4cJ3QmiTC253akNjuiCEk+Jh9uvmNPIcRPS8dSUI+VmGOnvS9RvJUykmV48BLucXZW+r1hKN22/eYOfaZ8iEhQNsTd6B8cJELJsV4B32HdTACxr9Fik6YdpvGtIYNvoG4SnO891rg9bf0pAOLNah18MvBofSjfLTXqc1CtIIUsLonxGrmDNctK28MPsye63tkuHC3ha5Q1akH1VwMfUcZ2Xp7fSn1ZvRfnpQ4SlWTzwGMdnIdEXro5TaS5tdm+v4q0UkWdlBFXKbEEgeBe6E/u7eCOduTdsvUPca62XXS6a5Ib7xII=
+  app: wwa-front
+  on:
+    repo: claytonweller/WWA-front
