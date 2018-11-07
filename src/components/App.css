@@ -40,6 +40,10 @@ li {
   padding: 0;
 }
 
+select {
+  background-color: white;
+}
+
 hr {
   display: block;
   height: 1px;
