@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import trashIcon from "../../../assets/images/Trash.png";
-import editIcon from "../../../assets/images/Edit.png";
-import { trashDiscipline, editDiscipline } from "../../../actions/profile";
+import { deleteDiscipline, trashDiscipline } from "../../../actions/profile";
 
 export function SingleDiscipline(props) {
   const experienceInYears = startYear => {
@@ -27,51 +26,24 @@ export function SingleDiscipline(props) {
     experience = experienceInYears(props.experience);
   }
 
-  const editClick = e => {
-    e.preventDefault();
-    let index = e.target.id.replace("editDTitle", "");
-    index = index.replace("editD", "");
-    index = parseInt(index);
-    props.dispatch(editDiscipline(index));
-    document.getElementById("editDiscipline").value =
-      props.disciplines[index].editDiscipline;
-    document.getElementById("editReward").value =
-      props.disciplines[index].editReward;
-    document.getElementById("editActive").value =
-      props.disciplines[index].editActive;
-    document.getElementById("editExperience").value =
-      props.disciplines[index].editExperience;
-  };
-
   const trashClick = e => {
     e.preventDefault();
     let index = e.target.id.replace("trashD", "");
-    props.dispatch(trashDiscipline(parseInt(index)));
+    let disciplineId = props.disciplines[index].u_discipline_id;
+    props.dispatch(deleteDiscipline(disciplineId));
+    props.dispatch(trashDiscipline(index));
   };
 
   return (
     <div className="single-discipline">
       <div className="discipline-top">
-        <a
-          id={"editDTitle" + props.index}
-          onClick={e => editClick(e)}
-          href="NONE"
-        >
-          {props.discipline}
-        </a>
+        <h2 style={{ margin: "0px", marginTop: "5px" }}>{props.discipline}</h2>
         <div>
           <a onClick={e => trashClick(e)} href="NONE">
             <img
               id={"trashD" + props.index}
               src={trashIcon}
               alt={"trash " + props.discipline}
-            />
-          </a>
-          <a onClick={e => editClick(e)} href="NONE">
-            <img
-              id={"editD" + props.index}
-              src={editIcon}
-              alt={"edit " + props.discipline}
             />
           </a>
         </div>

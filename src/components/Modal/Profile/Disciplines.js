@@ -15,7 +15,7 @@ export class Disciplines extends React.Component {
     this.props.dispatch(openAddDisciplineForm());
   }
 
-  nextClick(values) {
+  nextClick() {
     this.props.dispatch(openModalPage("display"));
   }
 
@@ -49,7 +49,6 @@ export class Disciplines extends React.Component {
     // }
 
     let disciplineElements = this.props.disciplines.map((discipline, i) => {
-      console.log(discipline);
       return (
         <SingleDiscipline
           key={"discipline" + i}

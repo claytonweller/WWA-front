@@ -15,6 +15,7 @@ import Modal from "./Modal";
 export class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(getDisciplineTypes());
+    this.props.dispatch(refreshAuthToken());
   }
 
   componentDidUpdate(prevProps) {

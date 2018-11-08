@@ -7,19 +7,31 @@ import years from "./allTheYears";
 import {
   submitProfileForm,
   closeAddDisciplineForm,
-  postUserDiscipline
+  postUserDiscipline,
+  createNewUserDiscipline
 } from "../../../actions/profile";
 
 export class AddDisciplineForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      addingNewDisciplineType: false
+    };
+  }
+
   disciplineSubmit(values) {
-    console.log(values);
-    values.type_id = this.props.disciplineTypes.find(
-      typeObject => typeObject.type === values.type
-    ).type_id;
+    if (!this.state.addingNewDisciplineType) {
+      values.type_id = this.props.disciplineTypes.find(
+        typeObject => typeObject.type === values.type
+      ).type_id;
+      this.props.dispatch(postUserDiscipline(values));
+    } else {
+      this.props.dispatch(createNewUserDiscipline(values));
+    }
     this.props.dispatch(submitProfileForm("discipline", values));
-    this.props.dispatch(postUserDiscipline(values));
     this.props.dispatch(closeAddDisciplineForm());
     this.props.dispatch(reset("Discipline"));
+    console.log(values);
   }
 
   cancelClick(e) {
@@ -45,6 +57,25 @@ export class AddDisciplineForm extends React.Component {
       );
     }
 
+    const populatedOptions = this.props.disciplineTypes.map(
+      typeObject => typeObject.type
+    );
+
+    let newDisciplineTypeField;
+    if (this.state.addingNewDisciplineType) {
+      newDisciplineTypeField = (
+        <Field
+          name="new_type"
+          type="text"
+          component={Input}
+          placeholder="Contortionist, Dancer, Puppeteer... etc"
+          label="New Discipline"
+        />
+      );
+    } else {
+      newDisciplineTypeField = null;
+    }
+
     return (
       <form
         hidden={this.props.formIshidden}
@@ -59,12 +90,22 @@ export class AddDisciplineForm extends React.Component {
             name="type"
             type="text"
             element="select"
+            handleChange={value => {
+              if (value === "--Other/Not Listed--") {
+                this.setState({ addingNewDisciplineType: true });
+              } else {
+                this.setState({ addingNewDisciplineType: false });
+              }
+            }}
             component={Input}
             label="Discipline"
-            options={this.props.disciplineTypes.map(
-              typeObject => typeObject.type
-            )}
+            options={[
+              "Discipline?",
+              "--Other/Not Listed--",
+              ...populatedOptions
+            ]}
           />
+          {newDisciplineTypeField}
           <Field
             name="experience"
             element="select"

@@ -5,12 +5,11 @@ import {
   OPEN_ADD_DISCIPLINE_FORM,
   CLOSE_ADD_DISCIPLINE_FORM,
   TRASH_DISCIPLINE,
-  // TODO remove edit
-  EDIT_DISCIPLINE,
   POST_USER_REQUEST,
   POST_USER_SUCCESS,
   POST_USER_ERROR,
   STORE_DISCIPLINE_TYPES,
+  STORE_USER_DISCIPLINES,
   SET_FOCUSED_USER
 } from "../actions/profile";
 
@@ -82,15 +81,13 @@ export default function reducer(state = initialState, action) {
     return Object.assign({}, state, {
       disciplines: newDisciplines
     });
-  } else if (action.type === EDIT_DISCIPLINE) {
-    let newDisciplines = state.disciplines.filter((d, i) => action.index !== i);
-    return Object.assign({}, state, {
-      addDisciplineFormIsHidden: false,
-      disciplines: newDisciplines
-    });
   } else if (action.type === STORE_DISCIPLINE_TYPES) {
     return Object.assign({}, state, {
       disciplineTypes: action.disciplineTypes
+    });
+  } else if (action.type === STORE_USER_DISCIPLINES) {
+    return Object.assign({}, state, {
+      disciplines: action.disciplines
     });
   } else if (action.type === POST_USER_REQUEST) {
     return Object.assign({}, state, {

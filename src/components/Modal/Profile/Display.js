@@ -108,9 +108,9 @@ export class Display extends React.Component {
                 </button>
               </div>
             </div>
-
-            {successMessage}
-            {errorMessage}
+            {/* MAYBE I'll add theses in again later... but for now they're garbage */}
+            {/* {successMessage}
+          {errorMessage} */}
           </form>
         </div>
       </div>

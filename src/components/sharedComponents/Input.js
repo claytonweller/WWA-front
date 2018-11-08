@@ -41,7 +41,6 @@ class Input extends React.Component {
         id={this.props.input.name}
         type={this.props.type}
         ref={input => (this.input = input)}
-        initialvalues={this.props.farts}
       />
     );
 
@@ -58,7 +57,13 @@ class Input extends React.Component {
           {...this.props.input}
           id={this.props.input.name}
           ref={input => (this.input = input)}
-          onChange={e => this.updateInput(e.target)}
+          onChange={e => {
+            this.updateInput(e.target);
+            console.log(e.target.value);
+            if (this.props.handleChange) {
+              this.props.handleChange(e.target.value);
+            }
+          }}
           value={this.state[this.props.input.name]}
         >
           {options}

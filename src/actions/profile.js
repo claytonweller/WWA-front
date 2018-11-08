@@ -1,7 +1,8 @@
 import { API_BASE_URL } from "../config";
 import { SubmissionError } from "redux-form";
-import { login } from "./auth";
+import { login, refreshAuthToken } from "./auth";
 import { parseJwt } from "../parseJwt";
+import jwtDecode from "jwt-decode";
 
 export const OPEN_MODAL_PAGE = "OPEN_MODAL_PAGE";
 export const openModalPage = editPage => {
@@ -34,6 +35,8 @@ export const setFocusedUser = id => {
     id
   };
 };
+
+////////////// CONTACT //////////////
 
 export const openContactModal = id => dispatch => {
   dispatch(setFocusedUser(id));
@@ -70,6 +73,8 @@ export const sendMessage = messageObject => dispatch => {
     });
 };
 
+///////////// USER_DISCIPLINES //////////////
+
 export const OPEN_ADD_DISCIPLINE_FORM = "OPEN_ADD_DISCIPLINE_FORM";
 export const openAddDisciplineForm = () => {
   return {
@@ -92,12 +97,32 @@ export const trashDiscipline = index => {
   };
 };
 
-export const EDIT_DISCIPLINE = "EDIT_DISCIPLINE";
-export const editDiscipline = index => {
-  return {
-    type: EDIT_DISCIPLINE,
-    index
-  };
+export const deleteDiscipline = (discipline_id, index) => dispatch => {
+  let jwt = localStorage.getItem("authToken");
+  let user = jwtDecode(jwt).user;
+  return fetch(
+    `${API_BASE_URL}/user_disciplines/${user.user_id}/${discipline_id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${jwt}`
+      }
+    }
+  )
+    .then(res => res.json())
+    .then(successObject => {
+      console.log("success", successObject);
+      dispatch(trashDiscipline(parseInt(index)));
+      dispatch(getUserDisciplines());
+    })
+    .catch(err => {
+      const message = err;
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
 };
 
 export const STORE_DISCIPLINE_TYPES = "STORE_DISCIPLINE_TYPES";
@@ -125,6 +150,97 @@ export const getDisciplineTypes = () => dispatch => {
       );
     });
 };
+
+export const STORE_USER_DISCIPLINES = "STORE_USER_DISCIPLINES";
+export const storUserDisciplines = disciplines => {
+  return {
+    type: STORE_USER_DISCIPLINES,
+    disciplines
+  };
+};
+
+export const getUserDisciplines = () => dispatch => {
+  let jwt = localStorage.getItem("authToken");
+  let user = jwtDecode(jwt).user;
+
+  return fetch(`${API_BASE_URL}/user_disciplines/${user.user_id}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + jwt
+    }
+  })
+    .then(res => res.json())
+    .then(disciplines => {
+      return dispatch(storUserDisciplines(disciplines));
+    })
+    .catch(err => {
+      const message = err;
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
+};
+
+export const createNewUserDiscipline = disciplineObject => dispatch => {
+  disciplineObject.type = disciplineObject.new_type;
+  return fetch(`${API_BASE_URL}/disciplines/`, {
+    method: "Post",
+    body: JSON.stringify(disciplineObject),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`
+    }
+  })
+    .then(res => res.json())
+    .then(successArray => {
+      console.log("success", successArray);
+      let resObject = successArray.filter(
+        obj => obj.type === disciplineObject.type
+      )[0];
+      disciplineObject.type_id = resObject.type_id;
+      console.log(disciplineObject);
+      dispatch(postUserDiscipline(disciplineObject));
+    })
+    .catch(err => {
+      const message = err;
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
+};
+
+export const postUserDiscipline = disciplineObject => dispatch => {
+  const currentUser = parseJwt(localStorage.getItem("authToken")).user;
+  disciplineObject.user_id = currentUser.user_id;
+  return fetch(`${API_BASE_URL}/user_disciplines/${currentUser.user_id}`, {
+    method: "Post",
+    body: JSON.stringify(disciplineObject),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`
+    }
+  })
+    .then(res => res.json())
+    .then(successObject => {
+      console.log("success", successObject);
+      dispatch(postUserSuccess(successObject));
+      dispatch(getUserDisciplines());
+    })
+    .catch(err => {
+      const message = err;
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
+};
+
+///////////// USER ////////////
 
 export const POST_USER_REQUEST = "POST_USER_REQUEST";
 export const postUserRequest = () => {
@@ -190,38 +306,12 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
     .then(res => res.json())
     .then(successObject => {
       dispatch(postUserSuccess(successObject));
-
+      dispatch(refreshAuthToken());
       if (nextPage) {
         dispatch(openModalPage(nextPage));
       } else {
         dispatch(closeModal());
       }
-    })
-    .catch(err => {
-      const message = err;
-      return Promise.reject(
-        new SubmissionError({
-          _error: message
-        })
-      );
-    });
-};
-
-export const postUserDiscipline = disciplineObject => dispatch => {
-  const currentUser = parseJwt(localStorage.getItem("authToken")).user;
-  disciplineObject.user_id = currentUser.user_id;
-  return fetch(`${API_BASE_URL}/user_disciplines/${currentUser.user_id}`, {
-    method: "Post",
-    body: JSON.stringify(disciplineObject),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`
-    }
-  })
-    .then(res => res.json())
-    .then(successObject => {
-      console.log("success", successObject);
-      dispatch(postUserSuccess(successObject));
     })
     .catch(err => {
       const message = err;

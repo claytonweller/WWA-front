@@ -1,10 +1,10 @@
 import jwtDecode from "jwt-decode";
-import { SubmissionError } from "redux-form";
+import { SubmissionError, reset } from "redux-form";
 
 import { API_BASE_URL } from "../config";
 import { normalizeResponseErrors } from "./utils";
 import { saveAuthToken, clearAuthToken } from "../local-storage";
-import { closeModal, storeDisciplineTypes } from "./profile";
+import { closeModal, getUserDisciplines } from "./profile";
 
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 export const setAuthToken = authToken => ({
@@ -41,11 +41,24 @@ const storeAuthInfo = (authToken, dispatch) => {
   dispatch(setAuthToken(authToken));
   dispatch(authSuccess(decodedToken.user));
   saveAuthToken(authToken);
+  dispatch(getUserDisciplines());
+
+  dispatch(reset("login"));
+  dispatch(reset("basic"));
+  dispatch(reset("discipline"));
+  dispatch(reset("display"));
+  dispatch(reset("bio"));
 };
 
 export const logout = () => dispatch => {
   dispatch(clearAuth());
   clearAuthToken();
+
+  dispatch(reset("login"));
+  dispatch(reset("basic"));
+  dispatch(reset("discipline"));
+  dispatch(reset("display"));
+  dispatch(reset("bio"));
 };
 
 export const login = (email, password, firstTime = false) => dispatch => {
@@ -67,7 +80,9 @@ export const login = (email, password, firstTime = false) => dispatch => {
       .then(res => res.json())
       .then(({ authToken }) => storeAuthInfo(authToken, dispatch))
       .then(() => {
-        storeDisciplineTypes();
+        console.log(localStorage.getItem("authToken"));
+        dispatch(getUserDisciplines());
+
         if (!firstTime) {
           dispatch(closeModal());
         }
