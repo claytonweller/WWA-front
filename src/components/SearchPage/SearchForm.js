@@ -1,6 +1,7 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 import Input from "../sharedComponents/Input";
+import { notFirstOption, required } from "../../validators";
 import {
   searchArtists,
   updateExperienceFilter,
@@ -9,27 +10,26 @@ import {
 
 export class SearchForm extends React.Component {
   onSubmit(values) {
-    console.log(values);
     this.props.dispatch(searchArtists(values));
   }
 
   render() {
     // TODO success/Error
-    // let successMessage;
-    // if (this.props.submitSucceeded) {
-    //   successMessage = (
-    //     <div className="message message-success">
-    //       Message submitted successfully
-    //     </div>
-    //   );
-    // }
+    let successMessage;
+    if (this.props.submitSucceeded) {
+      successMessage = (
+        <div className="message message-success">
+          Message submitted successfully
+        </div>
+      );
+    }
 
-    // let errorMessage;
-    // if (this.props.error) {
-    //   errorMessage = (
-    //     <div className="message message-error">{this.props.error}</div>
-    //   );
-    // }
+    let errorMessage;
+    if (this.props.error) {
+      errorMessage = (
+        <div className="message message-error">{this.props.error}</div>
+      );
+    }
 
     return (
       <div className="search-form-holder">
@@ -46,8 +46,10 @@ export class SearchForm extends React.Component {
               type="text"
               element="select"
               component={Input}
+              placeholder="Choose a Discipline"
               options={this.props.disciplineTypes}
               label=""
+              validate={required}
             />
             <Field
               name="experience"
@@ -80,7 +82,7 @@ export class SearchForm extends React.Component {
             </button>
           </div>
         </form>
-
+        {errorMessage}
         <div className="bar-gradient" />
       </div>
     );

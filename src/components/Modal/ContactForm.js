@@ -3,6 +3,7 @@ import { reduxForm, Field, focus, reset } from "redux-form";
 
 import Input from "../sharedComponents/Input";
 import { sendMessage } from "../../actions/profile";
+import { required, nonEmpty } from "../../validators";
 
 export class ContactForm extends React.Component {
   onSubmit(values) {
@@ -43,6 +44,7 @@ export class ContactForm extends React.Component {
               component={Input}
               placeholder="Work With Me!"
               label="Subject"
+              validate={[required, nonEmpty]}
             />
             <Field
               name="contact"
@@ -50,6 +52,7 @@ export class ContactForm extends React.Component {
               component={Input}
               placeholder="Hi! I'd love to work with you!"
               label="What do you want to say?"
+              validate={[required, nonEmpty]}
             />
 
             <button type="submit" disabled={this.props.submitting}>

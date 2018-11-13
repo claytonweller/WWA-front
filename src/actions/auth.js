@@ -34,15 +34,7 @@ export const authError = error => ({
   error
 });
 
-// Stores the auth token in state and localStorage, and decodes and stores
-// the user data stored in the token
-const storeAuthInfo = (authToken, dispatch) => {
-  const decodedToken = jwtDecode(authToken);
-  dispatch(setAuthToken(authToken));
-  dispatch(authSuccess(decodedToken.user));
-  saveAuthToken(authToken);
-  dispatch(getUserDisciplines());
-
+export const resetAllForms = dispatch => {
   dispatch(reset("login"));
   dispatch(reset("basic"));
   dispatch(reset("discipline"));
@@ -50,15 +42,23 @@ const storeAuthInfo = (authToken, dispatch) => {
   dispatch(reset("bio"));
 };
 
+// Stores the auth token in state and localStorage, and decodes and stores
+// the user data stored in the token
+const storeAuthInfo = (authToken, dispatch) => {
+  if (authToken) {
+    const decodedToken = jwtDecode(authToken);
+    dispatch(setAuthToken(authToken));
+    dispatch(authSuccess(decodedToken.user));
+    saveAuthToken(authToken);
+    dispatch(getUserDisciplines());
+    resetAllForms(dispatch);
+  }
+};
+
 export const logout = () => dispatch => {
   dispatch(clearAuth());
   clearAuthToken();
-
-  dispatch(reset("login"));
-  dispatch(reset("basic"));
-  dispatch(reset("discipline"));
-  dispatch(reset("display"));
-  dispatch(reset("bio"));
+  resetAllForms(dispatch);
 };
 
 export const login = (email, password, firstTime = false) => dispatch => {
@@ -78,10 +78,12 @@ export const login = (email, password, firstTime = false) => dispatch => {
       // errors which follow a consistent format
       .then(res => normalizeResponseErrors(res))
       .then(res => res.json())
-      .then(({ authToken }) => storeAuthInfo(authToken, dispatch))
+      .then(({ authToken }) => {
+        storeAuthInfo(authToken, dispatch);
+      })
       .then(() => {
-        console.log(localStorage.getItem("authToken"));
         dispatch(getUserDisciplines());
+        this.props.dispatch(reset("login"));
 
         if (!firstTime) {
           dispatch(closeModal());
@@ -122,6 +124,7 @@ export const refreshAuthToken = () => (dispatch, getState) => {
       // We couldn't get a refresh token because our current credentials
       // are invalid or expired, or something else went wrong, so clear
       // them and sign us out
+      resetAllForms(dispatch);
       dispatch(authError(err));
       dispatch(clearAuth());
       clearAuthToken();

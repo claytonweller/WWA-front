@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import Login from "./Login";
 import Profile from "./Profile";
 import ContactForm from "./ContactForm";
+import { closeModal } from "../../actions/profile";
 
 export function Modal(props) {
   let display;

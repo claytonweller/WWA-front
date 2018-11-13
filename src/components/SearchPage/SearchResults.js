@@ -22,8 +22,7 @@ export function SearchResults(props) {
     }
   };
 
-  const moreInfo = e => {
-    let id = e.target.id.replace("more", "");
+  const moreInfo = (e, id) => {
     let artistWrapper = document.getElementById("artist" + id);
     artistWrapper.style.order = 1;
     artistWrapper.className = "artist";
@@ -99,7 +98,6 @@ export function SearchResults(props) {
           clickAction={e => tearClick(e)}
         />
         <ArtistCard
-          id={artist.user_id}
           moreInfo={moreInfo}
           status="inactive"
           key={"card" + artist.user_id}
@@ -109,7 +107,17 @@ export function SearchResults(props) {
     );
   });
 
-  return <div className="search-results">{artists}</div>;
+  let displayedinfo = (
+    <h2 style={{ textAlign: "center", color: "#555555" }}>
+      No artists found - try a new search
+    </h2>
+  );
+
+  if (artists[0]) {
+    displayedinfo = artists;
+  }
+
+  return <div className="search-results">{displayedinfo}</div>;
 }
 
 const mapStateToProps = state => {

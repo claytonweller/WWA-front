@@ -55,7 +55,6 @@ export const sendMessage = messageObject => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
-      console.log("success", successObject);
       if (successObject.code === 422) {
         return Promise.reject(successObject);
       }
@@ -111,7 +110,6 @@ export const deleteDiscipline = (discipline_id, index) => dispatch => {
   )
     .then(res => res.json())
     .then(successObject => {
-      console.log("success", successObject);
       dispatch(trashDiscipline(parseInt(index)));
       dispatch(getUserDisciplines());
     })
@@ -139,6 +137,7 @@ export const getDisciplineTypes = () => dispatch => {
   })
     .then(res => res.json())
     .then(types => {
+      types.sort((a, b) => a.type.localeCompare(b.type));
       dispatch(storeDisciplineTypes(types));
     })
     .catch(err => {
@@ -171,6 +170,7 @@ export const getUserDisciplines = () => dispatch => {
   })
     .then(res => res.json())
     .then(disciplines => {
+      disciplines.sort((a, b) => a.type.localeCompare(b.type));
       return dispatch(storUserDisciplines(disciplines));
     })
     .catch(err => {
@@ -184,7 +184,7 @@ export const getUserDisciplines = () => dispatch => {
 };
 
 export const createNewUserDiscipline = disciplineObject => dispatch => {
-  disciplineObject.type = disciplineObject.new_type;
+  disciplineObject.new_type = disciplineObject.type = disciplineObject.new_type.toLowerCase();
   return fetch(`${API_BASE_URL}/disciplines/`, {
     method: "Post",
     body: JSON.stringify(disciplineObject),
@@ -195,12 +195,10 @@ export const createNewUserDiscipline = disciplineObject => dispatch => {
   })
     .then(res => res.json())
     .then(successArray => {
-      console.log("success", successArray);
       let resObject = successArray.filter(
         obj => obj.type === disciplineObject.type
       )[0];
       disciplineObject.type_id = resObject.type_id;
-      console.log(disciplineObject);
       dispatch(postUserDiscipline(disciplineObject));
     })
     .catch(err => {

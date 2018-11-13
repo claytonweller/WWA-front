@@ -51,7 +51,9 @@ export default function reducer(state = initialState, action) {
     });
   } else if (action.type === CLOSE_MODAL) {
     return Object.assign({}, state, {
-      modalIsVisible: false
+      modalIsVisible: false,
+      isLogin: false,
+      isContactForm: false
     });
   } else if (action.type === SET_FOCUSED_USER) {
     return Object.assign({}, state, {

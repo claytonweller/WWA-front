@@ -1,8 +1,12 @@
 export const required = value => (value ? undefined : "Required");
-export const nonEmpty = value =>
+export const nonEmpty = value => {
+  console.log(value);
   value.trim() !== "" ? undefined : "Cannot be empty";
-export const isTrimmed = value =>
+};
+
+export const isTrimmed = value => {
   value.trim() === value ? undefined : "Cannot start or end with whitespace";
+};
 export const length = length => value => {
   if (length.min && value.length < length.min) {
     return `Must be at least ${length.min} characters long`;
@@ -11,9 +15,15 @@ export const length = length => value => {
     return `Must be at most ${length.max} characters long`;
   }
 };
-export const matches = field => (value, allValues) =>
+export const matches = field => (value, allValues) => {
   field in allValues && value.trim() === allValues[field].trim()
     ? undefined
     : "Does not match";
-export const email = value =>
-  /^\S+@\S+$/.test(value) ? undefined : "Must be a valid email address";
+};
+
+export const notFirstOption = allOptions => selected => {
+  console.log(allOptions[0], selected);
+  if (allOptions[0] === selected) {
+    return `You have to pick a value fore this`;
+  }
+};

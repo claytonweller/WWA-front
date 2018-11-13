@@ -10,6 +10,7 @@ import {
   postUserDiscipline,
   createNewUserDiscipline
 } from "../../../actions/profile";
+import { required, notFirstOption } from "../../../validators";
 
 export class AddDisciplineForm extends React.Component {
   constructor(props) {
@@ -30,32 +31,32 @@ export class AddDisciplineForm extends React.Component {
     }
     this.props.dispatch(submitProfileForm("discipline", values));
     this.props.dispatch(closeAddDisciplineForm());
-    this.props.dispatch(reset("Discipline"));
+    this.props.dispatch(reset("discipline"));
     console.log(values);
   }
 
   cancelClick(e) {
     e.preventDefault();
     this.props.dispatch(closeAddDisciplineForm());
-    this.props.dispatch(reset("Discipline"));
+    this.props.dispatch(reset("discipline"));
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
+    // let successMessage;
+    // if (this.props.submitSucceeded) {
+    //   successMessage = (
+    //     <div className="message message-success">
+    //       Message submitted successfully
+    //     </div>
+    //   );
+    // }
 
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
+    // let errorMessage;
+    // if (this.props.error) {
+    //   errorMessage = (
+    //     <div className="message message-error">{this.props.error}</div>
+    //   );
+    // }
 
     const populatedOptions = this.props.disciplineTypes.map(
       typeObject => typeObject.type
@@ -99,11 +100,8 @@ export class AddDisciplineForm extends React.Component {
             }}
             component={Input}
             label="Discipline"
-            options={[
-              "Discipline?",
-              "--Other/Not Listed--",
-              ...populatedOptions
-            ]}
+            options={["--Other/Not Listed--", ...populatedOptions]}
+            placeholder="Discipline?"
           />
           {newDisciplineTypeField}
           <Field
@@ -112,6 +110,10 @@ export class AddDisciplineForm extends React.Component {
             component={Input}
             label="When Did you start doing this?"
             options={years}
+            validate={(value, allvalues, props, name) =>
+              console.log(value, allvalues, props, name)
+            }
+            placeholder="Experience?"
           />
 
           <Field
@@ -119,28 +121,33 @@ export class AddDisciplineForm extends React.Component {
             element="select"
             component={Input}
             label="Preferred reward for your time and expertise in this discipline"
-            options={["Reward?", "For Fun", "For Pay", "Depends on project"]}
+            options={["For Fun", "For Pay", "Depends on project"]}
+            placeholder="Reward?"
           />
           <Field
             name="active"
             element="select"
             component={Input}
             label="Are you actively seeking projects in this discipline?"
-            options={["Active?", "No", "Yes"]}
+            options={["No", "Yes"]}
+            placeholder="Active?"
           />
 
           <div className="edit-buttons">
             <a href="NONE" onClick={e => this.cancelClick(e)}>
               Cancel
             </a>
-            <button type="submit" disabled={this.props.submitting}>
+            <button
+              type="submit"
+              disabled={this.props.submitting || this.props.pristine}
+            >
               Save
             </button>
           </div>
         </div>
 
-        {successMessage}
-        {errorMessage}
+        {/* {successMessage}
+        {errorMessage} */}
       </form>
     );
   }

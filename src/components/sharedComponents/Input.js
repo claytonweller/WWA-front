@@ -52,6 +52,15 @@ class Input extends React.Component {
           </option>
         );
       });
+      let placeholder;
+      if (this.props.placeholder) {
+        placeholder = (
+          <option key={`${this.props.placeholder}`} value="" disabled>
+            {this.props.placeholder}
+          </option>
+        );
+      }
+
       elementStructure = (
         <Element
           {...this.props.input}
@@ -59,13 +68,13 @@ class Input extends React.Component {
           ref={input => (this.input = input)}
           onChange={e => {
             this.updateInput(e.target);
-            console.log(e.target.value);
             if (this.props.handleChange) {
               this.props.handleChange(e.target.value);
             }
           }}
           value={this.state[this.props.input.name]}
         >
+          {placeholder}
           {options}
         </Element>
       );

@@ -11,7 +11,7 @@ export function BasicInfo(props) {
 
   const contactClick = e => {
     console.log(props);
-    props.dispatch(openContactModal(e.target.id.replace("contact", "")));
+    props.dispatch(openContactModal(props.userId));
   };
 
   return (

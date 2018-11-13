@@ -9,8 +9,8 @@ import BasicInfo from "./BasicInfo";
 import { DisciplineGrid } from "./DisciplineGrid";
 
 export class ArtistCard extends React.Component {
-  moreInfoClick(e) {
-    this.props.moreInfo(e);
+  moreInfoClick(e, id) {
+    this.props.moreInfo(e, id);
   }
 
   render() {
@@ -29,8 +29,8 @@ export class ArtistCard extends React.Component {
             />
             <Paragraph content={this.props.artist.desired_projects} />
             <button
-              id={"more" + this.props.id}
-              onClick={e => this.moreInfoClick(e)}
+              id={"more" + this.props.artist.user_id}
+              onClick={e => this.moreInfoClick(e, this.props.artist.user_id)}
             >
               More
             </button>
@@ -39,6 +39,7 @@ export class ArtistCard extends React.Component {
             <BasicInfo
               location={this.props.artist.city + ", " + this.props.artist.state}
               DOB={this.props.artist.dob}
+              userId={this.props.artist.user_id}
             />
             <DisciplineGrid disciplines={this.props.artist.disciplines} />
           </div>

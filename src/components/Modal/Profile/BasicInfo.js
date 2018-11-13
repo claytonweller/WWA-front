@@ -8,7 +8,6 @@ import states from "./allTheStates";
 
 export class BasicInfo extends React.Component {
   onSubmit(values) {
-    // this.props.dispatch(submitProfileForm("basic", values));
     if (!this.props.currentUser) {
       return this.props.dispatch(postUser(values));
     }
@@ -67,7 +66,7 @@ export class BasicInfo extends React.Component {
                   element="select"
                   component={Input}
                   label="State"
-                  options={states}
+                  options={["XX", ...states]}
                 />
               </div>
               <Field
@@ -100,7 +99,10 @@ export class BasicInfo extends React.Component {
                 label="Re-type Password"
               />
 
-              <button type="submit" disabled={this.props.submitting}>
+              <button
+                type="submit"
+                disabled={this.props.pristine || this.props.submitting}
+              >
                 Next
               </button>
             </div>
@@ -130,8 +132,7 @@ const mapStateToProps = state => {
         first_name: state.auth.currentUser.first_name,
         last_name: state.auth.currentUser.last_name,
         city: state.auth.currentUser.city,
-        state: state.auth.currentUser.state,
-        email: state.auth.currentUser.email
+        state: state.auth.currentUser.state
       }
     };
   }

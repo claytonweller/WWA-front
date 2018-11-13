@@ -63,7 +63,6 @@ export const searchArtists = searchObject => dispatch => {
   })
     .then(res => res.json())
     .then(artistArray => {
-      console.log(artistArray);
       dispatch(artistSearchSuccess(artistArray));
     })
     .catch(err => {
