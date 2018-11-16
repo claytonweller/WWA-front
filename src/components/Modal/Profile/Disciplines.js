@@ -30,24 +30,6 @@ export class Disciplines extends React.Component {
   }
 
   render() {
-    // TODO Success/Error
-
-    // let successMessage;
-    // if (this.props.submitSucceeded) {
-    //   successMessage = (
-    //     <div className="message message-success">
-    //       Message submitted successfully
-    //     </div>
-    //   );
-    // }
-
-    // let errorMessage;
-    // if (this.props.error) {
-    //   errorMessage = (
-    //     <div className="message message-error">{this.props.error}</div>
-    //   );
-    // }
-
     let disciplineElements = this.props.disciplines.map((discipline, i) => {
       return (
         <SingleDiscipline
@@ -61,7 +43,7 @@ export class Disciplines extends React.Component {
       );
     });
 
-    let listDisplay = "inline-block";
+    let listDisplay;
     if (!this.props.formIshidden) {
       listDisplay = "none";
     }
@@ -86,22 +68,12 @@ export class Disciplines extends React.Component {
         </div>
         <hr
           style={{
-            marginBottom: "55px"
+            marginBottom: "10px"
           }}
         />
-
-        <button
-          style={{
-            width: "150px",
-            position: "absolute",
-            right: "20px",
-            bottom: "20px",
-            display: listDisplay
-          }}
-          onClick={() => this.nextClick()}
-        >
-          Next
-        </button>
+        <div className="button-holder">
+          <button onClick={() => this.nextClick()}>Next</button>
+        </div>
       </div>
     );
   }

@@ -6,30 +6,21 @@ import Input from "../../sharedComponents/Input";
 import { closeModal, updateUser } from "../../../actions/profile";
 
 export class Bio extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null
+    };
+  }
+
   onSubmit(values) {
-    this.props.dispatch(updateUser(values));
-    this.props.dispatch(reset("bio"));
+    this.props
+      .dispatch(updateUser(values))
+      .then(() => this.props.dispatch(reset("bio")))
+      .catch(err => this.setState({ error: err.errors._error }));
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
-
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
-    // This is the dispatch thing for the form.
-    // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
-
     return (
       <div className="">
         <p className="form-description">
@@ -64,6 +55,9 @@ export class Bio extends React.Component {
               label=""
               placeholder="Guitar, Video Camera, Wigs... etc"
             />
+            <div className="modal-error">
+              {this.state.error ? this.state.error : null}
+            </div>
             <div className="edit-buttons">
               <a
                 href="NONE"
@@ -83,9 +77,6 @@ export class Bio extends React.Component {
               </button>
             </div>
           </div>
-          {/* MAYBE I'll add theses in again later... but for now they're garbage */}
-          {/* {successMessage}
-          {errorMessage} */}
         </form>
       </div>
     );

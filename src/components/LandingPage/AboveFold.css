@@ -1,0 +1,84 @@
+.above-fold {
+  position: relative;
+  width: 100%;
+}
+
+.full-logo {
+  width: 100%;
+  padding: 10px;
+  padding-top: 35px;
+}
+
+.landing-tears {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.landing-tears img {
+  position: relative;
+  top: 15px;
+  right: 5px;
+  width: 40%;
+  height: 100%;
+}
+
+.above-fold hr {
+  display: none;
+}
+
+.above-fold .button-holder {
+  align-items: center;
+  flex-flow: column-reverse;
+}
+
+.above-fold .button-holder a {
+  margin: 10px;
+  font-size: 1.8em;
+  white-space: nowrap;
+}
+
+.above-fold .button-holder button {
+  margin-top: 10px;
+  font-size: 2em;
+  width: 200px;
+  white-space: nowrap;
+}
+
+@media only screen and (min-width: 500px) {
+  .full-logo {
+    width: 80%;
+    padding: 10px;
+    padding-top: 35px;
+  }
+
+  .landing-tears img {
+    top: 25px;
+    right: 5px;
+    width: 50%;
+    height: 100%;
+  }
+
+  .above-fold hr {
+    margin-top: 20px;
+    display: block;
+    margin-left: 10%;
+    width: 40%;
+  }
+
+  .above-fold .button-holder {
+    padding-left: 10%;
+    width: 50%;
+    padding-top: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-flow: row;
+  }
+
+  .above-fold .button-holder button {
+    width: 175px;
+  }
+}

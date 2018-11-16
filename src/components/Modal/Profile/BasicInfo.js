@@ -5,30 +5,38 @@ import { connect } from "react-redux";
 import { postUser, updateUser } from "../../../actions/profile";
 import Input from "../../sharedComponents/Input";
 import states from "./allTheStates";
+import { required, length } from "../../../validators";
 
 export class BasicInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null
+    };
+  }
+
   onSubmit(values) {
-    if (!this.props.currentUser) {
-      return this.props.dispatch(postUser(values));
+    if (values.password !== values.password2) {
+      return this.setState({ error: "Passwords do not match" });
     }
-    this.props.dispatch(updateUser(values));
-    this.props.dispatch(reset("basic"));
+
+    if (!this.props.currentUser) {
+      return this.props
+        .dispatch(postUser(values))
+        .then(() => this.props.dispatch(reset("basic")))
+        .catch(err => this.setState({ error: err.errors._error }));
+    }
+    this.props
+      .dispatch(updateUser(values, "disciplines"))
+      .then(() => this.props.dispatch(reset("basic")))
+      .catch(err => this.setState({ error: err.errors._error }));
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = <div className="message message-success">Submitted</div>;
+    let submitLogic = this.props.pristine || this.props.submitting;
+    if (this.props.currentUser) {
+      submitLogic = this.props.submitting;
     }
-
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
-    // This is the dispatch thing for the form.
-    // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
 
     return (
       <div className="">
@@ -45,6 +53,7 @@ export class BasicInfo extends React.Component {
                 component={Input}
                 placeholder="Billy"
                 label="First Name"
+                validate={[required]}
               />
               <Field
                 name="last_name"
@@ -52,6 +61,7 @@ export class BasicInfo extends React.Component {
                 component={Input}
                 placeholder="Shakespeare"
                 label="Last Name"
+                validate={[required]}
               />
               <div className="basic-location">
                 <Field
@@ -66,7 +76,8 @@ export class BasicInfo extends React.Component {
                   element="select"
                   component={Input}
                   label="State"
-                  options={["XX", ...states]}
+                  placeholder="XX"
+                  options={states}
                 />
               </div>
               <Field
@@ -83,6 +94,7 @@ export class BasicInfo extends React.Component {
                 component={Input}
                 placeholder="HamletBoi1603@aol.com"
                 label="Email - We will never give this out. All communications are opt in"
+                validate={[required]}
               />
               <Field
                 name="password"
@@ -90,6 +102,7 @@ export class BasicInfo extends React.Component {
                 component={Input}
                 placeholder="********"
                 label="Password"
+                validate={[required, length({ min: 10, max: 25 })]}
               />
               <Field
                 name="password2"
@@ -99,17 +112,14 @@ export class BasicInfo extends React.Component {
                 label="Re-type Password"
               />
 
-              <button
-                type="submit"
-                disabled={this.props.pristine || this.props.submitting}
-              >
+              <button type="submit" disabled={submitLogic}>
                 Next
               </button>
+              <div className="modal-error">
+                {this.state.error ? this.state.error : null}
+              </div>
             </div>
           </div>
-          {/* MAYBE I'll add theses in again later... but for now they're garbage */}
-          {/* {successMessage}
-          {errorMessage} */}
         </form>
       </div>
     );

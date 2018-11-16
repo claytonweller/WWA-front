@@ -3,6 +3,7 @@ import { SubmissionError } from "redux-form";
 import { login, refreshAuthToken } from "./auth";
 import { parseJwt } from "../parseJwt";
 import jwtDecode from "jwt-decode";
+import { reset } from "redux-form";
 
 export const OPEN_MODAL_PAGE = "OPEN_MODAL_PAGE";
 export const openModalPage = editPage => {
@@ -58,12 +59,14 @@ export const sendMessage = messageObject => dispatch => {
       if (successObject.code === 422) {
         return Promise.reject(successObject);
       }
-      // TODO dispatch(postUserSuccess(successObject));
+      // TODO dispatch(modalPostSuccess(successObject));
       dispatch(closeModal());
       dispatch(setFocusedUser(null));
+      dispatch(reset("contact"));
     })
     .catch(err => {
-      const message = err;
+      const message = err.message;
+      dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({
           _error: message
@@ -195,6 +198,9 @@ export const createNewUserDiscipline = disciplineObject => dispatch => {
   })
     .then(res => res.json())
     .then(successArray => {
+      if (successArray.code === 422) {
+        return Promise.reject(successArray);
+      }
       let resObject = successArray.filter(
         obj => obj.type === disciplineObject.type
       )[0];
@@ -202,7 +208,8 @@ export const createNewUserDiscipline = disciplineObject => dispatch => {
       dispatch(postUserDiscipline(disciplineObject));
     })
     .catch(err => {
-      const message = err;
+      const message = err.message;
+      dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({
           _error: message
@@ -224,12 +231,15 @@ export const postUserDiscipline = disciplineObject => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
-      console.log("success", successObject);
-      dispatch(postUserSuccess(successObject));
+      dispatch(modalPostSuccess(successObject));
       dispatch(getUserDisciplines());
+      dispatch(submitProfileForm("discipline", disciplineObject));
+      dispatch(closeAddDisciplineForm());
+      dispatch(reset("discipline"));
     })
     .catch(err => {
-      const message = err;
+      const message = err.message;
+      dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({
           _error: message
@@ -240,29 +250,29 @@ export const postUserDiscipline = disciplineObject => dispatch => {
 
 ///////////// USER ////////////
 
-export const POST_USER_REQUEST = "POST_USER_REQUEST";
-export const postUserRequest = () => {
+export const MODAL_POST_REQUEST = "MODAL_POST_REQUEST";
+export const modalPostRequest = () => {
   return {
-    type: POST_USER_REQUEST
+    type: MODAL_POST_REQUEST
   };
 };
 
-export const POST_USER_SUCCESS = "POST_USER_SUCCESS";
-export const postUserSuccess = () => {
+export const MODAL_POST_SUCCESS = "MODAL_POST_SUCCESS";
+export const modalPostSuccess = () => {
   return {
-    type: POST_USER_REQUEST
+    type: MODAL_POST_SUCCESS
   };
 };
 
-export const POST_USER_ERROR = "POST_USER_ERROR";
-export const postUserError = () => {
+export const MODAL_POST_ERROR = "MODAL_POST_ERROR";
+export const modalPostError = () => {
   return {
-    type: POST_USER_REQUEST
+    type: MODAL_POST_ERROR
   };
 };
 
 export const postUser = userObject => dispatch => {
-  dispatch(postUserRequest());
+  dispatch(modalPostRequest());
   return fetch(`${API_BASE_URL}/users/`, {
     method: "POST",
     body: JSON.stringify(userObject),
@@ -275,12 +285,14 @@ export const postUser = userObject => dispatch => {
       if (successObject.code === 422) {
         return Promise.reject(successObject);
       }
-      dispatch(postUserSuccess(successObject));
+      dispatch(modalPostSuccess(successObject));
       dispatch(openModalPage("disciplines"));
       dispatch(login(userObject.email, userObject.password, true));
+      dispatch(reset("basic"));
     })
     .catch(err => {
-      const message = err;
+      const message = err.message;
+      dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({
           _error: message
@@ -290,9 +302,8 @@ export const postUser = userObject => dispatch => {
 };
 
 export const updateUser = (updateObject, nextPage) => dispatch => {
-  dispatch(postUserRequest());
+  dispatch(modalPostRequest());
   const currentUser = parseJwt(localStorage.getItem("authToken")).user;
-  console.log(currentUser);
   return fetch(`${API_BASE_URL}/users/${currentUser.user_id}`, {
     method: "PUT",
     body: JSON.stringify(updateObject),
@@ -303,7 +314,7 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
-      dispatch(postUserSuccess(successObject));
+      dispatch(modalPostSuccess(successObject));
       dispatch(refreshAuthToken());
       if (nextPage) {
         dispatch(openModalPage(nextPage));
@@ -312,7 +323,8 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
       }
     })
     .catch(err => {
-      const message = err;
+      const message = err.message;
+      dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({
           _error: message

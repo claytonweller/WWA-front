@@ -5,9 +5,9 @@ import {
   OPEN_ADD_DISCIPLINE_FORM,
   CLOSE_ADD_DISCIPLINE_FORM,
   TRASH_DISCIPLINE,
-  POST_USER_REQUEST,
-  POST_USER_SUCCESS,
-  POST_USER_ERROR,
+  MODAL_POST_REQUEST,
+  MODAL_POST_SUCCESS,
+  MODAL_POST_ERROR,
   STORE_DISCIPLINE_TYPES,
   STORE_USER_DISCIPLINES,
   SET_FOCUSED_USER
@@ -91,16 +91,16 @@ export default function reducer(state = initialState, action) {
     return Object.assign({}, state, {
       disciplines: action.disciplines
     });
-  } else if (action.type === POST_USER_REQUEST) {
+  } else if (action.type === MODAL_POST_REQUEST) {
     return Object.assign({}, state, {
       loading: true,
       error: null
     });
-  } else if (action.type === POST_USER_SUCCESS) {
+  } else if (action.type === MODAL_POST_SUCCESS) {
     return Object.assign({}, state, {
       loading: false
     });
-  } else if (action.type === POST_USER_ERROR) {
+  } else if (action.type === MODAL_POST_ERROR) {
     return Object.assign({}, state, {
       loading: false,
       error: action.error

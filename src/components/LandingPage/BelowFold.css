@@ -1,0 +1,53 @@
+.landing-section {
+  display: flex;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.image-right {
+  flex-flow: column;
+}
+
+.image-left {
+  flex-flow: column-reverse;
+}
+
+.landing-description img {
+  width: 100%;
+}
+
+.landing-image img {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.landing-description div {
+  font-size: 1.2em;
+}
+
+@media only screen and (min-width: 600px) {
+  .landing-section {
+    flex-flow: row;
+    margin-top: 100px;
+  }
+
+  .landing-description {
+    width: 55%;
+    margin-top: 35px;
+  }
+
+  .landing-description div {
+    font-size: 1.5em;
+  }
+
+  .landing-image {
+    width: 45%;
+  }
+
+  .landing-image img {
+    display: block;
+    position: relative;
+    width: 70%;
+    margin: auto;
+  }
+}

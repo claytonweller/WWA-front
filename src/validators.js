@@ -1,6 +1,5 @@
 export const required = value => (value ? undefined : "Required");
 export const nonEmpty = value => {
-  console.log(value);
   value.trim() !== "" ? undefined : "Cannot be empty";
 };
 
@@ -16,14 +15,18 @@ export const length = length => value => {
   }
 };
 export const matches = field => (value, allValues) => {
-  field in allValues && value.trim() === allValues[field].trim()
-    ? undefined
-    : "Does not match";
+  if (value && allValues[field]) {
+    field in allValues && value === allValues[field]
+      ? undefined
+      : "Does not match";
+    console.log(value === allValues[field]);
+  }
 };
 
-export const notFirstOption = allOptions => selected => {
-  console.log(allOptions[0], selected);
-  if (allOptions[0] === selected) {
+export const notFirstOption = firstOption => selected => {
+  if (firstOption === selected) {
     return `You have to pick a value fore this`;
+  } else {
+    return undefined;
   }
 };

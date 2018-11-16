@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import years from "./allTheYears";
 
 import {
-  submitProfileForm,
   closeAddDisciplineForm,
   postUserDiscipline,
   createNewUserDiscipline
@@ -16,7 +15,8 @@ export class AddDisciplineForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      addingNewDisciplineType: false
+      addingNewDisciplineType: false,
+      error: null
     };
   }
 
@@ -25,14 +25,16 @@ export class AddDisciplineForm extends React.Component {
       values.type_id = this.props.disciplineTypes.find(
         typeObject => typeObject.type === values.type
       ).type_id;
-      this.props.dispatch(postUserDiscipline(values));
+      this.props
+        .dispatch(postUserDiscipline(values))
+        .then(() => this.setState({ error: null }))
+        .catch(err => this.setState({ error: err.errors._error }));
     } else {
-      this.props.dispatch(createNewUserDiscipline(values));
+      this.props
+        .dispatch(createNewUserDiscipline(values))
+        .then(() => this.setState({ error: null }))
+        .catch(err => this.setState({ error: err.errors._error }));
     }
-    this.props.dispatch(submitProfileForm("discipline", values));
-    this.props.dispatch(closeAddDisciplineForm());
-    this.props.dispatch(reset("discipline"));
-    console.log(values);
   }
 
   cancelClick(e) {
@@ -42,22 +44,6 @@ export class AddDisciplineForm extends React.Component {
   }
 
   render() {
-    // let successMessage;
-    // if (this.props.submitSucceeded) {
-    //   successMessage = (
-    //     <div className="message message-success">
-    //       Message submitted successfully
-    //     </div>
-    //   );
-    // }
-
-    // let errorMessage;
-    // if (this.props.error) {
-    //   errorMessage = (
-    //     <div className="message message-error">{this.props.error}</div>
-    //   );
-    // }
-
     const populatedOptions = this.props.disciplineTypes.map(
       typeObject => typeObject.type
     );
@@ -71,11 +57,13 @@ export class AddDisciplineForm extends React.Component {
           component={Input}
           placeholder="Contortionist, Dancer, Puppeteer... etc"
           label="New Discipline"
+          validate={[required]}
         />
       );
     } else {
       newDisciplineTypeField = null;
     }
+    console.log(this.state.error);
 
     return (
       <form
@@ -102,6 +90,7 @@ export class AddDisciplineForm extends React.Component {
             label="Discipline"
             options={["--Other/Not Listed--", ...populatedOptions]}
             placeholder="Discipline?"
+            validate={[required]}
           />
           {newDisciplineTypeField}
           <Field
@@ -110,10 +99,8 @@ export class AddDisciplineForm extends React.Component {
             component={Input}
             label="When Did you start doing this?"
             options={years}
-            validate={(value, allvalues, props, name) =>
-              console.log(value, allvalues, props, name)
-            }
             placeholder="Experience?"
+            validate={[required]}
           />
 
           <Field
@@ -123,6 +110,7 @@ export class AddDisciplineForm extends React.Component {
             label="Preferred reward for your time and expertise in this discipline"
             options={["For Fun", "For Pay", "Depends on project"]}
             placeholder="Reward?"
+            validate={[required]}
           />
           <Field
             name="active"
@@ -131,7 +119,11 @@ export class AddDisciplineForm extends React.Component {
             label="Are you actively seeking projects in this discipline?"
             options={["No", "Yes"]}
             placeholder="Active?"
+            validate={[required]}
           />
+          <div className="modal-error">
+            {this.state.error ? this.state.error : null}
+          </div>
 
           <div className="edit-buttons">
             <a href="NONE" onClick={e => this.cancelClick(e)}>
@@ -145,9 +137,6 @@ export class AddDisciplineForm extends React.Component {
             </button>
           </div>
         </div>
-
-        {/* {successMessage}
-        {errorMessage} */}
       </form>
     );
   }
@@ -155,7 +144,8 @@ export class AddDisciplineForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    disciplineTypes: state.profile.disciplineTypes
+    disciplineTypes: state.profile.disciplineTypes,
+    error: state.profile.error
   };
 };
 

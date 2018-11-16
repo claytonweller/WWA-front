@@ -83,7 +83,7 @@ export const login = (email, password, firstTime = false) => dispatch => {
       })
       .then(() => {
         dispatch(getUserDisciplines());
-        this.props.dispatch(reset("login"));
+        dispatch(reset("login"));
 
         if (!firstTime) {
           dispatch(closeModal());
@@ -95,6 +95,7 @@ export const login = (email, password, firstTime = false) => dispatch => {
           code === 401
             ? "Incorrect username or password"
             : "Unable to login, please try again";
+        err.message = message;
         dispatch(authError(err));
         // Could not authenticate, so return a SubmissionError for Redux
         // Form

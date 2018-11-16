@@ -43,6 +43,14 @@
   line-height: 1.1em;
 }
 
+.modal-error {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: right;
+  padding-top: 10px;
+  color: #940707;
+}
+
 /* BASIC INFO FORM */
 
 .basic-location {
@@ -59,6 +67,7 @@
 .disciplines-card {
   margin-top: 50px;
   width: 100%;
+  height: fit-content;
   border: solid #151515 1px;
   filter: drop-shadow(4px -4px 0 #465c8b);
   background-color: white;
@@ -155,6 +164,16 @@
   color: white;
 }
 
+.button-holder {
+  display: flex;
+  justify-content: flex-end;
+  flex-flow: row;
+}
+
+.button-holder button {
+  width: 155px;
+}
+
 /* DISPLAY CSS */
 
 .image-interface {
@@ -199,6 +218,43 @@
 
 .bio-form {
   margin: 0;
+}
+
+/* Simple (contact/login) */
+
+.simple-form {
+  width: 100%;
+}
+
+.simple-form * {
+  width: 100%;
+}
+
+.simple-form input {
+  height: 50px;
+}
+
+.simple-form .form-input {
+  margin-top: 15px;
+}
+
+.simple-buttons a {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.simple-form textarea {
+  height: 100px;
+}
+
+.simple-buttons {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.simple-buttons button {
+  font-size: 2em;
 }
 
 @media only screen and (min-width: 600px) {

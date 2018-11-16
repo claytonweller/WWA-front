@@ -10,13 +10,16 @@ export class Display extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageURL: ""
+      imageURL: "",
+      error: null
     };
   }
 
   onSubmit(values) {
-    this.props.dispatch(updateUser(values, "bio"));
-    this.props.dispatch(reset("display"));
+    this.props
+      .dispatch(updateUser(values, "bio"))
+      .then(() => this.props.dispatch(reset("display")))
+      .catch(err => this.setState({ error: err.errors._error }));
   }
 
   testUrlClick(e) {
@@ -26,24 +29,6 @@ export class Display extends React.Component {
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
-
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
-    // This is the dispatch thing for the form.
-    // onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
-
     return (
       <div className="">
         <p className="form-description">
@@ -89,6 +74,9 @@ export class Display extends React.Component {
                 label="What kind of projects are you most excited to work on?"
                 placeholder="In less than ### characters talk about the kind of work that most excites you. This will be people’s first impression of you."
               />
+              <div className="modal-error">
+                {this.state.error ? this.state.error : null}
+              </div>
               <div className="edit-buttons">
                 <a
                   href="NONE"
@@ -108,9 +96,6 @@ export class Display extends React.Component {
                 </button>
               </div>
             </div>
-            {/* MAYBE I'll add theses in again later... but for now they're garbage */}
-            {/* {successMessage}
-          {errorMessage} */}
           </form>
         </div>
       </div>

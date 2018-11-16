@@ -6,38 +6,31 @@ import { sendMessage } from "../../actions/profile";
 import { required, nonEmpty } from "../../validators";
 
 export class ContactForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null
+    };
+  }
+
   onSubmit(values) {
     values.artistId = this.props.focusedUser;
-    this.props.dispatch(sendMessage(values));
-    this.props.dispatch(reset("contact"));
+    this.props
+      .dispatch(sendMessage(values))
+      .then(() => console.log("YAY"))
+      .catch(err => this.setState({ error: err }));
   }
 
   render() {
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
-
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
-
     return (
       <div className="">
-        <h1>Contact</h1>
+        <h1 style={{ textAlign: "center" }}>Contact</h1>
         <hr />
         <form
           className="modal-form"
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <div className="search-field-holder">
+          <div className="simple-form">
             <Field
               name="subject"
               type="text"
@@ -48,20 +41,22 @@ export class ContactForm extends React.Component {
             />
             <Field
               name="contact"
-              type="textarea"
+              element="textarea"
               component={Input}
               placeholder="Hi! I'd love to work with you!"
               label="What do you want to say?"
               validate={[required, nonEmpty]}
             />
-
-            <button type="submit" disabled={this.props.submitting}>
-              Send
-            </button>
+            <div className="modal-error">
+              {this.state.error ? this.state.error : null}
+            </div>
+            <div className="simple-buttons">
+              <a>Cancel</a>
+              <button type="submit" disabled={this.props.submitting}>
+                Send
+              </button>
+            </div>
           </div>
-
-          {successMessage}
-          {errorMessage}
         </form>
       </div>
     );
