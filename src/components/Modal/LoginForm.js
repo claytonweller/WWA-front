@@ -18,7 +18,10 @@ export class LoginForm extends React.Component {
     this.props
       .dispatch(login(values.email, values.password))
       .then(() => this.props.history.push("/search"))
-      .catch(err => this.setState({ error: err.errors._error }));
+      .catch(err => {
+        console.log(err);
+        this.setState({ error: err.errors._error });
+      });
   }
 
   render() {

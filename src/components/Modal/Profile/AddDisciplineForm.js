@@ -147,6 +147,18 @@ export class AddDisciplineForm extends React.Component {
 }
 
 const mapStateToProps = state => {
+  if (state.auth.currentUser) {
+    return {
+      initialValues: {
+        active: "Active?",
+        reward: "Reward?",
+        experience: "Experience?",
+        type: "Discipline?"
+      },
+      disciplineTypes: state.profile.disciplineTypes,
+      error: state.profile.error
+    };
+  }
   return {
     disciplineTypes: state.profile.disciplineTypes,
     error: state.profile.error

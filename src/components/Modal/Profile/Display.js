@@ -77,7 +77,7 @@ export class Display extends React.Component {
                 element="textarea"
                 component={Input}
                 label="What kind of projects are you most excited to work on?"
-                placeholder="In less than ### characters talk about the kind of work that most excites you. This will be people’s first impression of you."
+                placeholder="In less than 250 characters talk about the kind of work that most excites you. This will be people’s first impression of you."
               />
               <div className="modal-error">
                 {this.state.error ? this.state.error : null}

@@ -16,7 +16,7 @@ export function FindArtists(props) {
         <img src={heading} alt="Find artists for your project" />
         <div>
           We all have big artistic dreams, but we can't do everything ourselves.
-          Work With Aritst lets you easily search and contact artists who do
+          Work With Artists lets you easily search and contact artists who do
           exactly what you need.
           <ul style={{ listStyleImage: `url('${pip}')` }}>
             <li>

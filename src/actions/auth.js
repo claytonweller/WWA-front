@@ -2,7 +2,6 @@ import jwtDecode from "jwt-decode";
 import { SubmissionError, reset } from "redux-form";
 
 import { API_BASE_URL } from "../config";
-import { normalizeResponseErrors } from "./utils";
 import { saveAuthToken, clearAuthToken } from "../local-storage";
 import { closeModal, getUserDisciplines } from "./profile";
 import { artistSearchSuccess } from "./search";
@@ -65,50 +64,45 @@ export const logout = () => dispatch => {
 
 export const login = (email, password, firstTime = false) => dispatch => {
   dispatch(authRequest());
-  return (
-    fetch(`${API_BASE_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
+  return fetch(`${API_BASE_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email,
+      password
     })
-      // Reject any requests which don't return a 200 status, creating
-      // errors which follow a consistent format
-      .then(res => normalizeResponseErrors(res))
-      .then(res => res.json())
-      .then(({ authToken }) => {
-        storeAuthInfo(authToken, dispatch);
-      })
-      .then(() => {
-        dispatch(getUserDisciplines());
-        dispatch(reset("login"));
+  })
+    .then(res => res.json())
+    .then(({ authToken }) => {
+      storeAuthInfo(authToken, dispatch);
+    })
+    .then(() => {
+      dispatch(getUserDisciplines());
+      dispatch(reset("login"));
 
-        // If they're already logged, it closes instead of going to the next form
-        if (!firstTime) {
-          dispatch(closeModal());
-        }
-      })
-      .catch(err => {
-        const { code } = err;
-        const message =
-          code === 401
-            ? "Incorrect username or password"
-            : "Unable to login, please try again";
-        err.message = message;
-        dispatch(authError(err));
-        // Could not authenticate, so return a SubmissionError for Redux
-        // Form
-        return Promise.reject(
-          new SubmissionError({
-            _error: message
-          })
-        );
-      })
-  );
+      // If they're already logged, it closes instead of going to the next form
+      if (!firstTime) {
+        dispatch(closeModal());
+      }
+    })
+    .catch(err => {
+      const { code } = err;
+      const message =
+        code === 401
+          ? "Incorrect username or password"
+          : "Unable to login, please try again";
+      err.message = message;
+      dispatch(authError(err));
+      // Could not authenticate, so return a SubmissionError for Redux
+      // Form
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
 };
 
 export const refreshAuthToken = () => (dispatch, getState) => {
@@ -121,7 +115,6 @@ export const refreshAuthToken = () => (dispatch, getState) => {
       Authorization: `Bearer ${authToken}`
     }
   })
-    .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
     .then(({ authToken }) => storeAuthInfo(authToken, dispatch))
     .catch(err => {

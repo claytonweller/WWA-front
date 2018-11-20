@@ -54,7 +54,7 @@ export class ArtistCard extends React.Component {
               id={"more" + this.props.artist.user_id}
               onClick={e => this.props.moreInfo(e, this.props.artist.user_id)}
             >
-              More
+              More/Contact
             </button>
           </div>
           {/* Below is only visible when the focusedId (set by the state) matches the artist card */}

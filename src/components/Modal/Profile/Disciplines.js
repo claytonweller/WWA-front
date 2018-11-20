@@ -15,7 +15,7 @@ export class Disciplines extends React.Component {
     this.props.dispatch(openModalPage("display"));
   }
 
-  disciplineSubmit(values) {
+  disciplineSubmit() {
     this.setState({ formIshidden: true });
   }
 
@@ -66,7 +66,7 @@ export class Disciplines extends React.Component {
             marginBottom: "10px"
           }}
         />
-        <div className="button-holder">
+        <div style={{ display: listDisplay }} className="button-holder">
           <button onClick={() => this.nextClick()}>Next</button>
         </div>
       </div>
