@@ -5,8 +5,8 @@ _Be found for for the projects you enjoy_
 
 ## Find it online
 
-Live App - http://www.workwithartists.com
-Back end - https://github.com/claytonweller/WWA-back
+- Live App - http://www.workwithartists.com
+- Back end - https://github.com/claytonweller/WWA-back
 
 ## Why?
 
