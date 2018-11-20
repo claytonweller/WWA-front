@@ -3,11 +3,7 @@ import { connect } from "react-redux";
 import SingleDiscipline from "./SingleDiscipline";
 import AddDisciplineForm from "./AddDisciplineForm";
 
-import {
-  openModalPage,
-  submitProfileForm,
-  openAddDisciplineForm
-} from "../../../actions/profile";
+import { openModalPage, openAddDisciplineForm } from "../../../actions/profile";
 
 export class Disciplines extends React.Component {
   addClick(e) {
@@ -20,7 +16,6 @@ export class Disciplines extends React.Component {
   }
 
   disciplineSubmit(values) {
-    this.props.dispatch(submitProfileForm("discipline", values));
     this.setState({ formIshidden: true });
   }
 
@@ -49,7 +44,7 @@ export class Disciplines extends React.Component {
     }
 
     return (
-      <div className="">
+      <div>
         <p className="form-description">
           Add as many artistic disciplines as you like. These are how people
           find artists in our app, the more you add, the more searches you’ll

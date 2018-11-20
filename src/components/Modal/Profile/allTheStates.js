@@ -1,3 +1,4 @@
+// This is every US state. We're starting in CO so we moved that to the top.
 let states = [
   "CO",
   "AK",

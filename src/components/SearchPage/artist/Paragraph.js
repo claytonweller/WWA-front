@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 export function Paragraph(props) {
   let display;
@@ -15,8 +14,4 @@ export function Paragraph(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  // loggedIn: state.auth.currentUser !== null
-});
-
-export default connect(mapStateToProps)(Paragraph);
+export default Paragraph;

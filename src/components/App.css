@@ -19,6 +19,8 @@
 
 p {
   font-size: 18px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 h1,
@@ -103,7 +105,12 @@ a:focus {
   text-decoration: underline;
 }
 
-/* TODO MAKE THIS ACTUALLY WORK */
+.close-x {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+
 .bar-gradient {
   position: relative;
   top: -3px;

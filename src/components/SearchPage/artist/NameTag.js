@@ -1,6 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
-
+// This shows up in the acti
 export function NameTag(props) {
   return (
     <div className="name-tag">
@@ -9,8 +8,4 @@ export function NameTag(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  // loggedIn: state.auth.currentUser !== null
-});
-
-export default connect(mapStateToProps)(NameTag);
+export default NameTag;

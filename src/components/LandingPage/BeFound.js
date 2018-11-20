@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import "./BelowFold.css";
 
-const phone = require("../../assets/images/phone-Search.png");
+const phone = require("../../assets/images/sample-artists.png");
 const heading = require("../../assets/images/be-found.png");
+const pip = require("../../assets/images/pip.png");
 
 export function BeFound(props) {
   return (
@@ -10,19 +12,26 @@ export function BeFound(props) {
       <div className="landing-description">
         <img src={heading} alt="Find artists for your project" />
         <div>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum
+          You are an artists. You love making art. You want to do more projects,
+          and work with new people, but it's exhausting putting yourself out
+          there. Work With Artists makes finding projects way easier:
+          <ul style={{ listStyleImage: `url('${pip}')` }}>
+            <li>Create a profile with your skills and resume.</li>
+            <li>
+              Tell people about the kinds of projects you want to work on.
+            </li>
+            <li>Get contacted by people who want YOU specifically.</li>
+          </ul>
+          All communicaitons are opt in, and we will never give away your email.
+          It's easy, updateable, and might lead to some truly wonderful
+          connections.
         </div>
       </div>
       <div className="landing-image">
-        <img src={phone} alt="An example search in a mobile phone" />
+        <img
+          src={phone}
+          alt="A series of sample users from the app. They have a variety of races and genders"
+        />
       </div>
     </div>
   );

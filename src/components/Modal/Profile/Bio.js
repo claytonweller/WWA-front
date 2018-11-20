@@ -17,6 +17,7 @@ export class Bio extends React.Component {
     this.props
       .dispatch(updateUser(values))
       .then(() => this.props.dispatch(reset("bio")))
+      .then(() => this.props.history.push("/search"))
       .catch(err => this.setState({ error: err.errors._error }));
   }
 
@@ -83,12 +84,6 @@ export class Bio extends React.Component {
   }
 }
 
-// state => ({
-//   initialValues: state.account.data // pull initial values from account reducer
-// }),
-// { load: loadAccount } // bind account loading action creator
-// )
-
 Bio = reduxForm({
   form: "bio",
   enableReinitialize: true,
@@ -102,7 +97,8 @@ const mapStateToProps = state => {
       initialValues: {
         bio: state.auth.currentUser.bio,
         equipment: state.auth.currentUser.equipment
-      }
+      },
+      state
     };
   }
 };

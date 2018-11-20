@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import trashIcon from "../../../assets/images/Trash.png";
 import { deleteDiscipline, trashDiscipline } from "../../../actions/profile";
 
+// These are populated in the discipline page.
 export function SingleDiscipline(props) {
   const experienceInYears = startYear => {
     let now = new Date();

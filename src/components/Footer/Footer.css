@@ -1,0 +1,36 @@
+.footer {
+  background-color: #465c8b;
+  padding: 10px;
+  display: flex;
+  flex-flow: column;
+}
+
+.footer * {
+  color: white;
+}
+
+.footer-left {
+  align-self: flex-start;
+}
+
+.footer-right {
+  padding-top: 10px;
+  align-self: flex-end;
+}
+
+.footer a {
+  color: #f5ef6d;
+  font-size: 1em;
+  font-weight: 100;
+}
+
+@media only screen and (min-width: 500px) {
+  .footer {
+    flex-flow: row;
+    justify-content: space-between;
+  }
+
+  .footer-left {
+    align-self: flex-end;
+  }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { openContactModal } from "../../../actions/profile";
 
+// This only shows up in the 'Expanded' version
 export function BasicInfo(props) {
   const findAge = DOB => {
     let now = new Date();
@@ -10,7 +11,6 @@ export function BasicInfo(props) {
   };
 
   const contactClick = e => {
-    console.log(props);
     props.dispatch(openContactModal(props.userId));
   };
 
@@ -23,8 +23,6 @@ export function BasicInfo(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
-});
+const mapStateToProps = () => ({});
 
 export default connect(mapStateToProps)(BasicInfo);

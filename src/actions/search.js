@@ -1,28 +1,33 @@
 import { API_BASE_URL } from "../config";
 import { SubmissionError } from "redux-form";
 
+// This changes a searched user tear to it's first dipslay info
 export const ACTIVATE_CARD = "ACTIVATE_CARD";
 export const activateCard = () => ({
   type: ACTIVATE_CARD
 });
 
+// This completely fills up a card
 export const EXPAND_CARD = "EXPAND_CARD";
 export const expandCard = () => ({
   type: EXPAND_CARD
 });
 
+// This is from the search form
 export const UPDATE_REWARD_FILTER = "UPDATE_REWARD_FILTER";
 export const udpateRewardFilter = value => ({
   type: UPDATE_REWARD_FILTER,
   value
 });
 
+// Also search form
 export const UPDATE_EXPERIENCE_FILTER = "UPDATE_EXPERIENCE_FILTER";
 export const updateExperienceFilter = value => ({
   type: UPDATE_EXPERIENCE_FILTER,
   value
 });
 
+// Also Search from
 export const UPDATE_DISCIPLINE_FILTER = "UPDATE_DISCIPLINE_FILTER";
 export const updateDisciplineFilter = value => ({
   type: UPDATE_DISCIPLINE_FILTER,
@@ -67,6 +72,7 @@ export const searchArtists = searchObject => dispatch => {
     })
     .catch(err => {
       const message = err;
+      dispatch(artistSearchError(message));
       console.log(err);
       return Promise.reject(
         new SubmissionError({

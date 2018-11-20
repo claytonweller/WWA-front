@@ -1,3 +1,5 @@
+// These are used for sorting people by experience
+
 const years = [
   2018,
   2017,

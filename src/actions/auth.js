@@ -5,6 +5,7 @@ import { API_BASE_URL } from "../config";
 import { normalizeResponseErrors } from "./utils";
 import { saveAuthToken, clearAuthToken } from "../local-storage";
 import { closeModal, getUserDisciplines } from "./profile";
+import { artistSearchSuccess } from "./search";
 
 export const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 export const setAuthToken = authToken => ({
@@ -59,6 +60,7 @@ export const logout = () => dispatch => {
   dispatch(clearAuth());
   clearAuthToken();
   resetAllForms(dispatch);
+  dispatch(artistSearchSuccess([]));
 };
 
 export const login = (email, password, firstTime = false) => dispatch => {
@@ -85,6 +87,7 @@ export const login = (email, password, firstTime = false) => dispatch => {
         dispatch(getUserDisciplines());
         dispatch(reset("login"));
 
+        // If they're already logged, it closes instead of going to the next form
         if (!firstTime) {
           dispatch(closeModal());
         }

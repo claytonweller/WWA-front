@@ -5,20 +5,16 @@ import { parseJwt } from "../parseJwt";
 import jwtDecode from "jwt-decode";
 import { reset } from "redux-form";
 
+////// This page deals with all the calls that heppen within the modal ////////////
+// TODO: Rename from 'profile' to 'modal'
+
+// This opens the modal and makes sure the correct
+// info is populated
 export const OPEN_MODAL_PAGE = "OPEN_MODAL_PAGE";
 export const openModalPage = editPage => {
   return {
     type: OPEN_MODAL_PAGE,
     editPage
-  };
-};
-
-export const SUBMIT_PROFILE_FORM = "SUBMIT_PROFILE_FORM";
-export const submitProfileForm = (form, values) => {
-  return {
-    type: SUBMIT_PROFILE_FORM,
-    form,
-    values
   };
 };
 
@@ -29,6 +25,9 @@ export const closeModal = () => {
   };
 };
 
+// This is used to for a couple of things
+// It makes sure emails are sent to the right person
+// It also makes it so there's only one expanded Profile at a time
 export const SET_FOCUSED_USER = "SET_FOCUSED_USER";
 export const setFocusedUser = id => {
   return {
@@ -37,15 +36,34 @@ export const setFocusedUser = id => {
   };
 };
 
+export const MODAL_POST_REQUEST = "MODAL_POST_REQUEST";
+export const modalPostRequest = () => {
+  return {
+    type: MODAL_POST_REQUEST
+  };
+};
+
+export const MODAL_POST_SUCCESS = "MODAL_POST_SUCCESS";
+export const modalPostSuccess = () => {
+  return {
+    type: MODAL_POST_SUCCESS
+  };
+};
+
+export const MODAL_POST_ERROR = "MODAL_POST_ERROR";
+export const modalPostError = () => {
+  return {
+    type: MODAL_POST_ERROR
+  };
+};
+
 ////////////// CONTACT //////////////
 
-export const openContactModal = id => dispatch => {
-  dispatch(setFocusedUser(id));
+export const openContactModal = () => dispatch => {
   dispatch(openModalPage("contact"));
 };
 
 export const sendMessage = messageObject => dispatch => {
-  // TODO (Request)
   return fetch(`${API_BASE_URL}/communication/`, {
     method: "POST",
     body: JSON.stringify(messageObject),
@@ -59,9 +77,7 @@ export const sendMessage = messageObject => dispatch => {
       if (successObject.code === 422) {
         return Promise.reject(successObject);
       }
-      // TODO dispatch(modalPostSuccess(successObject));
       dispatch(closeModal());
-      dispatch(setFocusedUser(null));
       dispatch(reset("contact"));
     })
     .catch(err => {
@@ -112,36 +128,9 @@ export const deleteDiscipline = (discipline_id, index) => dispatch => {
     }
   )
     .then(res => res.json())
-    .then(successObject => {
+    .then(() => {
       dispatch(trashDiscipline(parseInt(index)));
       dispatch(getUserDisciplines());
-    })
-    .catch(err => {
-      const message = err;
-      return Promise.reject(
-        new SubmissionError({
-          _error: message
-        })
-      );
-    });
-};
-
-export const STORE_DISCIPLINE_TYPES = "STORE_DISCIPLINE_TYPES";
-export const storeDisciplineTypes = disciplineTypes => {
-  return {
-    type: STORE_DISCIPLINE_TYPES,
-    disciplineTypes
-  };
-};
-
-export const getDisciplineTypes = () => dispatch => {
-  return fetch(`${API_BASE_URL}/disciplines/`, {
-    method: "GET"
-  })
-    .then(res => res.json())
-    .then(types => {
-      types.sort((a, b) => a.type.localeCompare(b.type));
-      dispatch(storeDisciplineTypes(types));
     })
     .catch(err => {
       const message = err;
@@ -233,7 +222,6 @@ export const postUserDiscipline = disciplineObject => dispatch => {
     .then(successObject => {
       dispatch(modalPostSuccess(successObject));
       dispatch(getUserDisciplines());
-      dispatch(submitProfileForm("discipline", disciplineObject));
       dispatch(closeAddDisciplineForm());
       dispatch(reset("discipline"));
     })
@@ -248,28 +236,38 @@ export const postUserDiscipline = disciplineObject => dispatch => {
     });
 };
 
+//////////////// DISCIPLINE TYPES //////////////
+// These are used when searching for artists
+// They're also used when a user is creating user Disciplines
+
+export const STORE_DISCIPLINE_TYPES = "STORE_DISCIPLINE_TYPES";
+export const storeDisciplineTypes = disciplineTypes => {
+  return {
+    type: STORE_DISCIPLINE_TYPES,
+    disciplineTypes
+  };
+};
+
+export const getDisciplineTypes = () => dispatch => {
+  return fetch(`${API_BASE_URL}/disciplines/`, {
+    method: "GET"
+  })
+    .then(res => res.json())
+    .then(types => {
+      types.sort((a, b) => a.type.localeCompare(b.type));
+      dispatch(storeDisciplineTypes(types));
+    })
+    .catch(err => {
+      const message = err;
+      return Promise.reject(
+        new SubmissionError({
+          _error: message
+        })
+      );
+    });
+};
+
 ///////////// USER ////////////
-
-export const MODAL_POST_REQUEST = "MODAL_POST_REQUEST";
-export const modalPostRequest = () => {
-  return {
-    type: MODAL_POST_REQUEST
-  };
-};
-
-export const MODAL_POST_SUCCESS = "MODAL_POST_SUCCESS";
-export const modalPostSuccess = () => {
-  return {
-    type: MODAL_POST_SUCCESS
-  };
-};
-
-export const MODAL_POST_ERROR = "MODAL_POST_ERROR";
-export const modalPostError = () => {
-  return {
-    type: MODAL_POST_ERROR
-  };
-};
 
 export const postUser = userObject => dispatch => {
   dispatch(modalPostRequest());
@@ -283,7 +281,11 @@ export const postUser = userObject => dispatch => {
     .then(res => res.json())
     .then(successObject => {
       if (successObject.code === 422) {
-        return Promise.reject(successObject);
+        return Promise.reject(
+          new SubmissionError({
+            _error: successObject.message
+          })
+        );
       }
       dispatch(modalPostSuccess(successObject));
       dispatch(openModalPage("disciplines"));
@@ -314,6 +316,14 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
+      if (successObject.code === 422) {
+        return Promise.reject(
+          new SubmissionError({
+            _error: successObject.message
+          })
+        );
+      }
+
       dispatch(modalPostSuccess(successObject));
       dispatch(refreshAuthToken());
       if (nextPage) {
@@ -323,7 +333,8 @@ export const updateUser = (updateObject, nextPage) => dispatch => {
       }
     })
     .catch(err => {
-      const message = err.message;
+      console.log(err);
+      const message = err.errors._error;
       dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({

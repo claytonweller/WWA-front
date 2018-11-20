@@ -1,6 +1,5 @@
 import {
   OPEN_MODAL_PAGE,
-  SUBMIT_PROFILE_FORM,
   CLOSE_MODAL,
   OPEN_ADD_DISCIPLINE_FORM,
   CLOSE_ADD_DISCIPLINE_FORM,
@@ -18,10 +17,7 @@ const initialState = {
   addDisciplineFormIsHidden: true,
   disciplineTypes: [],
   editPage: "basic",
-  basicInfo: { complete: false, values: {} },
   disciplines: [],
-  display: { complete: false, values: {} },
-  bio: { complete: false, values: {} },
   isLogin: false,
   isContactForm: false,
   loading: false,
@@ -60,16 +56,6 @@ export default function reducer(state = initialState, action) {
       modalIsVisible: false,
       focusedUser: parseInt(action.id, 10)
     });
-  } else if (action.type === SUBMIT_PROFILE_FORM) {
-    if (action.form === "discipline") {
-      return Object.assign({}, state, {
-        disciplines: [...state.disciplines, action.values]
-      });
-    } else {
-      return Object.assign({}, state, {
-        [action.form]: { values: action.values, complete: true }
-      });
-    }
   } else if (action.type === OPEN_ADD_DISCIPLINE_FORM) {
     return Object.assign({}, state, {
       addDisciplineFormIsHidden: false

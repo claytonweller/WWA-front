@@ -1,8 +1,8 @@
 import React from "react";
-import { reduxForm, Field, focus, reset } from "redux-form";
+import { reduxForm, Field, focus } from "redux-form";
 
 import Input from "../sharedComponents/Input";
-import { sendMessage } from "../../actions/profile";
+import { sendMessage, closeModal } from "../../actions/profile";
 import { required, nonEmpty } from "../../validators";
 
 export class ContactForm extends React.Component {
@@ -13,11 +13,11 @@ export class ContactForm extends React.Component {
     };
   }
 
+  // Send an email to the current focused user
   onSubmit(values) {
     values.artistId = this.props.focusedUser;
     this.props
       .dispatch(sendMessage(values))
-      .then(() => console.log("YAY"))
       .catch(err => this.setState({ error: err }));
   }
 
@@ -51,7 +51,15 @@ export class ContactForm extends React.Component {
               {this.state.error ? this.state.error : null}
             </div>
             <div className="simple-buttons">
-              <a>Cancel</a>
+              <a
+                href="none"
+                onClick={e => {
+                  e.preventDefault();
+                  this.props.dispatch(closeModal());
+                }}
+              >
+                Cancel
+              </a>
               <button type="submit" disabled={this.props.submitting}>
                 Send
               </button>

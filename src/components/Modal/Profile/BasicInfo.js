@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { postUser, updateUser } from "../../../actions/profile";
 import Input from "../../sharedComponents/Input";
 import states from "./allTheStates";
-import { required, length } from "../../../validators";
+import { required } from "../../../validators";
 
 export class BasicInfo extends React.Component {
   constructor(props) {
@@ -16,10 +16,22 @@ export class BasicInfo extends React.Component {
   }
 
   onSubmit(values) {
+    // For some reason the REDUX form validation
+    // was not playing well. So I just used straight up
+    // state to make it work
+    // TODO: Figure out redux form
     if (values.password !== values.password2) {
       return this.setState({ error: "Passwords do not match" });
     }
 
+    if (values.password.length < 10) {
+      return this.setState({
+        error: "Password must be at least 10 characters long"
+      });
+    }
+
+    // If the user is already signed in we just update their info
+    // Otherwise we create a new user
     if (!this.props.currentUser) {
       return this.props
         .dispatch(postUser(values))
@@ -34,6 +46,7 @@ export class BasicInfo extends React.Component {
 
   render() {
     let submitLogic = this.props.pristine || this.props.submitting;
+
     if (this.props.currentUser) {
       submitLogic = this.props.submitting;
     }
@@ -102,7 +115,7 @@ export class BasicInfo extends React.Component {
                 component={Input}
                 placeholder="********"
                 label="Password"
-                validate={[required, length({ min: 10, max: 25 })]}
+                validate={[required]}
               />
               <Field
                 name="password2"
@@ -129,8 +142,9 @@ export class BasicInfo extends React.Component {
 BasicInfo = reduxForm({
   form: "basic",
   enableReinitialize: true,
-  onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("basic", Object.keys(errors)[0]))
+  onSubmitFail: (errors, dispatch) => {
+    dispatch(focus("basic", Object.keys(errors)[0]));
+  }
 })(BasicInfo);
 
 const mapStateToProps = state => {
@@ -142,7 +156,8 @@ const mapStateToProps = state => {
         first_name: state.auth.currentUser.first_name,
         last_name: state.auth.currentUser.last_name,
         city: state.auth.currentUser.city,
-        state: state.auth.currentUser.state
+        state: state.auth.currentUser.state,
+        password: ""
       }
     };
   }

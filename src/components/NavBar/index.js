@@ -113,6 +113,9 @@ export function NavBar(props) {
   );
 
   let searchTab;
+  // THe way the nav bar looks changes a bit if you're logged in
+  // Instead of the sign you have a menue of options
+  // instead of horizontal bars or log/sign in buttons you have a user image
   if (props.loggedIn) {
     let img;
     if (localStorage.getItem("authToken")) {

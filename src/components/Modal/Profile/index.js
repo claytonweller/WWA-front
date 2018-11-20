@@ -12,15 +12,17 @@ export function Profile(props) {
   let title;
   let modalForm;
 
+  // props.editPage is passed any time the OpenModalPage function is used
+  // Then this if statement decides which page to show.
   if (props.editPage === "disciplines") {
     title = "2 - Disciplines";
     modalForm = <Disciplines />;
   } else if (props.editPage === "display") {
     title = "3 - Display";
-    modalForm = <Display />;
+    modalForm = <Display history={props.history} />;
   } else if (props.editPage === "bio") {
     title = "4 - Bio";
-    modalForm = <Bio />;
+    modalForm = <Bio history={props.history} />;
   } else {
     title = "1 - Basic Info";
     modalForm = <BasicInfo />;
@@ -29,13 +31,7 @@ export function Profile(props) {
   return (
     <div>
       <div className="modal-header">
-        <ProgressBar
-          basicInfo={props.basicInfo}
-          disciplines={props.disciplines}
-          display={props.display}
-          bio={props.bio}
-          editPage={props.editPage}
-        />
+        <ProgressBar editPage={props.editPage} />
         <h2 className="modal-title">{title}</h2>
       </div>
       {modalForm}
@@ -44,19 +40,11 @@ export function Profile(props) {
 }
 
 Profile.defaultProps = {
-  editPage: "basic",
-  basicInfo: { complete: false, values: {} },
-  disciplines: [],
-  display: { complete: false, values: {} },
-  bio: { complete: false, values: {} }
+  editPage: "basic"
 };
 
 const mapStateToProps = state => ({
-  editPage: state.profile.editPage,
-  basicInfo: state.basicInfo,
-  disciplines: state.disciplines,
-  display: state.display,
-  bio: state.bio
+  editPage: state.profile.editPage
 });
 
 export default connect(mapStateToProps)(Profile);

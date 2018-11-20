@@ -34,6 +34,7 @@ class Input extends React.Component {
       warning = <div className="form-warning">{this.props.meta.warning}</div>;
     }
 
+    // This is the basic structure of an input element
     let elementStructure = (
       <Element
         {...this.props.input}
@@ -44,6 +45,7 @@ class Input extends React.Component {
       />
     );
 
+    // If the element type is set to select, it takes an array and creates a drop down.
     if (this.props.element === "select") {
       let options = this.props.options.map((singleOption, i) => {
         return (
@@ -79,6 +81,8 @@ class Input extends React.Component {
         </Element>
       );
     }
+
+    // If there's a label this is it get populated, along with validation errors
     let label;
     if (this.props.label) {
       label = (

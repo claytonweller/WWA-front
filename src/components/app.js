@@ -1,18 +1,26 @@
 import "./App.css";
 import React from "react";
-import { connect, Provider } from "react-redux";
-import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { Route, withRouter } from "react-router-dom";
 
 import { refreshAuthToken } from "../actions/auth";
 import { getDisciplineTypes } from "../actions/profile";
-import store from "../store";
 
 import NavBar from "./NavBar";
 import SearchPage from "./SearchPage";
 import LandingPage from "./LandingPage";
 import Modal from "./Modal";
+import Footer from "./Footer";
 
 export class App extends React.Component {
+  componentWillMount() {
+    if (this.props.hasAuthToken) {
+      this.props.history.push("/search");
+    } else {
+      this.props.history.push("/");
+    }
+  }
+
   componentDidMount() {
     this.props.dispatch(getDisciplineTypes());
     this.props.dispatch(refreshAuthToken());
@@ -48,16 +56,18 @@ export class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Provider store={store}>
-          <div className="app">
-            <NavBar />
-            <Modal isVisible={this.props.modalIsVisible} />
-            <Route exact path="/" component={LandingPage} />
-            <Route exact path="/search" component={SearchPage} />
-          </div>
-        </Provider>
-      </Router>
+      <div className="app">
+        {/* Locked to the top */}
+        <NavBar />
+        {/* appears on top of the current page */}
+        <Modal isVisible={this.props.modalIsVisible} />
+        {/* If a user isn't logged in they get this page */}
+        <Route exact path="/" component={LandingPage} />
+        {/* If a user is logged in they get this page */}
+        <Route exact path="/search" component={SearchPage} />
+        {/* locked to the bottom */}
+        <Footer />
+      </div>
     );
   }
 }

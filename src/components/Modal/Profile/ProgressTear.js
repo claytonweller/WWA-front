@@ -11,7 +11,7 @@ export function ProgressTear(props) {
     textColor = "#151515";
     opacity = 0.5;
   }
-  if (props.complete === true) {
+  if (props.complete) {
     text = "+";
   }
   if (props.currentStep === true) {

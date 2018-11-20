@@ -1,7 +1,7 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 import Input from "../sharedComponents/Input";
-import { notFirstOption, required } from "../../validators";
+import { required } from "../../validators";
 import {
   searchArtists,
   updateExperienceFilter,
@@ -14,23 +14,6 @@ export class SearchForm extends React.Component {
   }
 
   render() {
-    // TODO success/Error
-    let successMessage;
-    if (this.props.submitSucceeded) {
-      successMessage = (
-        <div className="message message-success">
-          Message submitted successfully
-        </div>
-      );
-    }
-
-    let errorMessage;
-    if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
-    }
-
     return (
       <div className="search-form-holder">
         <form
@@ -82,7 +65,6 @@ export class SearchForm extends React.Component {
             </button>
           </div>
         </form>
-        {errorMessage}
         <div className="bar-gradient" />
       </div>
     );

@@ -1,13 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
 
+// This only shows up in the expanded version
 export function DisciplineGrid(props) {
   let disciplines = props.disciplines.map((discipline, i) => {
     let years = new Date().getFullYear() - discipline.experience;
     let reward = string => {
-      if (string === "pay") {
+      if (string === "For Pay") {
         return "Financial";
-      } else if (string === "fun") {
+      } else if (string === "For Fun") {
         return "Fun";
       } else {
         return "Depends";
@@ -42,8 +42,4 @@ export function DisciplineGrid(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  // loggedIn: state.auth.currentUser !== null
-});
-
-export default connect(mapStateToProps)(DisciplineGrid);
+export default DisciplineGrid;

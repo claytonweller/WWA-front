@@ -8,6 +8,7 @@
   margin-bottom: 30px;
   transition-duration: 500ms;
   min-width: 320px;
+  max-width: 100%;
 }
 
 .vertical-bar {
@@ -129,13 +130,17 @@
   text-align: center;
 }
 
+.artist-x {
+  display: none;
+}
+
 @media only screen and (min-width: 500px) {
   .card-left {
     min-width: 400px;
   }
 
   .active .artist-card .card-left {
-    min-width: 0px;
+    min-width: 100%;
   }
 
   .basic-info {
@@ -149,6 +154,12 @@
   .basic-info button {
     font-size: 1.7em;
     height: 45px;
+  }
+
+  .basic-info button {
+    position: absolute;
+    left: 25px;
+    top: -55px;
     width: fit-content;
   }
 
@@ -163,17 +174,15 @@
     left: 10px;
     text-align: left;
   }
-
-  /* .disciplines-top h2 {
-    position: relative;
-    top: 30px;
-    text-align: center;
-  } */
 }
 
-@media only screen and (min-width: 750px) {
+@media only screen and (min-width: 600px) {
   .artist-card {
     flex-flow: row;
+  }
+
+  .artist-x {
+    display: block;
   }
 
   .card-right {
@@ -187,19 +196,13 @@
     display: block;
   }
 
-  .basic-info {
+  /* .basic-info {
     position: relative;
     justify-content: flex-end;
-  }
+  } */
 
   .active-card {
     min-height: 210px;
-  }
-
-  .basic-info button {
-    position: absolute;
-    left: 10px;
-    top: -60px;
   }
 
   .basic-info div {
@@ -211,5 +214,9 @@
     margin: 10px 0;
     top: -20px;
     /* text-align: center; */
+  }
+
+  .disciplines-bottom {
+    margin-bottom: 20px;
   }
 }

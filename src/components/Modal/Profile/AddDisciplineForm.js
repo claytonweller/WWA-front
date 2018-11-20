@@ -9,12 +9,14 @@ import {
   postUserDiscipline,
   createNewUserDiscipline
 } from "../../../actions/profile";
-import { required, notFirstOption } from "../../../validators";
+import { required } from "../../../validators";
 
 export class AddDisciplineForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //this makes the form display an extra field
+      // It allows users to post new discipline types
       addingNewDisciplineType: false,
       error: null
     };
@@ -44,10 +46,13 @@ export class AddDisciplineForm extends React.Component {
   }
 
   render() {
+    // The discipline types are retreived on load
     const populatedOptions = this.props.disciplineTypes.map(
       typeObject => typeObject.type
     );
 
+    // This is hidden until the adding new discipline type
+    // state reads true
     let newDisciplineTypeField;
     if (this.state.addingNewDisciplineType) {
       newDisciplineTypeField = (
@@ -63,7 +68,6 @@ export class AddDisciplineForm extends React.Component {
     } else {
       newDisciplineTypeField = null;
     }
-    console.log(this.state.error);
 
     return (
       <form

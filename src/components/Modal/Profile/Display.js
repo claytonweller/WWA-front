@@ -22,6 +22,7 @@ export class Display extends React.Component {
       .catch(err => this.setState({ error: err.errors._error }));
   }
 
+  // This is used to test user image urls
   testUrlClick(e) {
     e.preventDefault();
     let url = document.getElementById("img_url").value;
@@ -43,6 +44,10 @@ export class Display extends React.Component {
           >
             <div className="display modal-left">
               <h2>Your picture</h2>
+              <p style={{ margin: 5 }}>
+                Grab a url of an image you like paste it here. Facebook profile
+                images work great.
+              </p>
               <div className="image-interface">
                 <Tear
                   clickAction={console.log}
@@ -83,6 +88,7 @@ export class Display extends React.Component {
                   onClick={e => {
                     e.preventDefault();
                     this.props.dispatch(closeModal());
+                    this.props.history.push("/search");
                   }}
                 >
                   Later

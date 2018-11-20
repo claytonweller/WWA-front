@@ -1,9 +1,10 @@
 import React from "react";
-import { reduxForm, Field, focus, reset } from "redux-form";
+import { reduxForm, Field, focus } from "redux-form";
 import { login } from "../../actions/auth";
 import { required } from "../../validators";
 
 import Input from "../sharedComponents/Input";
+import { openModalPage } from "../../actions/profile";
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -51,7 +52,16 @@ export class LoginForm extends React.Component {
               {this.state.error ? this.state.error : null}
             </div>
             <div className="simple-buttons">
-              <a>Sign Up</a>
+              <a
+                href="none"
+                onClick={e => {
+                  e.preventDefault();
+                  console.log(e);
+                  this.props.dispatch(openModalPage("basic"));
+                }}
+              >
+                Sign Up
+              </a>
               <button type="submit" disabled={this.props.submitting}>
                 submit
               </button>
