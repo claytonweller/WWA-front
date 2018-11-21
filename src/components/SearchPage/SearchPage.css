@@ -1,16 +1,17 @@
 .search-page {
-  top: 75px;
-  position: absolute;
+  margin-top: 75px;
+  position: relative;
   max-width: 1000px;
   margin: auto;
   left: 0;
   right: 0;
-  padding: 0 10px;
+  padding: 0 10px 0 0;
+  min-height: 100vh;
 }
 
 .search-form-holder {
   position: relative;
-  top: 20px;
+  margin-top: 80px;
 }
 
 .search-form {
@@ -46,7 +47,7 @@
 
 .search-results {
   position: relative;
-  top: 50px;
+  margin-top: 50px;
   padding: 0px 10px;
   display: flex;
   flex-flow: row wrap;
@@ -123,7 +124,7 @@
 
   .search-results {
     position: relative;
-    top: 200px;
+    margin-top: 275px;
   }
 
   .artist.inactive {
@@ -169,7 +170,7 @@
 
   .search-results {
     position: relative;
-    top: 150px;
+    margin-top: 225px;
   }
 
   .artist .tear {

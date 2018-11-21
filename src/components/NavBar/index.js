@@ -5,7 +5,6 @@ import "./NavBar.css";
 import { toggleNavMenu, closeNavMenu } from "../../actions/nav";
 import { openModalPage, closeModal } from "../../actions/profile";
 import { logout } from "../../actions/auth";
-import { parseJwt } from "../../parseJwt";
 
 import Tear from "../sharedComponents/Tear";
 
@@ -119,7 +118,7 @@ export function NavBar(props) {
   if (props.loggedIn) {
     let img;
     if (localStorage.getItem("authToken")) {
-      img = parseJwt(localStorage.getItem("authToken")).user.img_url;
+      img = props.currentUser.img_url;
     }
     mobileNav = wideNav = (
       <Tear
@@ -174,6 +173,7 @@ NavBar.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser,
   menuIsOpen: state.nav.menuIsOpen,
   loggedIn: !!state.auth.currentUser
 });

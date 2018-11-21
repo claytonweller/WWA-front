@@ -19,7 +19,7 @@ export class BasicInfo extends React.Component {
     // For some reason the REDUX form validation
     // was not playing well. So I just used straight up
     // state to make it work
-    // TODO: Figure out redux form
+    // TODO: Figure out redux form validator
     if (values.password !== values.password2) {
       return this.setState({ error: "Passwords do not match" });
     }

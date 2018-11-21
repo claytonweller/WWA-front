@@ -11,8 +11,8 @@ export class LandingPage extends React.Component {
       <div
         style={{
           maxWidth: "1000px",
-          top: "75px",
-          position: "absolute",
+          marginTop: "75px",
+          position: "relative",
           width: "100%",
           left: 0,
           right: 0,

@@ -315,7 +315,7 @@
     padding-top: 20px;
     display: flex;
     flex-flow: row;
-    max-height: 55vh;
+    /* max-height: 55vh; */
   }
 
   .disciplines-card {

@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "../config";
 import { SubmissionError } from "redux-form";
 import { login, refreshAuthToken } from "./auth";
-import { parseJwt } from "../parseJwt";
 import jwtDecode from "jwt-decode";
 import { reset } from "redux-form";
 
@@ -207,8 +206,8 @@ export const createNewUserDiscipline = disciplineObject => dispatch => {
     });
 };
 
-export const postUserDiscipline = disciplineObject => dispatch => {
-  const currentUser = parseJwt(localStorage.getItem("authToken")).user;
+export const postUserDiscipline = disciplineObject => (dispatch, getState) => {
+  const currentUser = getState().auth.currentUser;
   disciplineObject.user_id = currentUser.user_id;
   return fetch(`${API_BASE_URL}/user_disciplines/${currentUser.user_id}`, {
     method: "Post",
@@ -280,6 +279,7 @@ export const postUser = userObject => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
+      console.log(successObject);
       if (successObject.code === 422) {
         return Promise.reject(
           new SubmissionError({
@@ -293,7 +293,7 @@ export const postUser = userObject => dispatch => {
       dispatch(reset("basic"));
     })
     .catch(err => {
-      const message = err.message;
+      const message = err.errors._error;
       dispatch(modalPostError(message));
       return Promise.reject(
         new SubmissionError({
@@ -303,9 +303,9 @@ export const postUser = userObject => dispatch => {
     });
 };
 
-export const updateUser = (updateObject, nextPage) => dispatch => {
+export const updateUser = (updateObject, nextPage) => (dispatch, getState) => {
   dispatch(modalPostRequest());
-  const currentUser = parseJwt(localStorage.getItem("authToken")).user;
+  const currentUser = getState().auth.currentUser;
   return fetch(`${API_BASE_URL}/users/${currentUser.user_id}`, {
     method: "PUT",
     body: JSON.stringify(updateObject),

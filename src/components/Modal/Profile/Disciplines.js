@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { reset } from "redux-form";
 import SingleDiscipline from "./SingleDiscipline";
 import AddDisciplineForm from "./AddDisciplineForm";
 
@@ -8,6 +9,7 @@ import { openModalPage, openAddDisciplineForm } from "../../../actions/profile";
 export class Disciplines extends React.Component {
   addClick(e) {
     e.preventDefault();
+    this.props.dispatch(reset("discipline"));
     this.props.dispatch(openAddDisciplineForm());
   }
 
@@ -16,11 +18,6 @@ export class Disciplines extends React.Component {
   }
 
   disciplineSubmit() {
-    this.setState({ formIshidden: true });
-  }
-
-  cancelClick(e) {
-    e.preventDefault();
     this.setState({ formIshidden: true });
   }
 
