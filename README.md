@@ -26,7 +26,9 @@ At any time artists can change their info, and add/remove disciplines to their p
 
 ## Screenshots
 
+###Landing Page
 ![Screenshot of the landing page](https://imgur.com/9QBkZhn.jpg)
+###Search Page
 ![Screenshot of the search page](https://imgur.com/Q6dsO5e.jpg)
 
 ## Technology used
