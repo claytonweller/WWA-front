@@ -150,10 +150,10 @@ const mapStateToProps = state => {
   if (state.auth.currentUser) {
     return {
       initialValues: {
-        active: "Active?",
-        reward: "Reward?",
-        experience: "Experience?",
-        type: "Discipline?"
+        active: "",
+        reward: "",
+        experience: "",
+        type: ""
       },
       disciplineTypes: state.profile.disciplineTypes,
       error: state.profile.error
