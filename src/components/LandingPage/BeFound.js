@@ -12,7 +12,7 @@ export function BeFound(props) {
       <div className="landing-description">
         <img src={heading} alt="Find artists for your project" />
         <div>
-          You are an artists. You love making art. You want to do more projects,
+          You are an artist. You love making art. You want to do more projects,
           and work with new people, but it's exhausting putting yourself out
           there. Work With Artists makes finding projects way easier:
           <ul style={{ listStyleImage: `url('${pip}')` }}>
@@ -22,7 +22,7 @@ export function BeFound(props) {
             </li>
             <li>Get contacted by people who want YOU specifically.</li>
           </ul>
-          All communicaitons are opt in, and we will never give away your email.
+          All communications are opt in, and we will never give away your email.
           It's easy, updateable, and might lead to some truly wonderful
           connections.
         </div>
