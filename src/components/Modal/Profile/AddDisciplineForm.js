@@ -86,8 +86,14 @@ export class AddDisciplineForm extends React.Component {
             handleChange={value => {
               if (value === "--Other/Not Listed--") {
                 this.setState({ addingNewDisciplineType: true });
+                document.getElementById(
+                  "adding-new-discipline-type"
+                ).checked = true;
               } else {
                 this.setState({ addingNewDisciplineType: false });
+                document.getElementById(
+                  "adding-new-discipline-type"
+                ).checked = false;
               }
             }}
             component={Input}
