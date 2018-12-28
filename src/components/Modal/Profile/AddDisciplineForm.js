@@ -96,6 +96,25 @@ export class AddDisciplineForm extends React.Component {
             placeholder="Discipline?"
             validate={[required]}
           />
+          <label
+            onClick={e => {
+              if (
+                document.getElementById("adding-new-discipline-type").checked
+              ) {
+                this.setState({ addingNewDisciplineType: true });
+              } else {
+                this.setState({ addingNewDisciplineType: false });
+              }
+            }}
+            style={{
+              display: "flex",
+              width: "fit-content",
+              alignContent: "center"
+            }}
+          >
+            <input id="adding-new-discipline-type" type="checkbox" />
+            My Artistic Discipline is not in the list
+          </label>
           {newDisciplineTypeField}
           <Field
             name="experience"
