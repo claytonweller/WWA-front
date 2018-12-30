@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 import Input from "../../sharedComponents/Input";
 import Tear from "../../sharedComponents/Tear";
-import ImageUploader from "react-images-upload";
 
 export class ImageAdder extends React.Component {
   constructor(props) {
@@ -14,32 +13,35 @@ export class ImageAdder extends React.Component {
       image: "",
       error: null
     };
-    this.imageDrop = this.imageDrop.bind(this);
-  }
-
-  imageDrop(image) {
-    console.log(image);
-    this.setState({ image });
   }
 
   // This is used to test user image urls
   testUrlClick(e) {
     e.preventDefault();
-    let url = document.getElementById("img_url").value;
-    this.setState({ imageURL: url });
 
-    const file = e.target.files;
-    console.log(file[0]);
+    const file = e.target.files[0];
+    console.log(file.size);
 
-    fetch(`http://localhost:8080/api/images`, {
+    // Check for file size in MB
+    if (file.size / 1024 / 1024 > 0.5) {
+      throw "TOO BIG!";
+    }
+
+    let formData = new FormData();
+    formData.append("imageFile", file);
+
+    const options = {
       method: "POST",
-      body: file[0],
+      body: formData,
       headers: {
-        "Content-Type": "multipart/form-data;"
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`
       }
-    })
+    };
+
+    fetch(`http://localhost:8080/api/images/`, options)
       .then(res => res.json())
-      .then(res => console.log(res));
+      .then(res => this.setState({ imageURL: res }))
+      .catch(err => console.log("BOOP ERROR BOOP BOOP"));
     // .then(images => {
     //   this.setState({
     //     uploading: false,
@@ -58,11 +60,11 @@ export class ImageAdder extends React.Component {
         </p>
         <div className="image-interface">
           <Tear
-            clickAction={console.log}
+            clickAction={() => console.log("boop")}
             length="35%"
             width="35%"
             name="testImage"
-            imageUrl={this.state.imageURL}
+            imageUrl={this.props.imageURL}
           />
           <div className="img-url-test">
             <Field
@@ -72,14 +74,11 @@ export class ImageAdder extends React.Component {
               component={Input}
               label="Image URL"
             />
-            <ImageUploader
-              withIcon={true}
-              buttonText="Choose images"
-              onChange={this.imageDrop}
-              imgExtension={[".jpg", ".gif", ".png", ".gif"]}
-              maxFileSize={5242880}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => this.testUrlClick(e)}
             />
-            <input type="file" onChange={e => this.testUrlClick(e)} />
           </div>
         </div>
       </div>

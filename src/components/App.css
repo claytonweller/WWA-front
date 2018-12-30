@@ -66,6 +66,17 @@ textarea {
   padding: 10px;
 }
 
+input[type="file"] {
+  box-shadow: none;
+  width: fit-content;
+  appearance: none;
+  padding: 9px;
+  border: none;
+  /* border-radius: 3px; */
+  display: inline-block;
+  position: relative;
+}
+
 input[type="checkbox"] {
   box-shadow: none;
   width: fit-content;
