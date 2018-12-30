@@ -3,8 +3,8 @@ import { reduxForm, Field, focus, reset } from "redux-form";
 import { connect } from "react-redux";
 
 import Input from "../../sharedComponents/Input";
-import Tear from "../../sharedComponents/Tear";
 import { closeModal, updateUser } from "../../../actions/profile";
+import ImageAdder from "./ImageAdder";
 
 export class Display extends React.Component {
   constructor(props) {
@@ -43,30 +43,7 @@ export class Display extends React.Component {
             onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
           >
             <div className="display modal-left">
-              <h2>Your picture</h2>
-              <p style={{ margin: 5 }}>
-                Grab a url of an image you like paste it here. Facebook profile
-                images work great.
-              </p>
-              <div className="image-interface">
-                <Tear
-                  clickAction={console.log}
-                  length="35%"
-                  width="35%"
-                  name="testImage"
-                  imageUrl={this.state.imageURL}
-                />
-                <div className="img-url-test">
-                  <Field
-                    name="img_url"
-                    type="text"
-                    placeholder="www.imgur.com/mysickpic"
-                    component={Input}
-                    label="Image URL"
-                  />
-                  <button onClick={e => this.testUrlClick(e)}>Test URL</button>
-                </div>
-              </div>
+              <ImageAdder />
             </div>
             <hr className="display-split" />
             <div className="search-field-holder modal-right">
