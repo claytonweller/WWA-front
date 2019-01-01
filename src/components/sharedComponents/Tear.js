@@ -25,6 +25,12 @@ export function Tear(props) {
     props.clickAction(e);
   };
 
+  let position = () => {
+    if (props.position === "relative") {
+      return "relative";
+    }
+  };
+
   return (
     <a
       onClick={e => clickAction(e)}
@@ -32,8 +38,8 @@ export function Tear(props) {
       className="tear"
       style={{
         display: "block",
-        position: "relative",
         width: props.width,
+        position: position(),
         height: props.height
       }}
     >

@@ -63,6 +63,7 @@ export class ImageAdder extends React.Component {
             length="35%"
             width="35%"
             name="testImage"
+            position="relative"
             imageUrl={this.props.img_url}
           />
           {display()}
