@@ -313,7 +313,7 @@ export const updateUserImage = e => (dispatch, getState) => {
     }
   };
 
-  fetch(`http://localhost:8080/api/images/`, options)
+  fetch(`${API_BASE_URL}/images/`, options)
     .then(res => res.json())
     .then(res => {
       currentUser.img_url = res.img_url;
