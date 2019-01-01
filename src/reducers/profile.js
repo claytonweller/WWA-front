@@ -7,6 +7,9 @@ import {
   MODAL_POST_REQUEST,
   MODAL_POST_SUCCESS,
   MODAL_POST_ERROR,
+  IMAGE_POST_REQUEST,
+  IMAGE_POST_SUCCESS,
+  IMAGE_POST_ERROR,
   STORE_DISCIPLINE_TYPES,
   STORE_USER_DISCIPLINES,
   SET_FOCUSED_USER
@@ -22,7 +25,9 @@ const initialState = {
   isContactForm: false,
   loading: false,
   error: null,
-  focusedUser: null
+  focusedUser: null,
+  imgUploading: false,
+  imgUploadError: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -90,6 +95,20 @@ export default function reducer(state = initialState, action) {
     return Object.assign({}, state, {
       loading: false,
       error: action.error
+    });
+  } else if (action.type === IMAGE_POST_REQUEST) {
+    return Object.assign({}, state, {
+      imgUploading: true,
+      imgUploadError: null
+    });
+  } else if (action.type === IMAGE_POST_SUCCESS) {
+    return Object.assign({}, state, {
+      imgUploading: false
+    });
+  } else if (action.type === IMAGE_POST_ERROR) {
+    return Object.assign({}, state, {
+      imgUploading: false,
+      imgUploadError: true
     });
   }
   return state;
