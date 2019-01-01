@@ -3,6 +3,7 @@ import { SubmissionError } from "redux-form";
 import { login, refreshAuthToken } from "./auth";
 import jwtDecode from "jwt-decode";
 import { reset } from "redux-form";
+import { updateCurrentUser } from "./auth";
 
 ////// This page deals with all the calls that heppen within the modal ////////////
 // TODO: Rename from 'profile' to 'modal'
@@ -53,6 +54,27 @@ export const MODAL_POST_ERROR = "MODAL_POST_ERROR";
 export const modalPostError = () => {
   return {
     type: MODAL_POST_ERROR
+  };
+};
+
+export const IMAGE_POST_REQUEST = "IMAGE_POST_REQUEST";
+export const imagePostRequest = () => {
+  return {
+    type: IMAGE_POST_REQUEST
+  };
+};
+
+export const IMAGE_POST_SUCCESS = "IMAGE_POST_SUCCESS";
+export const imagePostSuccess = () => {
+  return {
+    type: IMAGE_POST_SUCCESS
+  };
+};
+
+export const IMAGE_POST_ERROR = "IMAGE_POST_ERROR";
+export const imagePostError = () => {
+  return {
+    type: IMAGE_POST_ERROR
   };
 };
 
@@ -268,6 +290,39 @@ export const getDisciplineTypes = () => dispatch => {
 
 ///////////// USER ////////////
 
+export const updateUserImage = e => (dispatch, getState) => {
+  const file = e.target.files[0];
+
+  // Check for file size in MB
+
+  if (file.size / 1024 / 1024 > 0.5) {
+    return dispatch(imagePostError());
+  }
+
+  let formData = new FormData();
+  formData.append("imageFile", file);
+  let currentUser = Object.assign({}, getState().auth.currentUser);
+
+  dispatch(imagePostRequest());
+
+  const options = {
+    method: "POST",
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`
+    }
+  };
+
+  fetch(`http://localhost:8080/api/images/`, options)
+    .then(res => res.json())
+    .then(res => {
+      currentUser.img_url = res.img_url;
+      dispatch(imagePostSuccess());
+      return dispatch(updateCurrentUser(currentUser));
+    })
+    .catch(() => dispatch(imagePostError()));
+};
+
 export const postUser = userObject => dispatch => {
   dispatch(modalPostRequest());
   return fetch(`${API_BASE_URL}/users/`, {
@@ -279,7 +334,6 @@ export const postUser = userObject => dispatch => {
   })
     .then(res => res.json())
     .then(successObject => {
-      console.log(successObject);
       if (successObject.code === 422) {
         return Promise.reject(
           new SubmissionError({

@@ -4,53 +4,52 @@ import { connect } from "react-redux";
 
 import Input from "../../sharedComponents/Input";
 import Tear from "../../sharedComponents/Tear";
+import { updateUserImage } from "../../../actions/profile";
 
 export class ImageAdder extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      imageURL: "",
-      image: "",
-      error: null
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     uploading: false,
+  //     error: false
+  //   };
+  // }
 
-  // This is used to test user image urls
-  testUrlClick(e) {
+  uploadImage(e) {
     e.preventDefault();
-
-    const file = e.target.files[0];
-    console.log(file.size);
-
-    // Check for file size in MB
-    if (file.size / 1024 / 1024 > 0.5) {
-      throw "TOO BIG!";
-    }
-
-    let formData = new FormData();
-    formData.append("imageFile", file);
-
-    const options = {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`
-      }
-    };
-
-    fetch(`http://localhost:8080/api/images/`, options)
-      .then(res => res.json())
-      .then(res => this.setState({ imageURL: res }))
-      .catch(err => console.log("BOOP ERROR BOOP BOOP"));
-    // .then(images => {
-    //   this.setState({
-    //     uploading: false,
-    //     images
-    //   });
-    // });
+    this.props.dispatch(updateUserImage(e));
   }
 
   render() {
+    let display = () => {
+      if (this.props.imgUploading) {
+        return <p>Image Uploading...</p>;
+      } else {
+        return (
+          <div className="img-url-test">
+            <Field
+              name="img_url"
+              type="text"
+              placeholder="www.imgur.com/mysickpic"
+              component={Input}
+              label="Image URL"
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => this.uploadImage(e)}
+            />
+          </div>
+        );
+      }
+    };
+    let err = () => {
+      if (this.props.imgUploadError) {
+        return <p style={{ color: "red" }}>image too large</p>;
+      }
+      return null;
+    };
+
     return (
       <div className="">
         <h2>Your picture</h2>
@@ -64,23 +63,11 @@ export class ImageAdder extends React.Component {
             length="35%"
             width="35%"
             name="testImage"
-            imageUrl={this.props.imageURL}
+            imageUrl={this.props.img_url}
           />
-          <div className="img-url-test">
-            <Field
-              name="img_url"
-              type="text"
-              placeholder="www.imgur.com/mysickpic"
-              component={Input}
-              label="Image URL"
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={e => this.testUrlClick(e)}
-            />
-          </div>
+          {display()}
         </div>
+        {err()}
       </div>
     );
   }
@@ -90,8 +77,13 @@ const mapStateToProps = state => {
   if (state.auth.currentUser) {
     return {
       initialValues: {
-        img_url: state.auth.currentUser.img_url
-      }
+        img_url: state.auth.currentUser.img_url,
+        imgUploading: false,
+        imgUploadError: null
+      },
+      img_url: state.auth.currentUser.img_url,
+      imgUploading: state.profile.imgUploading,
+      imgUploadError: state.profile.imgUploadError
     };
   }
   return { initialValues: {} };

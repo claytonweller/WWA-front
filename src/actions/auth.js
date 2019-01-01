@@ -34,6 +34,12 @@ export const authError = error => ({
   error
 });
 
+export const UPDATE_CURRENT_USER = "UPDATE_CURRENT_USER";
+export const updateCurrentUser = updatedUser => ({
+  type: UPDATE_CURRENT_USER,
+  updatedUser
+});
+
 export const resetAllForms = dispatch => {
   dispatch(reset("login"));
   dispatch(reset("basic"));
