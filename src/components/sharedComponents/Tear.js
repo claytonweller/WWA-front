@@ -30,7 +30,12 @@ export function Tear(props) {
       onClick={e => clickAction(e)}
       href="NONE"
       className="tear"
-      style={{ display: "block", width: props.width, height: props.height }}
+      style={{
+        display: "block",
+        position: "relative",
+        width: props.width,
+        height: props.height
+      }}
     >
       <div style={{ backgroundColor: color }} className="prong" />
       <div
