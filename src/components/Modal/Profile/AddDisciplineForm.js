@@ -53,9 +53,20 @@ export class AddDisciplineForm extends React.Component {
 
     // This is hidden until the adding new discipline type
     // state reads true
-    let newDisciplineTypeField;
+    let disciplineTypeField = (
+      <Field
+        name="type"
+        type="text"
+        element="select"
+        component={Input}
+        label="Discipline"
+        options={populatedOptions}
+        placeholder="Discipline?"
+        validate={[required]}
+      />
+    );
     if (this.state.addingNewDisciplineType) {
-      newDisciplineTypeField = (
+      disciplineTypeField = (
         <Field
           name="new_type"
           type="text"
@@ -65,8 +76,6 @@ export class AddDisciplineForm extends React.Component {
           validate={[required]}
         />
       );
-    } else {
-      newDisciplineTypeField = null;
     }
 
     return (
@@ -79,29 +88,7 @@ export class AddDisciplineForm extends React.Component {
       >
         <h2>Add / Edit a Discipline</h2>
         <div className="search-field-holder">
-          <Field
-            name="type"
-            type="text"
-            element="select"
-            handleChange={value => {
-              if (value === "--Other/Not Listed--") {
-                this.setState({ addingNewDisciplineType: true });
-                document.getElementById(
-                  "adding-new-discipline-type"
-                ).checked = true;
-              } else {
-                this.setState({ addingNewDisciplineType: false });
-                document.getElementById(
-                  "adding-new-discipline-type"
-                ).checked = false;
-              }
-            }}
-            component={Input}
-            label="Discipline"
-            options={["--Other/Not Listed--", ...populatedOptions]}
-            placeholder="Discipline?"
-            validate={[required]}
-          />
+          {disciplineTypeField}
           <label
             onClick={e => {
               if (
@@ -121,7 +108,7 @@ export class AddDisciplineForm extends React.Component {
             <input id="adding-new-discipline-type" type="checkbox" />
             My Artistic Discipline is not in the list
           </label>
-          {newDisciplineTypeField}
+
           <Field
             name="experience"
             element="select"
