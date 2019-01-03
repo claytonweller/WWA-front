@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import "./progressBar.css";
 
 import ProgressTear from "./ProgressTear.js";
-import { Disciplines } from "./Disciplines";
 
 export function ProgressBar(props) {
   const complete = {

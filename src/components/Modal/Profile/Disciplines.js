@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { reset } from "redux-form";
-import SingleDiscipline from "./SingleDiscipline";
 import AddDisciplineForm from "./AddDisciplineForm";
 
 import { openModalPage, openAddDisciplineForm } from "../../../actions/profile";
+import DisciplineList from "./DisciplineList";
 
 export class Disciplines extends React.Component {
   addClick(e) {
@@ -22,22 +22,11 @@ export class Disciplines extends React.Component {
   }
 
   render() {
-    let disciplineElements = this.props.disciplines.map((discipline, i) => {
-      return (
-        <SingleDiscipline
-          key={"discipline" + i}
-          index={i}
-          discipline={discipline.type}
-          experience={discipline.experience}
-          active={discipline.active}
-          reward={discipline.reward}
-        />
-      );
-    });
-
-    let listDisplay;
+    let visibleElement = <DisciplineList />;
+    let buttonDisplay;
     if (!this.props.formIshidden) {
-      listDisplay = "none";
+      visibleElement = <AddDisciplineForm />;
+      buttonDisplay = "none";
     }
 
     return (
@@ -50,20 +39,14 @@ export class Disciplines extends React.Component {
         <hr />
         <div className="modal-container">
           {/* The list and the form toggle back and forth */}
-          <div className="disciplines-card" style={{ display: listDisplay }}>
-            <h3 className="disciplines-title">Your Disciplines</h3>
-            {disciplineElements}
-            <button onClick={e => this.addClick(e)}>Add</button>
-          </div>
-
-          <AddDisciplineForm formIshidden={this.props.formIshidden} />
+          {visibleElement}
         </div>
         <hr
           style={{
             marginBottom: "10px"
           }}
         />
-        <div style={{ display: listDisplay }} className="button-holder">
+        <div style={{ display: buttonDisplay }} className="button-holder">
           <button onClick={() => this.nextClick()}>Next</button>
         </div>
       </div>
@@ -73,15 +56,12 @@ export class Disciplines extends React.Component {
 
 Disciplines.defaultProps = {
   formIshidden: true,
-  disciplines: [],
-  disciplineTypes: []
+  disciplines: []
 };
 
 const mapStateToProps = state => {
   return {
-    formIshidden: state.profile.addDisciplineFormIsHidden,
-    disciplines: state.profile.disciplines,
-    disciplineTypes: state.profile.disciplineTypes
+    formIshidden: state.profile.addDisciplineFormIsHidden
   };
 };
 
